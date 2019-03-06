@@ -1,0 +1,140 @@
+﻿@model VEH.Intranet.ViewModel.Spending.LstDetalleArchivoGastoViewModel
+@{
+    ViewBag.Title = "Gastos";
+}
+
+@section Breadcrumbs{
+
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.LstArchivo.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+                </div>
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    @*<div class="form-group">
+                        <label class="col-md-2 control-label">Unidad de tiempo</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.GastoId, Model.LstGasto, "[-Seleccione-]", new { @class = "form-control select2" })
+                        </div>
+                    </div>*@
+
+                    @Html.HiddenFor( x => x.EdificioId)
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Año</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.Anio, Model.LstAnio, new { @class = "form-control select2" })
+                        </div>
+                        <label class="col-md-1 control-label">Mes</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.Mes, Model.LstMeses, new { @class = "form-control select2" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10 ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.GastoId.HasValue) { 
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <ul class="nav nav-tabs">
+            <li class="@(Model.Pestania == 1 ? "active" : "")"><a href="#tab1" data-toggle="tab"><i class="fa fa-shopping-cart"></i>&nbsp;Detalle</a></li>
+            <li class="@(Model.Pestania != 1 ? "active" : "")"><a href="#tab2" data-toggle="tab"><i class="fa fa-file"></i>&nbsp;Comprobantes de Pago</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade @(Model.Pestania == 1 ? "active" : "") in" id="tab1">
+                <div class="panel panel-inverse">
+                   @* <div class="panel-heading">
+                        <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+                    </div>*@
+                    <div class="panel-body">
+                        @*<div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-8 text-center">Concepto</th>
+                                        <th class="col-sm-2 text-center">Monto</th>
+                                        <th class="col-sm-2 text-center">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstDetalle.LstDetalleGasto)
+                                    {
+                                        <tr>
+                                            <td>@item.Concepto</td>
+                                            <td class="text-center">@String.Format("{0:0,0.00}", item.Monto)</td>
+                                            <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : "Inactivo")</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @Html.PagedListPager(Model.LstDetalle.LstDetalleGasto, page => Url.Action("LstGasto", new { GastoId = Model.GastoId, np1 = page, pestania = 1 }), ConstantHelpers.Bootstrap3Pager)
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade @(Model.Pestania != 1 ? "active" : "") in" id="tab2">
+                <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="col-sm-12 text-center">Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LstArchivo.LstArchivoGasto)
+                        {
+                            <tr>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Ruta))
+                                    { <a target="_blank" href="@Url.Content("~/Resources/Files/"+Model.LstArchivo.Edificio.Acronimo+"/"+item.Ruta)" title="Clic para descargar">@item.Nombre</a>}
+                                    else
+                                    { @item.Nombre }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager(Model.LstArchivo.LstArchivoGasto, page => Url.Action("LstGasto", new { GastoId = Model.GastoId, np2 = page, pestania = 2 }), ConstantHelpers.Bootstrap3Pager)
+            </div>
+        </div>
+    </div>
+    </div>
+            <a class="btn btn-primary" target="_blank" href="@Url.Action("DownloadReporteDepartamentoIngresosGastos", "Building", new { edificioId = Model.EdificioId, UnidadTiempoId = Model.UnidadTiempoId,mes = DateTime.Now.Month,annio = DateTime.Now.Year , dia = DateTime.Now.Day })"><i class="fa fa-arrow-down"></i>&nbsp;&nbsp;Descargar balance de ingresos y gastos</a>
+
+        </div>
+    </div>
+</div>
+}

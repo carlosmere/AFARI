@@ -1,0 +1,115 @@
+﻿@model VEH.Intranet.ViewModel.External.ItemsGenericosViewModel
+
+@{
+    ViewBag.Title = "Obligaciones Laborales";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Lista de Edificios</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+}
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <i class="fa fa-table"></i> Filtros
+    </div>
+    <div class="panel-body">
+        <form action="@Url.Action("ItemsGenericos", "External")">
+            <input hidden name="EdificioId" value="@Model.EdificioId" />
+            <input hidden name="filtroNombre" value="" />
+            <input hidden name="filtroDato" value="" />
+            <input hidden name="filtroTipo" value="Obligaciones" />
+            <input hidden name="vista" value="ObligacionesLaborales" />
+            <div class="form-group">
+                <label class="col-md-1 control-label"><strong>Año</strong></label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.Anio, new SelectList(Model.LstAnios, "Value", "Text"), "[-Seleccione-]", new { @class = "form-control select2" })
+                    @Html.ValidationMessageFor(x => x.Anio)
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-filter"></i> Filtrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <p>&nbsp;</p>
+
+        <table class="table table-hover ">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Unidad de tiempo</th>
+                    <th>Tipo</th>
+                    <th>@(((Session.GetRol() ?? AppRol.Propietario) == AppRol.Administrador)?"Opciones":"Ver")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var listas = Model.LstDatos.GroupBy(X => X.Tipo).ToList();
+
+
+                    foreach (var lista in listas)
+                    {
+                        if (lista.Count() == 0)
+                        {
+                            continue;
+                        }
+                        <tr>
+                            <td colspan="4" style="background-color:lightgray">@ConstantHelpers.TipoDato.getInner(lista.First().Tipo)</td>
+                        </tr>
+
+                        foreach (var item in lista)
+                        {
+                          
+                            <tr>
+                                <td>@item.Nombre</td>
+                                <td>@(item.UnidadTiempo!= null?item.UnidadTiempo.Descripcion:"-") </td>
+                                <td>@ConstantHelpers.TipoDato.getInner(item.Tipo)</td>
+                                <td>
+                                    @if ((Session.GetRol() ?? AppRol.Propietario) == AppRol.Administrador)
+                                    {
+                                        <a class="btn btn-default" href="@Url.Action("AddEditItemGenerico","External",new{ itemId=item.DatoEdificioId, EdificioId=Model.EdificioId,vista ="ObligacionesLaborales" ,tipo=item.Tipo,UnidadTiempoId = item.UnidadTiempoId })"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-danger" href="@Url.Action("DeleteItemGenerico","External",new{ itemId=item.DatoEdificioId, EdificioId=Model.EdificioId,vista ="ObligacionesLaborales" ,filtroTipo=ConstantHelpers.TipoDato.getOutter(item.Tipo),UnidadTiempoId = item.UnidadTiempoId })"><i class="fa fa-times"></i></a>
+                                    }
+                                    @*<a class="btn btn-primary view-pdf" nombre="@(item.Nombre)" href="@(Url.Action("DescargarDocumentoGenerico", "External", new { itemId = item.DatoEdificioId}))"><i class="fa fa-eye"></i></a>*@
+                                    <a class="btn btn-primary" target="_blank" nombre="@(item.Nombre)" href="@(Url.Action("DescargarDocumentoGenerico", "External", new { itemId = item.DatoEdificioId}))"><i class="fa fa-eye"></i></a>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if ((Session.GetRol() ?? AppRol.Propietario) == AppRol.Administrador)
+        {
+            <a class="btn btn-primary" href="@Url.Action("AddEditItemGenerico","External",new{ EdificioId = Model.EdificioId,vista = "ObligacionesLaborales",tipo= ConstantHelpers.TipoDato.ObligacionesLaborales.AFP })"><i class="fa fa-plus"></i>&nbsp;Agregar AFP</a>
+            <a class="btn btn-primary" href="@Url.Action("AddEditItemGenerico","External",new{ EdificioId = Model.EdificioId,vista = "ObligacionesLaborales",tipo= ConstantHelpers.TipoDato.ObligacionesLaborales.EssaludYOnp })"><i class="fa fa-plus"></i>&nbsp;Agregar ESSALUD y ONP</a>
+            <a class="btn btn-primary" href="@Url.Action("AddEditItemGenerico","External",new{ EdificioId = Model.EdificioId,vista = "ObligacionesLaborales",tipo= ConstantHelpers.TipoDato.ObligacionesLaborales.PresentacionPlanillaTrabajadores })"><i class="fa fa-plus"></i>&nbsp;Agregar Presentación planilla trabajadores</a>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        (function (a) { a.createModal = function (b) { defaults = { title: "", message: "Your Message Goes Here!", closeButton: true, scrollable: false }; var b = a.extend({}, defaults, b); var c = (b.scrollable === true) ? 'style="max-height: 420px;overflow-y: auto;"' : ""; html = '<div class="modal fade" id="myModal">'; html += '<div class="modal-dialog modal-lg">'; html += '<div class="modal-content">'; html += '<div class="modal-header">'; html += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'; if (b.title.length > 0) { html += '<h4 class="modal-title">' + b.title + "</h4>" } html += "</div>"; html += '<div class="modal-body" ' + c + ">"; html += b.message; html += "</div>"; html += '<div class="modal-footer">'; if (b.closeButton === true) { html += '<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>' } html += "</div>"; html += "</div>"; html += "</div>"; html += "</div>"; a("body").prepend(html); a("#myModal").modal().on("hidden.bs.modal", function () { a(this).remove() }) } })(jQuery);
+
+
+        $(function () {
+            $('.view-pdf').on('click', function () {
+                var pdf_link = $(this).attr('href');
+                var pdf_name = $(this).attr('nombre');
+                var iframe = '<object type="application/pdf" data="' + pdf_link + '" width="100%" height="500">No Support</object>'
+                $.createModal({
+                    title: pdf_name,
+                    message: iframe,
+                    closeButton: true,
+                    scrollable: false
+                });
+                return false;
+            });
+        })
+    </script>
+}

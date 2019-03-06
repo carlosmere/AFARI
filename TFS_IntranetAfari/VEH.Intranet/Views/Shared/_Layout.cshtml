@@ -1,0 +1,243 @@
+﻿@model VEH.Intranet.ViewModel.Shared.BaseViewModel
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="es">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    @RazorHelpers.Content("plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css", Url)
+    @RazorHelpers.Content("plugins/bootstrap-3.1.1/css/bootstrap.min.css", Url)
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    @RazorHelpers.Content("css/animate.min.css", Url)
+    @RazorHelpers.Content("css/style.min.css", Url)
+    @RazorHelpers.Content("css/style-responsive.min.css", Url)
+    <!-- ================== END BASE CSS STYLE ================== -->
+
+    <link href="@Url.Content("~/Content/css/select2.min.css")" rel="stylesheet" />
+    <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+    @RazorHelpers.Content("plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css", Url)
+    @RazorHelpers.Content("plugins/bootstrap-datepicker/css/datepicker.css", Url)
+    @RazorHelpers.Content("plugins/bootstrap-datepicker/css/datepicker3.css", Url)
+    @RazorHelpers.Content("plugins/gritter/css/jquery.gritter.css", Url)
+    @RazorHelpers.Content("plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.css", Url)
+    <link href="@Url.Content("~/Content/css/lightbox.min.css")" rel="stylesheet" />
+    @RazorHelpers.Content("plugins/password-indicator/css/password-indicator.css", Url)
+    <link href="@Url.Content("~/Content/css/components.css")" rel="stylesheet" />
+    <!-- ================== END PAGE LEVEL STYLE ================== -->
+    @RenderSection("styles", false)
+</head>
+<body>
+    @try
+    {	<!-- begin #page-loader -->
+        <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+
+	<!-- begin #page-container -->
+        <div id="page-container" class="fade">
+            <!-- begin #header -->
+            <div id="header" class="header navbar navbar-default navbar-fixed-top">
+                <!-- begin container-fluid -->
+                <div class="container-fluid">
+                    <!-- begin mobile sidebar expand / collapse button -->
+                    <div class="navbar-header">
+                        <a href="@Url.Action("Dashboard", "Home")" class="navbar-brand">
+                            <img src="@Url.Content("~/Content/img/AFARIlogo.png")" style="width: 180px;height: 45px;margin-top: -5px;" />
+                        </a>
+                        <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!-- end mobile sidebar expand / collapse button -->
+                    <!-- begin header navigation right -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown navbar-user">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="hidden-xs">@Session.GetNombreCompleto()</span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInLeft">
+                                <li class="arrow"></li>
+                                <li><a href="@Url.Action("CambiarPassword", "User")">Cambiar contraseña</a></li>
+                                <li class="divider"></li>
+                                <li><a href="@Url.Action("Logout", "Home")">Salir</a></li>
+                            </ul>
+                        </li>
+                        @if (Model.LstAnuncio.Count > 0 && Session.GetRol() == AppRol.Propietario)
+                        {
+                            <li class="dropdown show" style="margin-top: 18%;" id="section-anuncio">
+                                <ul class="dropdown-menu media-list dropdown-menu-right show" x-placement="top-end" style="width:500px;height: 500px; overflow: auto;margin-left: 30px;transform: translate3d(-314px, 5px, 0px); will-change: transform; top: 0px; left: 0px;">
+                                    <a href="#" class="pull-right" id="eliminar-anuncio"><i class="fa fa-times"></i></a>
+                                    <li class="dropdown-header text-center">ANUNCIOS</li>
+                                    @foreach (var anuncio in Model.LstAnuncio)
+                                    {
+                                        <li class="media">
+                                            <a target="_blank" href="@anuncio.Url">
+                                                <div class="media-left">
+                                                    <img width="240px" height="237" src="@Url.Content("~/Resources/Files/Anuncio/")@anuncio.Ruta"/>
+                                                </div><br />
+                                                <div class="media-body">
+                                                    <h6 class="media-heading">@anuncio.Nombre</h6>
+                                                    <div class="text-muted f-s-11">@anuncio.Descripcion</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    <!-- end header navigation right -->
+                </div>
+                <!-- end container-fluid -->
+            </div>
+            <!-- end #header -->
+            <!-- begin #sidebar -->
+            <div id="sidebar" class="sidebar">
+                <!-- begin sidebar scrollbar -->
+                <div data-scrollbar="true" data-height="100%">
+                    <!-- begin sidebar user -->
+                    <ul class="nav">
+                        <li class="nav-profile">
+                            <div class="info">
+                                @Session.GetNombreCompleto()
+                                <small>@(Session.GetRol() == AppRol.Administrador ? "Administrador" : "Propietario")</small>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- end sidebar user -->
+                    <!-- begin sidebar nav -->
+                    <ul class="nav">
+                        @{Html.RenderPartial("_Sidebar", Model);}
+
+                        <!-- begin sidebar minify button -->
+                        <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+                        <!-- end sidebar minify button -->
+                    </ul>
+                    <!-- end sidebar nav -->
+                </div>
+                <!-- end sidebar scrollbar -->
+            </div>
+            <!-- end #sidebar -->
+            <!-- begin #content -->
+            <div id="content" class="content">
+                <!-- begin breadcrumb -->
+                @if (IsSectionDefined("Breadcrumbs"))
+                {
+                    <ol class="breadcrumb pull-right">
+                        <li><a href="@Url.Action("Dashboard", "Home")"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
+                        @RenderSection("Breadcrumbs", false)
+                        <li class="active">@ViewBag.Title</li>
+                    </ol>
+                }
+                <!-- end breadcrumb -->
+                <!-- begin page-header -->
+                <h1 class="page-header">
+                    @if (ViewBag.PageIcon != null)
+                {
+                        <i class="@ViewBag.PageIcon"></i>
+                    }
+                    @ViewBag.Title
+                </h1>
+                <!-- end page-header -->
+
+                <div class="row">
+                    @MessageHelpers.ShowMessages(TempData)
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- end #content -->
+            <!-- begin scroll to top btn -->
+            <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+            <!-- end scroll to top btn -->
+        </div>
+	<!-- end page container -->
+                            <div class="row-fluid" id="default-modal-container">
+                                <div class="hide" id="default-modal-loading">
+                                    <div class="modal-body">
+                                        <h3>
+                                            <i class="fa fa-cog fa-spin fa-1x fa-fw"></i> Cargando...
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="hide" id="default-modal-loading-error">
+                                    <div class="modal-body">
+                                        <h3>
+                                            <i class="fa fa-exclamation-triangle"></i> Ha ocurrido un error
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+	<!-- ================== BEGIN BASE JS ================== -->
+                            @RazorHelpers.Content("plugins/jquery-1.8.2/jquery-1.8.2.min.js", Url)
+                            @RazorHelpers.Content("plugins/jquery-ui-1.10.4/ui/minified/jquery-ui.min.js", Url)
+
+                            @*<script src="http://code.jquery.com/jquery-1.11.1.js"></script>*@
+                            <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+                            @RazorHelpers.Content("plugins/bootstrap-3.1.1/js/bootstrap.min.js", Url)
+
+                            @RazorHelpers.Script("jquery.validate.js", Url)
+                            @RazorHelpers.Script("jquery.validate.unobtrusive.min.js", Url)
+                            @RazorHelpers.Script("jquery.unobtrusive-ajax.min.js", Url)
+
+                            <!--[if lt IE 9]>
+                                @RazorHelpers.Content("crossbrowserjs/html5shiv.js", Url)
+                                @RazorHelpers.Content("crossbrowserjs/respond.min.js", Url)
+                                @RazorHelpers.Content("crossbrowserjs/excanvas.min.js", Url)
+                            <![endif]-->
+
+
+                            @RazorHelpers.Content("plugins/slimscroll/jquery.slimscroll.min.js", Url)
+	<!-- ================== END BASE JS ================== -->
+
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+                            @RazorHelpers.Content("plugins/gritter/js/jquery.gritter.js", Url)
+                            @RazorHelpers.Content("plugins/flot/jquery.flot.min.js", Url)
+                            @RazorHelpers.Content("plugins/flot/jquery.flot.time.min.js", Url)
+                            @RazorHelpers.Content("plugins/flot/jquery.flot.resize.min.js", Url)
+                            @RazorHelpers.Content("plugins/flot/jquery.flot.pie.min.js", Url)
+                            @RazorHelpers.Content("plugins/sparkline/jquery.sparkline.js", Url)
+                            @RazorHelpers.Content("plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js", Url)
+                            @RazorHelpers.Content("plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js", Url)
+                            @RazorHelpers.Content("plugins/bootstrap-datepicker/js/bootstrap-datepicker.js", Url)
+                            <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+                            @RazorHelpers.Content("plugins/bootstrap-wysihtml5/lib/js/wysihtml5-0.3.0.js", Url)
+                            @RazorHelpers.Content("plugins/bootstrap-wysihtml5/src/bootstrap-wysihtml5.js", Url)
+                            <script src="@Url.Content("~/Content/js/lightbox.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/select2.min.js")"></script>
+                            @RazorHelpers.Content("js/apps.min.js", Url)
+                            @RazorHelpers.Script("Pages/Shared/Global.js", Url)
+	<!-- ================== END PAGE LEVEL JS ================== -->
+                            @RazorHelpers.Content("plugins/password-indicator/js/password-indicator.js", Url)
+                            @RenderSection("scripts", false)
+
+                            <script>
+                                $(document).ready(function () {
+                                    App.init();
+                                    $('.wysihtml5').wysihtml5()
+                                    //Gallery.init();
+                                    $('#eliminar-anuncio').on('click', function () {
+                                        $('#section-anuncio').remove();
+                                    });
+                                });
+                            </script>
+                            }
+                            catch (Exception ex)
+                            {
+                                <script>
+                                    console.log('@(ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty))')
+                                </script>
+                                <div>
+                                    Hubo un contratiempo en la aplicación, porfavor inténtelo más tarde.
+                                </div>
+                            }
+</body>
+</html>

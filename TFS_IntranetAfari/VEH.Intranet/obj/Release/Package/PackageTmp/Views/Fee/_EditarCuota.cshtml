@@ -1,0 +1,42 @@
+﻿@model VEH.Intranet.ViewModel.Fee._EditarCuotaViewModel
+@{
+    ViewBag.Title = "Editar Cuota";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("_EditarCuota", "Fee", FormMethod.Post, new { id = "modal-form" });
+}
+@Html.HiddenFor( x => x.CuotaId)
+<div class="form-group">
+    @Html.LabelFor(x => x.FechaPago)
+    @Html.TextBoxFor(x => x.FechaPago,new { @class = "form-control datepicker"})
+    @Html.ValidationMessageFor(x => x.FechaPago)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.Mora)
+    @Html.TextBoxFor(x => x.Mora, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Mora)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.Leyenda)
+    @Html.TextBoxFor(x => x.Leyenda, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Leyenda)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.Estado)
+    @Html.DropDownListFor(x => x.Estado, Model.LstEstado, new { @class = "form-control select2" })
+    @Html.ValidationMessageFor(x => x.Estado)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.EsAdelantado)
+    @Html.DropDownListFor(x => x.EsAdelantado, Model.LstAdelantado, new { @class = "form-control select2" })
+    @Html.ValidationMessageFor(x => x.EsAdelantado)
+</div>
+
+@section Footer{
+    <button type="submit" class="btn btn-sm btn-primary" id="btn-modal-aceptar"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+<script>
+        $('#modal-form').on('submit', function () {
+            $('#btn-modal-aceptar').attr('disabled', true);
+        });
+</script>

@@ -1,0 +1,23 @@
+﻿@model VEH.Intranet.ViewModel.Building._EditarGrupoEquiposViewModel
+@{
+    ViewBag.Title = "Cronograma";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("_EditarGrupoEquipos", "Building", FormMethod.Post);
+}
+@Html.HiddenFor(x => x.EdificioId)
+@Html.HiddenFor(x => x.FiltroTipo)
+@Html.HiddenFor(x => x.vista)
+@Html.HiddenFor(x => x.LstDatosId)
+
+<div class="form form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nombre</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+@section Footer{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}

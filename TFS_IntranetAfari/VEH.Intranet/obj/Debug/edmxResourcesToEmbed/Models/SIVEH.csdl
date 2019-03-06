@@ -1,0 +1,2119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_92747_intranetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AFP">
+    <Key>
+      <PropertyRef Name="AFPId" />
+    </Key>
+    <Property Name="AFPId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ComisionAFP" Relationship="Self.FK_ComisionAFP_AFP" FromRole="AFP" ToRole="ComisionAFP" />
+    <NavigationProperty Name="Trabajador" Relationship="Self.FK_Trabajador_AFP" FromRole="AFP" ToRole="Trabajador" />
+  </EntityType>
+  <EntityType Name="Anuncio">
+    <Key>
+      <PropertyRef Name="AnuncioId" />
+    </Key>
+    <Property Name="AnuncioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Prioridad" Type="Int32" Nullable="false" />
+    <Property Name="CantidadClic" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Anuncio_Usuario" FromRole="Anuncio" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="ArchivoCorrecionEdificio">
+    <Key>
+      <PropertyRef Name="ArchivoCorrecionEdificioId" />
+    </Key>
+    <Property Name="ArchivoCorrecionEdificioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="RutaArchivo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaSubido" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_ArchivoCorrecionEdificio_Edificio" FromRole="ArchivoCorrecionEdificio" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_ArchivoCorrecionEdificio_UnidadTiempo" FromRole="ArchivoCorrecionEdificio" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="ArchivoGasto">
+    <Key>
+      <PropertyRef Name="ArchivoGastoId" />
+    </Key>
+    <Property Name="ArchivoGastoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="GastoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_ArchivoGasto_Gasto" FromRole="ArchivoGasto" ToRole="Gasto" />
+  </EntityType>
+  <EntityType Name="ArchivoIngreso">
+    <Key>
+      <PropertyRef Name="ArchivoIngresoId" />
+    </Key>
+    <Property Name="ArchivoIngresoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IngresoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ingreso" Relationship="Self.FK_ArchivoIngreso_Ingreso" FromRole="ArchivoIngreso" ToRole="Ingreso" />
+  </EntityType>
+  <EntityType Name="ArchivoTrabajador">
+    <Key>
+      <PropertyRef Name="ArchivoTrabajadorId" />
+    </Key>
+    <Property Name="ArchivoTrabajadorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_ArchivoTrabajador_Edificio" FromRole="ArchivoTrabajador" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_ArchivoTrabajador_UnidadTiempo" FromRole="ArchivoTrabajador" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="BalanceUnidadTiempoEdificio">
+    <Key>
+      <PropertyRef Name="BalanceUnidadTiempoEdificioId" />
+    </Key>
+    <Property Name="BalanceUnidadTiempoEdificioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadDeTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="IngresosTotalesMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GastosTotalesMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SaldoMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SaldoAcumulado" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="FechaDeActualizacion" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_BalanceUnidadTiempoEdificio_Edificio" FromRole="BalanceUnidadTiempoEdificio" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_BalanceUnidadTiempoEdificio_UnidadTiempo" FromRole="BalanceUnidadTiempoEdificio" ToRole="UnidadTiempo" />
+    <NavigationProperty Name="Leyenda" Relationship="Self.FK_Leyenda_BalanceUnidadTiempoEdificio" FromRole="BalanceUnidadTiempoEdificio" ToRole="Leyenda" />
+  </EntityType>
+  <EntityType Name="ComisionAFP">
+    <Key>
+      <PropertyRef Name="ComisionAFPId" />
+    </Key>
+    <Property Name="ComisionAFPId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AFPId" Type="Int32" Nullable="false" />
+    <Property Name="TipoDescuentoId" Type="Int32" Nullable="false" />
+    <Property Name="Comision" Type="Decimal" Precision="18" Scale="5" Nullable="false" />
+    <NavigationProperty Name="AFP" Relationship="Self.FK_ComisionAFP_AFP" FromRole="ComisionAFP" ToRole="AFP" />
+    <NavigationProperty Name="TipoDescuento" Relationship="Self.FK_ComisionAFP_TipoDescuento" FromRole="ComisionAFP" ToRole="TipoDescuento" />
+  </EntityType>
+  <EntityType Name="Cronograma">
+    <Key>
+      <PropertyRef Name="CronogramaId" />
+    </Key>
+    <Property Name="CronogramaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Orden" Type="Int32" Nullable="false" />
+    <Property Name="Anio" Type="Int32" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Cronograma_Edificio" FromRole="Cronograma" ToRole="Edificio" />
+    <NavigationProperty Name="DetalleCronograma" Relationship="Self.FK_DetalleCronograma_Cronograma" FromRole="Cronograma" ToRole="DetalleCronograma" />
+  </EntityType>
+  <EntityType Name="Cuota">
+    <Key>
+      <PropertyRef Name="CuotaId" />
+    </Key>
+    <Property Name="CuotaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+    <Property Name="LecturaAgua" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ConsumoMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ConsumoAgua" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Leyenda" Type="Int32" />
+    <Property Name="Mora" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ConsumoSoles" Type="Decimal" Precision="18" Scale="7" Nullable="false" />
+    <Property Name="AreaComun" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Alcantarillado" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CargoFijo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IGV" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ConsumoAguaTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CuotaExtraordinaria" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FechaEmision" Type="DateTime" Precision="3" />
+    <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
+    <Property Name="Pagado" Type="Boolean" Nullable="false" />
+    <Property Name="FechaPagado" Type="DateTime" Precision="3" />
+    <Property Name="LecturaAnterior" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FechaLeyenda" Type="DateTime" Precision="3" />
+    <Property Name="EsExtraordinaria" Type="Boolean" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_Cuota_Departamento" FromRole="Cuota" ToRole="Departamento" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_Cuota_UnidadTiempo" FromRole="Cuota" ToRole="UnidadTiempo" />
+    <Property Name="EsAdelantado" Type="Boolean" />
+    <NavigationProperty Name="ConsumoIndividual" Relationship="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" FromRole="Cuota" ToRole="ConsumoIndividual" />
+    <Property Name="Otros" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="CuotaComun">
+    <Key>
+      <PropertyRef Name="CuotaComunId" />
+    </Key>
+    <Property Name="CuotaComunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TotalMontoAgua" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalAreaComun" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalAlcantarillado" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalCargoFijo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SaldoMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Pagado" Type="Boolean" Nullable="false" />
+    <Property Name="TotalOtrosGastos" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_CuotaComun_Edificio" FromRole="CuotaComun" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_CuotaComun_UnidadTiempo" FromRole="CuotaComun" ToRole="UnidadTiempo" />
+    <NavigationProperty Name="GastoCuotaComun" Relationship="Self.FK_GastoCuotaComun_CuotaComun" FromRole="CuotaComun" ToRole="GastoCuotaComun" />
+  </EntityType>
+  <EntityType Name="DatoEdificio">
+    <Key>
+      <PropertyRef Name="DatoEdificioId" />
+    </Key>
+    <Property Name="DatoEdificioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Dato" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" />
+    <Property Name="AplicaMantenimiento" Type="Boolean" Nullable="false" />
+    <Property Name="EsRealizado" Type="Boolean" />
+    <Property Name="Orden" Type="Int32" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_DatoEdificio_Edificio" FromRole="DatoEdificio" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_DatoEdificio_UnidadTiempo" FromRole="DatoEdificio" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="DepartamentoId" />
+    </Key>
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Numero" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Piso" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="LecturaAgua" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <Property Name="FactorGasto" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="Estacionamiento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Deposito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DepartamentoM2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="EstacionamientoM2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DepositoM2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PDistribucion" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MontoMora" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="OmitirMora" Type="Boolean" Nullable="false" />
+    <Property Name="FechaPago" Type="DateTime" Precision="3" />
+    <Property Name="CuotaDefault" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalM2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TipoInmuebleId" Type="Int32" />
+    <Property Name="NombreRecibo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AlertaMora" Type="Boolean" Nullable="false" />
+    <Property Name="NombrePropietario" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Cuota" Relationship="Self.FK_Cuota_Departamento" FromRole="Departamento" ToRole="Cuota" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Departamento_Edificio" FromRole="Departamento" ToRole="Edificio" />
+    <NavigationProperty Name="TipoInmueble" Relationship="Self.FK_Departamento_TipoInmueble" FromRole="Departamento" ToRole="TipoInmueble" />
+    <NavigationProperty Name="DepartamentoHistorico" Relationship="Self.FK_DepartamentoHistorico_Departamento" FromRole="Departamento" ToRole="DepartamentoHistorico" />
+    <NavigationProperty Name="DepartamentoPropietario" Relationship="Self.FK_DepartamentoPropietario_Departamento" FromRole="Departamento" ToRole="DepartamentoPropietario" />
+    <NavigationProperty Name="Propietario" Relationship="Self.FK_Propietario_Departamento" FromRole="Departamento" ToRole="Propietario" />
+    <NavigationProperty Name="UnidadTiempoReciboDepartamento" Relationship="Self.FK_UnidadTiempoReciboDepartamento_Departamento" FromRole="Departamento" ToRole="UnidadTiempoReciboDepartamento" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Departamento" FromRole="Departamento" ToRole="Usuario" />
+    <NavigationProperty Name="Visita" Relationship="Self.FK_Visita_Departamento" FromRole="Departamento" ToRole="Visita" />
+  </EntityType>
+  <EntityType Name="DepartamentoHistorico">
+    <Key>
+      <PropertyRef Name="DepartamentoHistoricoId" />
+    </Key>
+    <Property Name="DepartamentoHistoricoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropietarioId" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_DepartamentoHistorico_Departamento" FromRole="DepartamentoHistorico" ToRole="Departamento" />
+    <NavigationProperty Name="Propietario" Relationship="Self.FK_DepartamentoHistorico_Propietario" FromRole="DepartamentoHistorico" ToRole="Propietario" />
+  </EntityType>
+  <EntityType Name="DepartamentoPropietario">
+    <Key>
+      <PropertyRef Name="DepartamentoPropietarioId" />
+    </Key>
+    <Property Name="DepartamentoPropietarioId" Type="Int32" Nullable="false" />
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+    <Property Name="PropietarioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_DepartamentoPropietario_Departamento" FromRole="DepartamentoPropietario" ToRole="Departamento" />
+    <NavigationProperty Name="Propietario" Relationship="Self.FK_DepartamentoPropietario_Propietario" FromRole="DepartamentoPropietario" ToRole="Propietario" />
+  </EntityType>
+  <EntityType Name="DetalleCronograma">
+    <Key>
+      <PropertyRef Name="DetalleCronogramaId" />
+    </Key>
+    <Property Name="DetalleCronogramaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CronogramaId" Type="Int32" Nullable="false" />
+    <Property Name="Mes" Type="Int32" Nullable="false" />
+    <Property Name="Dia" Type="Int32" />
+    <Property Name="EsRealizado" Type="Boolean" Nullable="false" />
+    <Property Name="EsMarcado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Cronograma" Relationship="Self.FK_DetalleCronograma_Cronograma" FromRole="DetalleCronograma" ToRole="Cronograma" />
+  </EntityType>
+  <EntityType Name="DetalleGasto">
+    <Key>
+      <PropertyRef Name="DetalleGastoId" />
+    </Key>
+    <Property Name="DetalleGastoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Concepto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GastoId" Type="Int32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Pagado" Type="Boolean" Nullable="false" />
+    <Property Name="Ordinario" Type="Boolean" Nullable="false" />
+    <Property Name="Detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Orden" Type="Int32" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_DetalleGasto_Gasto" FromRole="DetalleGasto" ToRole="Gasto" />
+  </EntityType>
+  <EntityType Name="DetalleIngreso">
+    <Key>
+      <PropertyRef Name="DetalleIngresoId" />
+    </Key>
+    <Property Name="DetalleIngresoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Concepto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IngresoId" Type="Int32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Pagado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Ingreso" Relationship="Self.FK_DetalleIngreso_Ingreso" FromRole="DetalleIngreso" ToRole="Ingreso" />
+  </EntityType>
+  <EntityType Name="DetalleMensualidad">
+    <Key>
+      <PropertyRef Name="DetalleMensualidadId" />
+    </Key>
+    <Property Name="DetalleMensualidadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Essalud" Type="Boolean" Nullable="false" />
+    <Property Name="CTS" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Trabajador" Relationship="Self.FK_Trabajador_DetalleMensualidad" FromRole="DetalleMensualidad" ToRole="Trabajador" />
+  </EntityType>
+  <EntityType Name="DetalleQuincena">
+    <Key>
+      <PropertyRef Name="DetalleQuincenaId" />
+    </Key>
+    <Property Name="DetalleQuincenaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BonoPorMovilidad" Type="Boolean" Nullable="false" />
+    <Property Name="Bonificacion" Type="Boolean" Nullable="false" />
+    <Property Name="TotalQuincena" Type="Boolean" Nullable="false" />
+    <Property Name="Seguro" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Trabajador" Relationship="Self.FK_Trabajador_DetalleQuincena" FromRole="DetalleQuincena" ToRole="Trabajador" />
+  </EntityType>
+  <EntityType Name="Edificio">
+    <Key>
+      <PropertyRef Name="EdificioId" />
+    </Key>
+    <Property Name="EdificioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Acronimo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Referencia" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UDepartamentoId" Type="Int32" />
+    <Property Name="NroDepartamentos" Type="Int32" />
+    <Property Name="UProvinciaId" Type="Int32" />
+    <Property Name="UDistritoId" Type="Int32" />
+    <Property Name="MontoCuota" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="FactorAreaComun" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="FactorAlcantarillado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="FactorCargoFijo" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Representante" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Identificador" Type="Int32" Nullable="false" />
+    <Property Name="CantidadReporte" Type="Int32" Nullable="false" />
+    <Property Name="PMora" Type="Decimal" Precision="18" Scale="8" />
+    <Property Name="NroCuenta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NormasConvivencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SaldoAcumulado" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TipoMora" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="DiaEmisionCuota" Type="Int32" Nullable="false" />
+    <Property Name="DesfaseRecibos" Type="Int32" />
+    <Property Name="EmailEncargado" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SaldoAnteriorHistorico" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Firma" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="NombreEncargado" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PresupuestoMensual" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NombrePago" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MensajeMora" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TipoInmuebleId" Type="Int32" />
+    <Property Name="ReciboUnidadTiempoId" Type="Int32" />
+    <Property Name="DiaMora" Type="Int32" />
+    <Property Name="Orden" Type="Int32" />
+    <Property Name="SaldoAnteriorUnidadTiempo" Type="Int32" />
+    <NavigationProperty Name="ArchivoCorrecionEdificio" Relationship="Self.FK_ArchivoCorrecionEdificio_Edificio" FromRole="Edificio" ToRole="ArchivoCorrecionEdificio" />
+    <NavigationProperty Name="ArchivoTrabajador" Relationship="Self.FK_ArchivoTrabajador_Edificio" FromRole="Edificio" ToRole="ArchivoTrabajador" />
+    <NavigationProperty Name="BalanceUnidadTiempoEdificio" Relationship="Self.FK_BalanceUnidadTiempoEdificio_Edificio" FromRole="Edificio" ToRole="BalanceUnidadTiempoEdificio" />
+    <NavigationProperty Name="Cronograma" Relationship="Self.FK_Cronograma_Edificio" FromRole="Edificio" ToRole="Cronograma" />
+    <NavigationProperty Name="CuotaComun" Relationship="Self.FK_CuotaComun_Edificio" FromRole="Edificio" ToRole="CuotaComun" />
+    <NavigationProperty Name="DatoEdificio" Relationship="Self.FK_DatoEdificio_Edificio" FromRole="Edificio" ToRole="DatoEdificio" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_Departamento_Edificio" FromRole="Edificio" ToRole="Departamento" />
+    <NavigationProperty Name="TipoInmueble" Relationship="Self.FK_Edificio_TipoInmueble" FromRole="Edificio" ToRole="TipoInmueble" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_Edificio_UnidadTiempo" FromRole="Edificio" ToRole="UnidadTiempo" />
+    <NavigationProperty Name="EmailValidacion" Relationship="Self.FK_EmailValidacion_Edificio" FromRole="Edificio" ToRole="EmailValidacion" />
+    <NavigationProperty Name="EstadoCuentaBancario" Relationship="Self.FK_EstadoCuentaBancario_Edificio" FromRole="Edificio" ToRole="EstadoCuentaBancario" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_Gasto_Edificio" FromRole="Edificio" ToRole="Gasto" />
+    <NavigationProperty Name="Ingreso" Relationship="Self.FK_Ingreso_Edificio" FromRole="Edificio" ToRole="Ingreso" />
+    <NavigationProperty Name="Inspeccion" Relationship="Self.FK_Inspeccion_Edificio" FromRole="Edificio" ToRole="Inspeccion" />
+    <NavigationProperty Name="ItemActa" Relationship="Self.FK_ItemActa_Edificio" FromRole="Edificio" ToRole="ItemActa" />
+    <NavigationProperty Name="MenuPropietarioEdificio" Relationship="Self.FK_MenuPropietarioEdificio_Edificio" FromRole="Edificio" ToRole="MenuPropietarioEdificio" />
+    <NavigationProperty Name="Noticia" Relationship="Self.FK_Noticia_Edificio" FromRole="Edificio" ToRole="Noticia" />
+    <NavigationProperty Name="PermisoEdificio" Relationship="Self.FK_PermisoEdificio_Edificio" FromRole="Edificio" ToRole="PermisoEdificio" />
+    <NavigationProperty Name="PlanillaR" Relationship="Self.FK_PlanillaR_Edificio" FromRole="Edificio" ToRole="PlanillaR" />
+    <NavigationProperty Name="ReciboMes" Relationship="Self.FK_ReciboMes_Edificio" FromRole="Edificio" ToRole="ReciboMes" />
+    <NavigationProperty Name="ReporteEdificioUnidadTiempo" Relationship="Self.FK_ReporteEdificioUnidadTiempo_Edificio" FromRole="Edificio" ToRole="ReporteEdificioUnidadTiempo" />
+    <NavigationProperty Name="Trabajador" Relationship="Self.FK_Trabajador_Edificio" FromRole="Edificio" ToRole="Trabajador" />
+    <NavigationProperty Name="Visita" Relationship="Self.FK_Visita_Edificio" FromRole="Edificio" ToRole="Visita" />
+  </EntityType>
+  <EntityType Name="EmailValidacion">
+    <Key>
+      <PropertyRef Name="EmailValidacionId" />
+    </Key>
+    <Property Name="EmailValidacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Destinatarios" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CopiaCarbon" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Asunto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CopiaOculta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_EmailValidacion_Edificio" FromRole="EmailValidacion" ToRole="Edificio" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_EmailValidacion_Usuario" FromRole="EmailValidacion" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="EstadoCuentaBancario">
+    <Key>
+      <PropertyRef Name="EstadoCuentaBancarioId" />
+    </Key>
+    <Property Name="EstadoCuentaBancarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_EstadoCuentaBancario_Edificio" FromRole="EstadoCuentaBancario" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_EstadoCuentaBancario_UnidadTiempo" FromRole="EstadoCuentaBancario" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="Gasto">
+    <Key>
+      <PropertyRef Name="GastoId" />
+    </Key>
+    <Property Name="GastoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SaldoMes" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CuentasPorCobrarO" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CuentasPorCobrarE" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="ArchivoGasto" Relationship="Self.FK_ArchivoGasto_Gasto" FromRole="Gasto" ToRole="ArchivoGasto" />
+    <NavigationProperty Name="DetalleGasto" Relationship="Self.FK_DetalleGasto_Gasto" FromRole="Gasto" ToRole="DetalleGasto" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Gasto_Edificio" FromRole="Gasto" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_Gasto_UnidadTiempo" FromRole="Gasto" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="GastoCuotaComun">
+    <Key>
+      <PropertyRef Name="GastoCuotaComunId" />
+    </Key>
+    <Property Name="GastoCuotaComunId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CuotaComunId" Type="Int32" Nullable="false" />
+    <Property Name="Concepto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CuotaComun" Relationship="Self.FK_GastoCuotaComun_CuotaComun" FromRole="GastoCuotaComun" ToRole="CuotaComun" />
+  </EntityType>
+  <EntityType Name="Ingreso">
+    <Key>
+      <PropertyRef Name="IngresoId" />
+    </Key>
+    <Property Name="IngresoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SaldoMes" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ArchivoIngreso" Relationship="Self.FK_ArchivoIngreso_Ingreso" FromRole="Ingreso" ToRole="ArchivoIngreso" />
+    <NavigationProperty Name="DetalleIngreso" Relationship="Self.FK_DetalleIngreso_Ingreso" FromRole="Ingreso" ToRole="DetalleIngreso" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Ingreso_Edificio" FromRole="Ingreso" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_Ingreso_UnidadTiempo" FromRole="Ingreso" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="Inquilino">
+    <Key>
+      <PropertyRef Name="InquilinoId" />
+    </Key>
+    <Property Name="InquilinoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropietarioId" Type="Int32" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="450" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Dni" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RUC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="RazonSocial" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="MostrarRUC" Type="Boolean" />
+    <NavigationProperty Name="Propietario" Relationship="Self.FK_Inquilino_Propietario" FromRole="Inquilino" ToRole="Propietario" />
+    <NavigationProperty Name="PropietarioInquilino" Relationship="Self.FK_PropietarioInquilino_Inquilino" FromRole="Inquilino" ToRole="PropietarioInquilino" />
+  </EntityType>
+  <EntityType Name="Inspeccion">
+    <Key>
+      <PropertyRef Name="InspeccionId" />
+    </Key>
+    <Property Name="InspeccionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Pregunta1" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta2" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta3" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta4" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta5" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta6" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta7" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta8" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta9" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta10" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta11" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta12" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta13" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta14" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta15" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta16" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta17" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta18" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta19" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta20" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta21" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta22" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta23" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta24" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta25" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta26" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta27" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta28" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta29" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta30" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta31" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta32" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta33" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta34" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta35" Type="Int32" Nullable="false" />
+    <Property Name="Pregunta36" Type="Int32" Nullable="false" />
+    <Property Name="Enunciado1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado2" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado3" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado4" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado5" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado6" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado7" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado8" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Enunciado9" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Inspeccion_Edificio" FromRole="Inspeccion" ToRole="Edificio" />
+  </EntityType>
+  <EntityType Name="ItemActa">
+    <Key>
+      <PropertyRef Name="ItemActaId" />
+    </Key>
+    <Property Name="ItemActaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Ruta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_ItemActa_Edificio" FromRole="ItemActa" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_ItemActa_UnidadTiempo" FromRole="ItemActa" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="Leyenda">
+    <Key>
+      <PropertyRef Name="LeyendaId" />
+    </Key>
+    <Property Name="LeyendaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Numero" Type="Int32" Nullable="false" />
+    <Property Name="BalanceUnidadTiempoEdificioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BalanceUnidadTiempoEdificio" Relationship="Self.FK_Leyenda_BalanceUnidadTiempoEdificio" FromRole="Leyenda" ToRole="BalanceUnidadTiempoEdificio" />
+  </EntityType>
+  <EntityType Name="MenuPropietarioEdificio">
+    <Key>
+      <PropertyRef Name="MenuPropietarioEdificioId" />
+    </Key>
+    <Property Name="MenuPropietarioEdificioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Documento" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Icono" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_MenuPropietarioEdificio_Edificio" FromRole="MenuPropietarioEdificio" ToRole="Edificio" />
+  </EntityType>
+  <EntityType Name="NivelEstado">
+    <Key>
+      <PropertyRef Name="NivelEstadoId" />
+    </Key>
+    <Property Name="NivelEstadoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Noticia">
+    <Key>
+      <PropertyRef Name="NoticiaId" />
+    </Key>
+    <Property Name="NoticiaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titulo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sumilla" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="Detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Noticia_Edificio" FromRole="Noticia" ToRole="Edificio" />
+  </EntityType>
+  <EntityType Name="PermisoEdificio">
+    <Key>
+      <PropertyRef Name="PermisoEdificioId" />
+    </Key>
+    <Property Name="PermisoEdificioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_PermisoEdificio_Edificio" FromRole="PermisoEdificio" ToRole="Edificio" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_PermisoEdificio_Usuario" FromRole="PermisoEdificio" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Planilla">
+    <Key>
+      <PropertyRef Name="PlanillaId" />
+    </Key>
+    <Property Name="PlanillaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TrabajadorId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="HorasExtras" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Feriado" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AdelantoQuincena" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SegundaQuincena" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ESSALUD" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="AporteObligatorio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="PrimaSeguro" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ComisionAFP" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="TotalDescuentos" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SueldoTotalNeto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="SegundaQuincenaNeto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="CTSMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ReemplazoVacaciones" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="HorasExtras25" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="HorasExtras35" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MontoFeriados" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DescuenoAusencia" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AumentoReemplazo" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalMes" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MontoHorasExtras25" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MontoHorasExtras35" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GratificacionesMes" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Trabajador" Relationship="Self.FK_Planilla_Trabajador" FromRole="Planilla" ToRole="Trabajador" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_Planilla_UnidadTiempo" FromRole="Planilla" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="PlanillaQuincena">
+    <Key>
+      <PropertyRef Name="PlanillaQuincenaId" />
+    </Key>
+    <Property Name="PlanillaQuincenaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BonoPorMovilidad" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Bonificacion" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalQuincena" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Seguro" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="TrabajadorId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Trabajador" Relationship="Self.FK_PlanillaQuincena_Trabajador" FromRole="PlanillaQuincena" ToRole="Trabajador" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_PlanillaQuincena_UnidadTiempo" FromRole="PlanillaQuincena" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="PlanillaR">
+    <Key>
+      <PropertyRef Name="PlanillaRId" />
+    </Key>
+    <Property Name="PlanillaRId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RutaExcel" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RutaPDF" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_PlanillaR_Edificio" FromRole="PlanillaR" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_PlanillaR_UnidadTiempo" FromRole="PlanillaR" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="Propietario">
+    <Key>
+      <PropertyRef Name="PropietarioId" />
+    </Key>
+    <Property Name="PropietarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TipoDocumento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="NroDocumento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Nombres" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ApellidoPaterno" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidoMaterno" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Poseedor" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ParentescoTitular" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RazonSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="RUC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="MostrarRUC" Type="Boolean" />
+    <Property Name="Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_Propietario_Departamento" FromRole="Propietario" ToRole="Departamento" />
+    <NavigationProperty Name="DepartamentoHistorico" Relationship="Self.FK_DepartamentoHistorico_Propietario" FromRole="Propietario" ToRole="DepartamentoHistorico" />
+    <NavigationProperty Name="DepartamentoPropietario" Relationship="Self.FK_DepartamentoPropietario_Propietario" FromRole="Propietario" ToRole="DepartamentoPropietario" />
+    <NavigationProperty Name="Inquilino" Relationship="Self.FK_Inquilino_Propietario" FromRole="Propietario" ToRole="Inquilino" />
+    <NavigationProperty Name="PropietarioInquilino" Relationship="Self.FK_PropietarioInquilino_Propietario" FromRole="Propietario" ToRole="PropietarioInquilino" />
+  </EntityType>
+  <EntityType Name="PropietarioInquilino">
+    <Key>
+      <PropertyRef Name="PropietarioInquilinoId" />
+    </Key>
+    <Property Name="PropietarioInquilinoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropietarioId" Type="Int32" Nullable="false" />
+    <Property Name="InquilinoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inquilino" Relationship="Self.FK_PropietarioInquilino_Inquilino" FromRole="PropietarioInquilino" ToRole="Inquilino" />
+    <NavigationProperty Name="Propietario" Relationship="Self.FK_PropietarioInquilino_Propietario" FromRole="PropietarioInquilino" ToRole="Propietario" />
+  </EntityType>
+  <EntityType Name="ReciboMes">
+    <Key>
+      <PropertyRef Name="ReciboMesId" />
+    </Key>
+    <Property Name="ReciboMesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_ReciboMes_Edificio" FromRole="ReciboMes" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_ReciboMes_UnidadTiempo" FromRole="ReciboMes" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="ReporteEdificioUnidadTiempo">
+    <Key>
+      <PropertyRef Name="ReporteEdificioUnidadTiempoId" />
+    </Key>
+    <Property Name="ReporteEdificioUnidadTiempoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ruta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_ReporteEdificioUnidadTiempo_Edificio" FromRole="ReporteEdificioUnidadTiempo" ToRole="Edificio" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_ReporteEdificioUnidadTiempo_UnidadTiempo" FromRole="ReporteEdificioUnidadTiempo" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TipoDescuento">
+    <Key>
+      <PropertyRef Name="TipoDescuentoId" />
+    </Key>
+    <Property Name="TipoDescuentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Detalle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Acronimo" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="ComisionAFP" Relationship="Self.FK_ComisionAFP_TipoDescuento" FromRole="TipoDescuento" ToRole="ComisionAFP" />
+  </EntityType>
+  <EntityType Name="TipoInmueble">
+    <Key>
+      <PropertyRef Name="TipoInmuebleId" />
+    </Key>
+    <Property Name="TipoInmuebleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Acronimo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_Departamento_TipoInmueble" FromRole="TipoInmueble" ToRole="Departamento" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Edificio_TipoInmueble" FromRole="TipoInmueble" ToRole="Edificio" />
+  </EntityType>
+  <EntityType Name="Trabajador">
+    <Key>
+      <PropertyRef Name="TrabajadorId" />
+    </Key>
+    <Property Name="TrabajadorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombres" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DNI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="AntecedentesPoliciales" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="PartidaNacimiento" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Cargo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUSSP" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Comision" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FechaIngreso" Type="DateTime" Precision="0" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <Property Name="Modalidad" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SueldoBase" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AFPId" Type="Int32" />
+    <Property Name="MontoHoras25" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MontoHoras35" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MontoFeriado" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AdelantoQuincena" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ComisionFlujo" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="DetalleQuincenaId" Type="Int32" />
+    <Property Name="DetalleMensualidadId" Type="Int32" />
+    <NavigationProperty Name="AFP" Relationship="Self.FK_Trabajador_AFP" FromRole="Trabajador" ToRole="AFP" />
+    <NavigationProperty Name="DetalleMensualidad" Relationship="Self.FK_Trabajador_DetalleMensualidad" FromRole="Trabajador" ToRole="DetalleMensualidad" />
+    <NavigationProperty Name="DetalleQuincena" Relationship="Self.FK_Trabajador_DetalleQuincena" FromRole="Trabajador" ToRole="DetalleQuincena" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Trabajador_Edificio" FromRole="Trabajador" ToRole="Edificio" />
+    <NavigationProperty Name="Planilla" Relationship="Self.FK_Planilla_Trabajador" FromRole="Trabajador" ToRole="Planilla" />
+    <NavigationProperty Name="PlanillaQuincena" Relationship="Self.FK_PlanillaQuincena_Trabajador" FromRole="Trabajador" ToRole="PlanillaQuincena" />
+  </EntityType>
+  <EntityType Name="Ubigeo">
+    <Key>
+      <PropertyRef Name="UbigeoId" />
+    </Key>
+    <Property Name="UbigeoId" Type="Int32" Nullable="false" />
+    <Property Name="Departamento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Provincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Distrito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UDepartamento">
+    <Key>
+      <PropertyRef Name="UDepartamentoId" />
+    </Key>
+    <Property Name="UDepartamentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="UProvincia" Relationship="Self.FK_UProvincia_UDepartamento" FromRole="UDepartamento" ToRole="UProvincia" />
+  </EntityType>
+  <EntityType Name="UDistrito">
+    <Key>
+      <PropertyRef Name="UDistritoId" />
+    </Key>
+    <Property Name="UDistritoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UProvinciaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UProvincia" Relationship="Self.FK_UDistrito_UProvincia" FromRole="UDistrito" ToRole="UProvincia" />
+  </EntityType>
+  <EntityType Name="UnidadTiempo">
+    <Key>
+      <PropertyRef Name="UnidadTiempoId" />
+    </Key>
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Anio" Type="Int32" Nullable="false" />
+    <Property Name="Mes" Type="Int32" Nullable="false" />
+    <Property Name="EsActivo" Type="Boolean" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Orden" Type="Int32" />
+    <NavigationProperty Name="ArchivoCorrecionEdificio" Relationship="Self.FK_ArchivoCorrecionEdificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ArchivoCorrecionEdificio" />
+    <NavigationProperty Name="ArchivoTrabajador" Relationship="Self.FK_ArchivoTrabajador_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ArchivoTrabajador" />
+    <NavigationProperty Name="BalanceUnidadTiempoEdificio" Relationship="Self.FK_BalanceUnidadTiempoEdificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="BalanceUnidadTiempoEdificio" />
+    <NavigationProperty Name="Cuota" Relationship="Self.FK_Cuota_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Cuota" />
+    <NavigationProperty Name="CuotaComun" Relationship="Self.FK_CuotaComun_UnidadTiempo" FromRole="UnidadTiempo" ToRole="CuotaComun" />
+    <NavigationProperty Name="DatoEdificio" Relationship="Self.FK_DatoEdificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="DatoEdificio" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Edificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Edificio" />
+    <NavigationProperty Name="EstadoCuentaBancario" Relationship="Self.FK_EstadoCuentaBancario_UnidadTiempo" FromRole="UnidadTiempo" ToRole="EstadoCuentaBancario" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_Gasto_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Gasto" />
+    <NavigationProperty Name="Ingreso" Relationship="Self.FK_Ingreso_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Ingreso" />
+    <NavigationProperty Name="ItemActa" Relationship="Self.FK_ItemActa_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ItemActa" />
+    <NavigationProperty Name="Planilla" Relationship="Self.FK_Planilla_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Planilla" />
+    <NavigationProperty Name="PlanillaQuincena" Relationship="Self.FK_PlanillaQuincena_UnidadTiempo" FromRole="UnidadTiempo" ToRole="PlanillaQuincena" />
+    <NavigationProperty Name="PlanillaR" Relationship="Self.FK_PlanillaR_UnidadTiempo" FromRole="UnidadTiempo" ToRole="PlanillaR" />
+    <NavigationProperty Name="ReciboMes" Relationship="Self.FK_ReciboMes_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ReciboMes" />
+    <NavigationProperty Name="ReporteEdificioUnidadTiempo" Relationship="Self.FK_ReporteEdificioUnidadTiempo_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ReporteEdificioUnidadTiempo" />
+    <NavigationProperty Name="UnidadTiempoReciboDepartamento" Relationship="Self.FK_UnidadTiempoReciboDepartamento_UnidadTiempo" FromRole="UnidadTiempo" ToRole="UnidadTiempoReciboDepartamento" />
+  </EntityType>
+  <EntityType Name="UnidadTiempoReciboDepartamento">
+    <Key>
+      <PropertyRef Name="UnidadTiempoReciboDepartamentoId" />
+    </Key>
+    <Property Name="UnidadTiempoReciboDepartamentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+    <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+    <Property Name="NumeroRecibo" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_UnidadTiempoReciboDepartamento_Departamento" FromRole="UnidadTiempoReciboDepartamento" ToRole="Departamento" />
+    <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_UnidadTiempoReciboDepartamento_UnidadTiempo" FromRole="UnidadTiempoReciboDepartamento" ToRole="UnidadTiempo" />
+  </EntityType>
+  <EntityType Name="UProvincia">
+    <Key>
+      <PropertyRef Name="UProvinciaId" />
+    </Key>
+    <Property Name="UProvinciaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UDepartamentoId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UDepartamento" Relationship="Self.FK_UProvincia_UDepartamento" FromRole="UProvincia" ToRole="UDepartamento" />
+    <NavigationProperty Name="UDistrito" Relationship="Self.FK_UDistrito_UProvincia" FromRole="UProvincia" ToRole="UDistrito" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Codigo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Rol" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DepartamentoId" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="NombreRemitente" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Firma" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="EsAdmin" Type="Boolean" />
+    <NavigationProperty Name="Anuncio" Relationship="Self.FK_Anuncio_Usuario" FromRole="Usuario" ToRole="Anuncio" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_Usuario_Departamento" FromRole="Usuario" ToRole="Departamento" />
+    <NavigationProperty Name="EmailValidacion" Relationship="Self.FK_EmailValidacion_Usuario" FromRole="Usuario" ToRole="EmailValidacion" />
+    <NavigationProperty Name="PermisoEdificio" Relationship="Self.FK_PermisoEdificio_Usuario" FromRole="Usuario" ToRole="PermisoEdificio" />
+    <NavigationProperty Name="Visita" Relationship="Self.FK_Visita_Usuario" FromRole="Usuario" ToRole="Visita" />
+  </EntityType>
+  <EntityType Name="Visita">
+    <Key>
+      <PropertyRef Name="VisitaId" />
+    </Key>
+    <Property Name="VisitaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+    <Property Name="EdificioId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Departamento" Relationship="Self.FK_Visita_Departamento" FromRole="Visita" ToRole="Departamento" />
+    <NavigationProperty Name="Edificio" Relationship="Self.FK_Visita_Edificio" FromRole="Visita" ToRole="Edificio" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Visita_Usuario" FromRole="Visita" ToRole="Usuario" />
+  </EntityType>
+  <Association Name="FK_ComisionAFP_AFP">
+    <End Role="AFP" Type="Self.AFP" Multiplicity="1" />
+    <End Role="ComisionAFP" Type="Self.ComisionAFP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFP">
+        <PropertyRef Name="AFPId" />
+      </Principal>
+      <Dependent Role="ComisionAFP">
+        <PropertyRef Name="AFPId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trabajador_AFP">
+    <End Role="AFP" Type="Self.AFP" Multiplicity="0..1" />
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AFP">
+        <PropertyRef Name="AFPId" />
+      </Principal>
+      <Dependent Role="Trabajador">
+        <PropertyRef Name="AFPId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Anuncio_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Anuncio" Type="Self.Anuncio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Anuncio">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivoCorrecionEdificio_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="ArchivoCorrecionEdificio" Type="Self.ArchivoCorrecionEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="ArchivoCorrecionEdificio">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivoCorrecionEdificio_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="ArchivoCorrecionEdificio" Type="Self.ArchivoCorrecionEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="ArchivoCorrecionEdificio">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivoGasto_Gasto">
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="1" />
+    <End Role="ArchivoGasto" Type="Self.ArchivoGasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gasto">
+        <PropertyRef Name="GastoId" />
+      </Principal>
+      <Dependent Role="ArchivoGasto">
+        <PropertyRef Name="GastoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivoIngreso_Ingreso">
+    <End Role="Ingreso" Type="Self.Ingreso" Multiplicity="1" />
+    <End Role="ArchivoIngreso" Type="Self.ArchivoIngreso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingreso">
+        <PropertyRef Name="IngresoId" />
+      </Principal>
+      <Dependent Role="ArchivoIngreso">
+        <PropertyRef Name="IngresoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivoTrabajador_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="ArchivoTrabajador" Type="Self.ArchivoTrabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="ArchivoTrabajador">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArchivoTrabajador_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="ArchivoTrabajador" Type="Self.ArchivoTrabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="ArchivoTrabajador">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BalanceUnidadTiempoEdificio_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="BalanceUnidadTiempoEdificio" Type="Self.BalanceUnidadTiempoEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="BalanceUnidadTiempoEdificio">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BalanceUnidadTiempoEdificio_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="BalanceUnidadTiempoEdificio" Type="Self.BalanceUnidadTiempoEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="BalanceUnidadTiempoEdificio">
+        <PropertyRef Name="UnidadDeTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Leyenda_BalanceUnidadTiempoEdificio">
+    <End Role="BalanceUnidadTiempoEdificio" Type="Self.BalanceUnidadTiempoEdificio" Multiplicity="1" />
+    <End Role="Leyenda" Type="Self.Leyenda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BalanceUnidadTiempoEdificio">
+        <PropertyRef Name="BalanceUnidadTiempoEdificioId" />
+      </Principal>
+      <Dependent Role="Leyenda">
+        <PropertyRef Name="BalanceUnidadTiempoEdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComisionAFP_TipoDescuento">
+    <End Role="TipoDescuento" Type="Self.TipoDescuento" Multiplicity="1" />
+    <End Role="ComisionAFP" Type="Self.ComisionAFP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoDescuento">
+        <PropertyRef Name="TipoDescuentoId" />
+      </Principal>
+      <Dependent Role="ComisionAFP">
+        <PropertyRef Name="TipoDescuentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cronograma_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Cronograma" Type="Self.Cronograma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Cronograma">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleCronograma_Cronograma">
+    <End Role="Cronograma" Type="Self.Cronograma" Multiplicity="1" />
+    <End Role="DetalleCronograma" Type="Self.DetalleCronograma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cronograma">
+        <PropertyRef Name="CronogramaId" />
+      </Principal>
+      <Dependent Role="DetalleCronograma">
+        <PropertyRef Name="CronogramaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cuota_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="Cuota">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cuota_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="Cuota">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CuotaComun_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="CuotaComun" Type="Self.CuotaComun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="CuotaComun">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CuotaComun_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="CuotaComun" Type="Self.CuotaComun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="CuotaComun">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GastoCuotaComun_CuotaComun">
+    <End Role="CuotaComun" Type="Self.CuotaComun" Multiplicity="1" />
+    <End Role="GastoCuotaComun" Type="Self.GastoCuotaComun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CuotaComun">
+        <PropertyRef Name="CuotaComunId" />
+      </Principal>
+      <Dependent Role="GastoCuotaComun">
+        <PropertyRef Name="CuotaComunId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DatoEdificio_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="DatoEdificio" Type="Self.DatoEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="DatoEdificio">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DatoEdificio_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="0..1" />
+    <End Role="DatoEdificio" Type="Self.DatoEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="DatoEdificio">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Departamento_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Departamento">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Departamento_TipoInmueble">
+    <End Role="TipoInmueble" Type="Self.TipoInmueble" Multiplicity="0..1" />
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoInmueble">
+        <PropertyRef Name="TipoInmuebleId" />
+      </Principal>
+      <Dependent Role="Departamento">
+        <PropertyRef Name="TipoInmuebleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DepartamentoHistorico_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="DepartamentoHistorico" Type="Self.DepartamentoHistorico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="DepartamentoHistorico">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DepartamentoPropietario_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="DepartamentoPropietario" Type="Self.DepartamentoPropietario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="DepartamentoPropietario">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Propietario_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Propietario" Type="Self.Propietario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="Propietario">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnidadTiempoReciboDepartamento_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="UnidadTiempoReciboDepartamento" Type="Self.UnidadTiempoReciboDepartamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="UnidadTiempoReciboDepartamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="0..1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visita_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Visita" Type="Self.Visita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="Visita">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DepartamentoHistorico_Propietario">
+    <End Role="Propietario" Type="Self.Propietario" Multiplicity="1" />
+    <End Role="DepartamentoHistorico" Type="Self.DepartamentoHistorico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Propietario">
+        <PropertyRef Name="PropietarioId" />
+      </Principal>
+      <Dependent Role="DepartamentoHistorico">
+        <PropertyRef Name="PropietarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DepartamentoPropietario_Propietario">
+    <End Role="Propietario" Type="Self.Propietario" Multiplicity="1" />
+    <End Role="DepartamentoPropietario" Type="Self.DepartamentoPropietario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Propietario">
+        <PropertyRef Name="PropietarioId" />
+      </Principal>
+      <Dependent Role="DepartamentoPropietario">
+        <PropertyRef Name="PropietarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleGasto_Gasto">
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="1" />
+    <End Role="DetalleGasto" Type="Self.DetalleGasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gasto">
+        <PropertyRef Name="GastoId" />
+      </Principal>
+      <Dependent Role="DetalleGasto">
+        <PropertyRef Name="GastoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleIngreso_Ingreso">
+    <End Role="Ingreso" Type="Self.Ingreso" Multiplicity="1" />
+    <End Role="DetalleIngreso" Type="Self.DetalleIngreso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingreso">
+        <PropertyRef Name="IngresoId" />
+      </Principal>
+      <Dependent Role="DetalleIngreso">
+        <PropertyRef Name="IngresoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trabajador_DetalleMensualidad">
+    <End Role="DetalleMensualidad" Type="Self.DetalleMensualidad" Multiplicity="0..1" />
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DetalleMensualidad">
+        <PropertyRef Name="DetalleMensualidadId" />
+      </Principal>
+      <Dependent Role="Trabajador">
+        <PropertyRef Name="DetalleMensualidadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trabajador_DetalleQuincena">
+    <End Role="DetalleQuincena" Type="Self.DetalleQuincena" Multiplicity="0..1" />
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DetalleQuincena">
+        <PropertyRef Name="DetalleQuincenaId" />
+      </Principal>
+      <Dependent Role="Trabajador">
+        <PropertyRef Name="DetalleQuincenaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Edificio_TipoInmueble">
+    <End Role="TipoInmueble" Type="Self.TipoInmueble" Multiplicity="0..1" />
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoInmueble">
+        <PropertyRef Name="TipoInmuebleId" />
+      </Principal>
+      <Dependent Role="Edificio">
+        <PropertyRef Name="TipoInmuebleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Edificio_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="0..1" />
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="Edificio">
+        <PropertyRef Name="ReciboUnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailValidacion_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="EmailValidacion" Type="Self.EmailValidacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="EmailValidacion">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadoCuentaBancario_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="EstadoCuentaBancario" Type="Self.EstadoCuentaBancario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="EstadoCuentaBancario">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Gasto_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Gasto">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ingreso_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Ingreso" Type="Self.Ingreso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Ingreso">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inspeccion_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Inspeccion">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemActa_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="ItemActa" Type="Self.ItemActa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="ItemActa">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuPropietarioEdificio_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="MenuPropietarioEdificio" Type="Self.MenuPropietarioEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="MenuPropietarioEdificio">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Noticia_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Noticia" Type="Self.Noticia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Noticia">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PermisoEdificio_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="PermisoEdificio" Type="Self.PermisoEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="PermisoEdificio">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanillaR_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="PlanillaR" Type="Self.PlanillaR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="PlanillaR">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReciboMes_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="ReciboMes" Type="Self.ReciboMes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="ReciboMes">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReporteEdificioUnidadTiempo_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="ReporteEdificioUnidadTiempo" Type="Self.ReporteEdificioUnidadTiempo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="ReporteEdificioUnidadTiempo">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trabajador_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Trabajador">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visita_Edificio">
+    <End Role="Edificio" Type="Self.Edificio" Multiplicity="1" />
+    <End Role="Visita" Type="Self.Visita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Edificio">
+        <PropertyRef Name="EdificioId" />
+      </Principal>
+      <Dependent Role="Visita">
+        <PropertyRef Name="EdificioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailValidacion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="EmailValidacion" Type="Self.EmailValidacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="EmailValidacion">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadoCuentaBancario_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="EstadoCuentaBancario" Type="Self.EstadoCuentaBancario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="EstadoCuentaBancario">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Gasto_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="Gasto">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ingreso_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="Ingreso" Type="Self.Ingreso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="Ingreso">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inquilino_Propietario">
+    <End Role="Propietario" Type="Self.Propietario" Multiplicity="1" />
+    <End Role="Inquilino" Type="Self.Inquilino" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Propietario">
+        <PropertyRef Name="PropietarioId" />
+      </Principal>
+      <Dependent Role="Inquilino">
+        <PropertyRef Name="PropietarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropietarioInquilino_Inquilino">
+    <End Role="Inquilino" Type="Self.Inquilino" Multiplicity="1" />
+    <End Role="PropietarioInquilino" Type="Self.PropietarioInquilino" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inquilino">
+        <PropertyRef Name="InquilinoId" />
+      </Principal>
+      <Dependent Role="PropietarioInquilino">
+        <PropertyRef Name="InquilinoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemActa_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="ItemActa" Type="Self.ItemActa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="ItemActa">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PermisoEdificio_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="PermisoEdificio" Type="Self.PermisoEdificio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="PermisoEdificio">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Planilla_Trabajador">
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="1" />
+    <End Role="Planilla" Type="Self.Planilla" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trabajador">
+        <PropertyRef Name="TrabajadorId" />
+      </Principal>
+      <Dependent Role="Planilla">
+        <PropertyRef Name="TrabajadorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Planilla_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="Planilla" Type="Self.Planilla" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="Planilla">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanillaQuincena_Trabajador">
+    <End Role="Trabajador" Type="Self.Trabajador" Multiplicity="1" />
+    <End Role="PlanillaQuincena" Type="Self.PlanillaQuincena" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trabajador">
+        <PropertyRef Name="TrabajadorId" />
+      </Principal>
+      <Dependent Role="PlanillaQuincena">
+        <PropertyRef Name="TrabajadorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanillaQuincena_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="PlanillaQuincena" Type="Self.PlanillaQuincena" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="PlanillaQuincena">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanillaR_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="PlanillaR" Type="Self.PlanillaR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="PlanillaR">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropietarioInquilino_Propietario">
+    <End Role="Propietario" Type="Self.Propietario" Multiplicity="1" />
+    <End Role="PropietarioInquilino" Type="Self.PropietarioInquilino" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Propietario">
+        <PropertyRef Name="PropietarioId" />
+      </Principal>
+      <Dependent Role="PropietarioInquilino">
+        <PropertyRef Name="PropietarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReciboMes_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="ReciboMes" Type="Self.ReciboMes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="ReciboMes">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReporteEdificioUnidadTiempo_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="ReporteEdificioUnidadTiempo" Type="Self.ReporteEdificioUnidadTiempo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="ReporteEdificioUnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UProvincia_UDepartamento">
+    <End Role="UDepartamento" Type="Self.UDepartamento" Multiplicity="1" />
+    <End Role="UProvincia" Type="Self.UProvincia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UDepartamento">
+        <PropertyRef Name="UDepartamentoId" />
+      </Principal>
+      <Dependent Role="UProvincia">
+        <PropertyRef Name="UDepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UDistrito_UProvincia">
+    <End Role="UProvincia" Type="Self.UProvincia" Multiplicity="1" />
+    <End Role="UDistrito" Type="Self.UDistrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UProvincia">
+        <PropertyRef Name="UProvinciaId" />
+      </Principal>
+      <Dependent Role="UDistrito">
+        <PropertyRef Name="UProvinciaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnidadTiempoReciboDepartamento_UnidadTiempo">
+    <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
+    <End Role="UnidadTiempoReciboDepartamento" Type="Self.UnidadTiempoReciboDepartamento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadTiempo">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Principal>
+      <Dependent Role="UnidadTiempoReciboDepartamento">
+        <PropertyRef Name="UnidadTiempoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Visita_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Visita" Type="Self.Visita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Visita">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SIVEHEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AFP" EntityType="Self.AFP" />
+    <EntitySet Name="Anuncio" EntityType="Self.Anuncio" />
+    <EntitySet Name="ArchivoCorrecionEdificio" EntityType="Self.ArchivoCorrecionEdificio" />
+    <EntitySet Name="ArchivoGasto" EntityType="Self.ArchivoGasto" />
+    <EntitySet Name="ArchivoIngreso" EntityType="Self.ArchivoIngreso" />
+    <EntitySet Name="ArchivoTrabajador" EntityType="Self.ArchivoTrabajador" />
+    <EntitySet Name="BalanceUnidadTiempoEdificio" EntityType="Self.BalanceUnidadTiempoEdificio" />
+    <EntitySet Name="ComisionAFP" EntityType="Self.ComisionAFP" />
+    <EntitySet Name="Cronograma" EntityType="Self.Cronograma" />
+    <EntitySet Name="Cuota" EntityType="Self.Cuota" />
+    <EntitySet Name="CuotaComun" EntityType="Self.CuotaComun" />
+    <EntitySet Name="DatoEdificio" EntityType="Self.DatoEdificio" />
+    <EntitySet Name="Departamento" EntityType="Self.Departamento" />
+    <EntitySet Name="DepartamentoHistorico" EntityType="Self.DepartamentoHistorico" />
+    <EntitySet Name="DepartamentoPropietario" EntityType="Self.DepartamentoPropietario" />
+    <EntitySet Name="DetalleCronograma" EntityType="Self.DetalleCronograma" />
+    <EntitySet Name="DetalleGasto" EntityType="Self.DetalleGasto" />
+    <EntitySet Name="DetalleIngreso" EntityType="Self.DetalleIngreso" />
+    <EntitySet Name="DetalleMensualidad" EntityType="Self.DetalleMensualidad" />
+    <EntitySet Name="DetalleQuincena" EntityType="Self.DetalleQuincena" />
+    <EntitySet Name="Edificio" EntityType="Self.Edificio" />
+    <EntitySet Name="EmailValidacion" EntityType="Self.EmailValidacion" />
+    <EntitySet Name="EstadoCuentaBancario" EntityType="Self.EstadoCuentaBancario" />
+    <EntitySet Name="Gasto" EntityType="Self.Gasto" />
+    <EntitySet Name="GastoCuotaComun" EntityType="Self.GastoCuotaComun" />
+    <EntitySet Name="Ingreso" EntityType="Self.Ingreso" />
+    <EntitySet Name="Inquilino" EntityType="Self.Inquilino" />
+    <EntitySet Name="Inspeccion" EntityType="Self.Inspeccion" />
+    <EntitySet Name="ItemActa" EntityType="Self.ItemActa" />
+    <EntitySet Name="Leyenda" EntityType="Self.Leyenda" />
+    <EntitySet Name="MenuPropietarioEdificio" EntityType="Self.MenuPropietarioEdificio" />
+    <EntitySet Name="NivelEstado" EntityType="Self.NivelEstado" />
+    <EntitySet Name="Noticia" EntityType="Self.Noticia" />
+    <EntitySet Name="PermisoEdificio" EntityType="Self.PermisoEdificio" />
+    <EntitySet Name="Planilla" EntityType="Self.Planilla" />
+    <EntitySet Name="PlanillaQuincena" EntityType="Self.PlanillaQuincena" />
+    <EntitySet Name="PlanillaR" EntityType="Self.PlanillaR" />
+    <EntitySet Name="Propietario" EntityType="Self.Propietario" />
+    <EntitySet Name="PropietarioInquilino" EntityType="Self.PropietarioInquilino" />
+    <EntitySet Name="ReciboMes" EntityType="Self.ReciboMes" />
+    <EntitySet Name="ReporteEdificioUnidadTiempo" EntityType="Self.ReporteEdificioUnidadTiempo" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TipoDescuento" EntityType="Self.TipoDescuento" />
+    <EntitySet Name="TipoInmueble" EntityType="Self.TipoInmueble" />
+    <EntitySet Name="Trabajador" EntityType="Self.Trabajador" />
+    <EntitySet Name="Ubigeo" EntityType="Self.Ubigeo" />
+    <EntitySet Name="UDepartamento" EntityType="Self.UDepartamento" />
+    <EntitySet Name="UDistrito" EntityType="Self.UDistrito" />
+    <EntitySet Name="UnidadTiempo" EntityType="Self.UnidadTiempo" />
+    <EntitySet Name="UnidadTiempoReciboDepartamento" EntityType="Self.UnidadTiempoReciboDepartamento" />
+    <EntitySet Name="UProvincia" EntityType="Self.UProvincia" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <EntitySet Name="Visita" EntityType="Self.Visita" />
+    <AssociationSet Name="FK_ComisionAFP_AFP" Association="Self.FK_ComisionAFP_AFP">
+      <End Role="AFP" EntitySet="AFP" />
+      <End Role="ComisionAFP" EntitySet="ComisionAFP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trabajador_AFP" Association="Self.FK_Trabajador_AFP">
+      <End Role="AFP" EntitySet="AFP" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Anuncio_Usuario" Association="Self.FK_Anuncio_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Anuncio" EntitySet="Anuncio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivoCorrecionEdificio_Edificio" Association="Self.FK_ArchivoCorrecionEdificio_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="ArchivoCorrecionEdificio" EntitySet="ArchivoCorrecionEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivoCorrecionEdificio_UnidadTiempo" Association="Self.FK_ArchivoCorrecionEdificio_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="ArchivoCorrecionEdificio" EntitySet="ArchivoCorrecionEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivoGasto_Gasto" Association="Self.FK_ArchivoGasto_Gasto">
+      <End Role="Gasto" EntitySet="Gasto" />
+      <End Role="ArchivoGasto" EntitySet="ArchivoGasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivoIngreso_Ingreso" Association="Self.FK_ArchivoIngreso_Ingreso">
+      <End Role="Ingreso" EntitySet="Ingreso" />
+      <End Role="ArchivoIngreso" EntitySet="ArchivoIngreso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivoTrabajador_Edificio" Association="Self.FK_ArchivoTrabajador_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="ArchivoTrabajador" EntitySet="ArchivoTrabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArchivoTrabajador_UnidadTiempo" Association="Self.FK_ArchivoTrabajador_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="ArchivoTrabajador" EntitySet="ArchivoTrabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BalanceUnidadTiempoEdificio_Edificio" Association="Self.FK_BalanceUnidadTiempoEdificio_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="BalanceUnidadTiempoEdificio" EntitySet="BalanceUnidadTiempoEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BalanceUnidadTiempoEdificio_UnidadTiempo" Association="Self.FK_BalanceUnidadTiempoEdificio_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="BalanceUnidadTiempoEdificio" EntitySet="BalanceUnidadTiempoEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Leyenda_BalanceUnidadTiempoEdificio" Association="Self.FK_Leyenda_BalanceUnidadTiempoEdificio">
+      <End Role="BalanceUnidadTiempoEdificio" EntitySet="BalanceUnidadTiempoEdificio" />
+      <End Role="Leyenda" EntitySet="Leyenda" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComisionAFP_TipoDescuento" Association="Self.FK_ComisionAFP_TipoDescuento">
+      <End Role="TipoDescuento" EntitySet="TipoDescuento" />
+      <End Role="ComisionAFP" EntitySet="ComisionAFP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cronograma_Edificio" Association="Self.FK_Cronograma_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Cronograma" EntitySet="Cronograma" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleCronograma_Cronograma" Association="Self.FK_DetalleCronograma_Cronograma">
+      <End Role="Cronograma" EntitySet="Cronograma" />
+      <End Role="DetalleCronograma" EntitySet="DetalleCronograma" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cuota_Departamento" Association="Self.FK_Cuota_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Cuota" EntitySet="Cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cuota_UnidadTiempo" Association="Self.FK_Cuota_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="Cuota" EntitySet="Cuota" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CuotaComun_Edificio" Association="Self.FK_CuotaComun_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="CuotaComun" EntitySet="CuotaComun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CuotaComun_UnidadTiempo" Association="Self.FK_CuotaComun_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="CuotaComun" EntitySet="CuotaComun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GastoCuotaComun_CuotaComun" Association="Self.FK_GastoCuotaComun_CuotaComun">
+      <End Role="CuotaComun" EntitySet="CuotaComun" />
+      <End Role="GastoCuotaComun" EntitySet="GastoCuotaComun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DatoEdificio_Edificio" Association="Self.FK_DatoEdificio_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="DatoEdificio" EntitySet="DatoEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DatoEdificio_UnidadTiempo" Association="Self.FK_DatoEdificio_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="DatoEdificio" EntitySet="DatoEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Departamento_Edificio" Association="Self.FK_Departamento_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Departamento" EntitySet="Departamento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Departamento_TipoInmueble" Association="Self.FK_Departamento_TipoInmueble">
+      <End Role="TipoInmueble" EntitySet="TipoInmueble" />
+      <End Role="Departamento" EntitySet="Departamento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DepartamentoHistorico_Departamento" Association="Self.FK_DepartamentoHistorico_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="DepartamentoHistorico" EntitySet="DepartamentoHistorico" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DepartamentoPropietario_Departamento" Association="Self.FK_DepartamentoPropietario_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="DepartamentoPropietario" EntitySet="DepartamentoPropietario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Propietario_Departamento" Association="Self.FK_Propietario_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Propietario" EntitySet="Propietario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnidadTiempoReciboDepartamento_Departamento" Association="Self.FK_UnidadTiempoReciboDepartamento_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="UnidadTiempoReciboDepartamento" EntitySet="UnidadTiempoReciboDepartamento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Departamento" Association="Self.FK_Usuario_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visita_Departamento" Association="Self.FK_Visita_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Visita" EntitySet="Visita" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DepartamentoHistorico_Propietario" Association="Self.FK_DepartamentoHistorico_Propietario">
+      <End Role="Propietario" EntitySet="Propietario" />
+      <End Role="DepartamentoHistorico" EntitySet="DepartamentoHistorico" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DepartamentoPropietario_Propietario" Association="Self.FK_DepartamentoPropietario_Propietario">
+      <End Role="Propietario" EntitySet="Propietario" />
+      <End Role="DepartamentoPropietario" EntitySet="DepartamentoPropietario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleGasto_Gasto" Association="Self.FK_DetalleGasto_Gasto">
+      <End Role="Gasto" EntitySet="Gasto" />
+      <End Role="DetalleGasto" EntitySet="DetalleGasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleIngreso_Ingreso" Association="Self.FK_DetalleIngreso_Ingreso">
+      <End Role="Ingreso" EntitySet="Ingreso" />
+      <End Role="DetalleIngreso" EntitySet="DetalleIngreso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trabajador_DetalleMensualidad" Association="Self.FK_Trabajador_DetalleMensualidad">
+      <End Role="DetalleMensualidad" EntitySet="DetalleMensualidad" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trabajador_DetalleQuincena" Association="Self.FK_Trabajador_DetalleQuincena">
+      <End Role="DetalleQuincena" EntitySet="DetalleQuincena" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Edificio_TipoInmueble" Association="Self.FK_Edificio_TipoInmueble">
+      <End Role="TipoInmueble" EntitySet="TipoInmueble" />
+      <End Role="Edificio" EntitySet="Edificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Edificio_UnidadTiempo" Association="Self.FK_Edificio_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="Edificio" EntitySet="Edificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailValidacion_Edificio" Association="Self.FK_EmailValidacion_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="EmailValidacion" EntitySet="EmailValidacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadoCuentaBancario_Edificio" Association="Self.FK_EstadoCuentaBancario_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="EstadoCuentaBancario" EntitySet="EstadoCuentaBancario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Gasto_Edificio" Association="Self.FK_Gasto_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Gasto" EntitySet="Gasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ingreso_Edificio" Association="Self.FK_Ingreso_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Ingreso" EntitySet="Ingreso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inspeccion_Edificio" Association="Self.FK_Inspeccion_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Inspeccion" EntitySet="Inspeccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemActa_Edificio" Association="Self.FK_ItemActa_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="ItemActa" EntitySet="ItemActa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuPropietarioEdificio_Edificio" Association="Self.FK_MenuPropietarioEdificio_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="MenuPropietarioEdificio" EntitySet="MenuPropietarioEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Noticia_Edificio" Association="Self.FK_Noticia_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Noticia" EntitySet="Noticia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PermisoEdificio_Edificio" Association="Self.FK_PermisoEdificio_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="PermisoEdificio" EntitySet="PermisoEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanillaR_Edificio" Association="Self.FK_PlanillaR_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="PlanillaR" EntitySet="PlanillaR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReciboMes_Edificio" Association="Self.FK_ReciboMes_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="ReciboMes" EntitySet="ReciboMes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReporteEdificioUnidadTiempo_Edificio" Association="Self.FK_ReporteEdificioUnidadTiempo_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="ReporteEdificioUnidadTiempo" EntitySet="ReporteEdificioUnidadTiempo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trabajador_Edificio" Association="Self.FK_Trabajador_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Trabajador" EntitySet="Trabajador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visita_Edificio" Association="Self.FK_Visita_Edificio">
+      <End Role="Edificio" EntitySet="Edificio" />
+      <End Role="Visita" EntitySet="Visita" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailValidacion_Usuario" Association="Self.FK_EmailValidacion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="EmailValidacion" EntitySet="EmailValidacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadoCuentaBancario_UnidadTiempo" Association="Self.FK_EstadoCuentaBancario_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="EstadoCuentaBancario" EntitySet="EstadoCuentaBancario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Gasto_UnidadTiempo" Association="Self.FK_Gasto_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="Gasto" EntitySet="Gasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ingreso_UnidadTiempo" Association="Self.FK_Ingreso_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="Ingreso" EntitySet="Ingreso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inquilino_Propietario" Association="Self.FK_Inquilino_Propietario">
+      <End Role="Propietario" EntitySet="Propietario" />
+      <End Role="Inquilino" EntitySet="Inquilino" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropietarioInquilino_Inquilino" Association="Self.FK_PropietarioInquilino_Inquilino">
+      <End Role="Inquilino" EntitySet="Inquilino" />
+      <End Role="PropietarioInquilino" EntitySet="PropietarioInquilino" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemActa_UnidadTiempo" Association="Self.FK_ItemActa_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="ItemActa" EntitySet="ItemActa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PermisoEdificio_Usuario" Association="Self.FK_PermisoEdificio_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="PermisoEdificio" EntitySet="PermisoEdificio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Planilla_Trabajador" Association="Self.FK_Planilla_Trabajador">
+      <End Role="Trabajador" EntitySet="Trabajador" />
+      <End Role="Planilla" EntitySet="Planilla" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Planilla_UnidadTiempo" Association="Self.FK_Planilla_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="Planilla" EntitySet="Planilla" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanillaQuincena_Trabajador" Association="Self.FK_PlanillaQuincena_Trabajador">
+      <End Role="Trabajador" EntitySet="Trabajador" />
+      <End Role="PlanillaQuincena" EntitySet="PlanillaQuincena" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanillaQuincena_UnidadTiempo" Association="Self.FK_PlanillaQuincena_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="PlanillaQuincena" EntitySet="PlanillaQuincena" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanillaR_UnidadTiempo" Association="Self.FK_PlanillaR_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="PlanillaR" EntitySet="PlanillaR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropietarioInquilino_Propietario" Association="Self.FK_PropietarioInquilino_Propietario">
+      <End Role="Propietario" EntitySet="Propietario" />
+      <End Role="PropietarioInquilino" EntitySet="PropietarioInquilino" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReciboMes_UnidadTiempo" Association="Self.FK_ReciboMes_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="ReciboMes" EntitySet="ReciboMes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReporteEdificioUnidadTiempo_UnidadTiempo" Association="Self.FK_ReporteEdificioUnidadTiempo_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="ReporteEdificioUnidadTiempo" EntitySet="ReporteEdificioUnidadTiempo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UProvincia_UDepartamento" Association="Self.FK_UProvincia_UDepartamento">
+      <End Role="UDepartamento" EntitySet="UDepartamento" />
+      <End Role="UProvincia" EntitySet="UProvincia" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UDistrito_UProvincia" Association="Self.FK_UDistrito_UProvincia">
+      <End Role="UProvincia" EntitySet="UProvincia" />
+      <End Role="UDistrito" EntitySet="UDistrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnidadTiempoReciboDepartamento_UnidadTiempo" Association="Self.FK_UnidadTiempoReciboDepartamento_UnidadTiempo">
+      <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+      <End Role="UnidadTiempoReciboDepartamento" EntitySet="UnidadTiempoReciboDepartamento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Visita_Usuario" Association="Self.FK_Visita_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Visita" EntitySet="Visita" />
+    </AssociationSet>
+    <EntitySet Name="ConsumoIndividual" EntityType="DB_92747_intranetModel.ConsumoIndividual" />
+    <AssociationSet Name="FK_ConsumoIndividual_Cuota" Association="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota">
+      <End Role="Cuota" EntitySet="Cuota" />
+      <End Role="ConsumoIndividual" EntitySet="ConsumoIndividual" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ConsumoIndividual">
+    <Key>
+      <PropertyRef Name="ConsumoIndividualId" />
+    </Key>
+    <Property Name="ConsumoIndividualId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Detalle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="CuotaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cuota" Relationship="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" FromRole="ConsumoIndividual" ToRole="Cuota" />
+  </EntityType>
+  <Association Name="FK_ConsumoIndividual_Cuota">
+    <End Type="DB_92747_intranetModel.Cuota" Role="Cuota" Multiplicity="1" />
+    <End Type="DB_92747_intranetModel.ConsumoIndividual" Role="ConsumoIndividual" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cuota">
+        <PropertyRef Name="CuotaId" />
+      </Principal>
+      <Dependent Role="ConsumoIndividual">
+        <PropertyRef Name="CuotaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

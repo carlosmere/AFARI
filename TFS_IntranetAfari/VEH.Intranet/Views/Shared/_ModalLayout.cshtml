@@ -1,0 +1,73 @@
+﻿@{ 
+
+    ViewBag.GUID = ViewBag.GUID ?? Guid.NewGuid().ToString();
+}
+<div id="@ViewBag.GUID">
+    @if (ViewBag.ModalSet != null)
+    {
+        @Html.Raw("<div id='" + ViewBag.ModalSet + "'>");
+    }
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">
+            @if (ViewBag.PageIcon != null)
+            {
+                <i class="@ViewBag.PageIcon"></i>
+            }
+            @ViewBag.Title
+        </h4>
+
+    </div>
+
+    @if (ViewBag.Form != null)
+    {
+        if (ViewBag.Form is ModalFormHelpers)
+        {
+            <text>@{ViewBag.Form.BeginForm(Html);}</text>
+                }
+                else if (ViewBag.Form is ModalAjaxFormHelpers)
+                {
+                    <text>@{ViewBag.Form.BeginForm(Ajax);}</text>
+                            }
+                        }
+
+    <div class="modal-body" style="padding-bottom: 2px;">
+        @RenderBody()
+    </div>
+
+    <div class="modal-footer">
+        @if (ViewBag.DeshabilitarCerrarFooter == null || !ViewBag.DeshabilitarCerrarFooter)
+        {
+            <button class="btn btn-sm" data-dismiss="modal">Cerrar</button>
+        }
+        @RenderSection("Footer", false)
+    </div>
+
+    @if (ViewBag.Form != null || ViewBag.AjaxForm != null)
+    {
+        Html.EndForm();
+    }
+    @if (ViewBag.ModalSize != null)
+    {
+        <script id="modal-size-@ViewBag.GUID">
+            $('#@ViewBag.GUID').closest('.modal-dialog').addClass('modal-@ViewBag.ModalSize');
+        </script>
+    }
+    @if (ViewBag.ModalSet != null)
+    {
+        @Html.Raw("</div>")
+    }
+    @if (ViewBag.ExtraLargeModalSize != null || ViewBag.ExtraLargeModalSize == true)
+    {
+        <script id="modal-extra-size-@ViewBag.GUID">
+        $('#@ViewBag.GUID').closest('.modal-dialog').css('width', '90%')
+        $('#@ViewBag.GUID').closest('.modal-dialog').css('margin-left', 'auto')
+        $('#@ViewBag.GUID').closest('.modal-dialog').css('margin-right', 'auto')
+        </script>
+    }
+</div>
+<script>
+    $('.select2').select2();
+</script>
+@RenderSection("Scripts", false)

@@ -1,0 +1,344 @@
+﻿@model VEH.Intranet.ViewModel.Employee.EditPlanillaViewModel
+@{
+    ViewBag.Title = "Administrar Planillas";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+}
+
+@section Styles{
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table-cuota-masiva th {
+            width: 70px;
+        }
+
+        .table-cuota-masiva input {
+            width: 70px;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script>
+        function obtenerTrabajadorId(selector) {
+            return selector.substring(selector.lastIndexOf('-') + 1);
+        }
+
+        function actualizarHoraExtra25(trabajadorId) {
+
+            var proporcion = parseFloat($('#proporcion-monto-horas-25-' + trabajadorId).text(), 10);
+            var horas = parseFloat($('[name="planilla-horas-extras-25-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(horas)) horas = 0;
+            var monto = proporcion * horas;
+            monto = Math.floor(monto * 100) / 100;
+            $('[name="planilla-adicional-25-' + trabajadorId + '"]').val(monto);
+        }
+
+        function actualizarHoraExtra35(trabajadorId) {
+            var proporcion = parseFloat($('#proporcion-monto-horas-35-' + trabajadorId).text(), 10);
+            var horas = parseFloat($('[name="planilla-horas-extras-35-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(horas)) horas = 0;
+            var monto = proporcion * horas;
+            monto = Math.floor(monto * 100) / 100;
+            $('[name="planilla-adicional-35-' + trabajadorId + '"]').val(monto);
+        }
+
+        function actualizarTotalMes(trabajadorId) {
+            var sueldoBase = parseFloat($('#planilla-sueldo-base-' + trabajadorId).text(), 10);
+            var adicional25 = parseFloat($('[name="planilla-adicional-25-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(adicional25)) adicional25 = 0;
+            var adicional35 = parseFloat($('[name="planilla-adicional-35-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(adicional35)) adicional35 = 0;
+            var montoFeriados = parseFloat($('[name="planilla-monto-feriados-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(montoFeriados)) montoFeriados = 0;
+            var descuentoAusencia = parseFloat($('[name="planilla-descuentos-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(descuentoAusencia)) descuentoAusencia = 0;
+            var aumentoReemplazo = parseFloat($('[name="planilla-reemplazo-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(aumentoReemplazo)) aumentoReemplazo = 0;
+            var totalMes = sueldoBase + adicional25 + adicional35 + montoFeriados - descuentoAusencia + aumentoReemplazo;
+            $('[name="planilla-total-mes-' + trabajadorId + '"]').val(totalMes);
+            var essalud9 = totalMes * 0.09;
+            essalud9 = Math.floor(essalud9 * 100) / 100;
+            $('[name="planilla-essalud-' + trabajadorId + '"]').val(essalud9);
+            var adelantoQuincena = parseFloat($('[name="planilla-adelanto-quincena-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(adelantoQuincena)) adelantoQuincena = 0;
+            var segundaQuincena = totalMes - adelantoQuincena;
+            segundaQuincena = Math.floor(segundaQuincena * 100) / 100;
+            $('[name="planilla-segunda-quincena-' + trabajadorId + '"]').val(segundaQuincena);
+        }
+
+        function actualizarTotalFeriados(trabajadorId) {
+            var proporcion = parseFloat($('#proporcion-monto-feriado-' + trabajadorId).text(), 10);
+            var meses = parseFloat($('[name="planilla-feriados-' + trabajadorId + '"]').val(), 10);
+            if (isNaN(meses)) meses = 0;
+            var totalFeriados = proporcion * meses;
+            $('[name="planilla-monto-feriados-' + trabajadorId + '"]').val(totalFeriados);
+        }
+
+        function init() {
+            $('[name^="planilla-horas-extras-25"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-horas-extras-25-' + trabajadorId + '"]').change(function () {
+                    actualizarHoraExtra25(trabajadorId);
+                    actualizarTotalMes(trabajadorId);
+                })
+            });
+
+            $('[name^="planilla-horas-extras-35"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-horas-extras-35-' + trabajadorId + '"]').change(function () {
+                    actualizarHoraExtra35(trabajadorId);
+                    actualizarTotalMes(trabajadorId);
+                })
+            });
+
+            $('[name^="planilla-feriados"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-feriados-' + trabajadorId + '"]').change(function () {
+                    actualizarTotalFeriados(trabajadorId);
+                    this.value = parseFloat(this.value).toFixed(0);
+                })
+                this.value = parseFloat(this.value).toFixed(0);
+            });
+
+            $('[name^="planilla-monto-feriados"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-monto-feriados-' + trabajadorId + '"]').change(function () {
+                    actualizarTotalMes(trabajadorId);
+                })
+            });
+
+            $('[name^="planilla-descuentos"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-descuentos-' + trabajadorId + '"]').change(function () {
+                    actualizarTotalMes(trabajadorId);
+                })
+            });
+
+            $('[name^="planilla-adelanto-quincena"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-adelanto-quincena-' + trabajadorId + '"]').change(function () {
+                    actualizarTotalMes(trabajadorId);
+                })
+            });
+
+            $('[name^="planilla-reemplazo"]').each(function (i, e) {
+                var trabajadorId = obtenerTrabajadorId(e.name);
+                $('[name^="planilla-reemplazo-' + trabajadorId + '"]').change(function () {
+                    actualizarTotalMes(trabajadorId);
+                })
+                actualizarTotalMes(trabajadorId);
+            });
+        }
+
+        $(document).ready(function () {
+            init();
+        });
+    </script>
+
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+                </div>
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    @Html.HiddenFor(x => x.EdificioId)
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Unidad de tiempo</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.UnidadTiempoId, Model.LstComboUnidadTiempo, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10 ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.UnidadTiempoId.HasValue)
+{
+    var disabledStyle = "background: #e5e9ed;cursor: not-allowed;box-shadow: none;border: 1px solid #ccd0d4;";
+
+    <div class="panel panel-inverse dl-horizontal">
+
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+            @*@Html.Raw(Model.NormasConvivencia)*@
+            <div class="col-md-6 form-horizontal">
+                <h4 class="panel" style="padding:20px">
+
+                    @*@Html.HiddenFor(x => x.Ruta)*@
+
+                    @if (!string.IsNullOrEmpty(Model.RutaExcel))
+                    {   @Html.EditorFor(x => x.Archivo, new { Ruta = Url.Action("DescargarArchivo", "Employee", new { ruta = Model.RutaExcel, nombre = Model.Edificio.Nombre, acronimo = Model.Edificio.Acronimo, unidadTiempo = Model.objUnidadTiempo.Descripcion }) }) }
+                    else
+                    {   @Html.EditorFor(x => x.Archivo) }
+                    @if (!string.IsNullOrEmpty(Model.RutaPDF))
+                    {   @Html.EditorFor(x => x.ArchivoPublico, new { Ruta = Url.Action("DescargarArchivo", "Employee", new { ruta = Model.RutaPDF, nombre = Model.Edificio.Nombre, acronimo = Model.Edificio.Acronimo, unidadTiempo = Model.objUnidadTiempo.Descripcion }) }) }
+                    else
+                    {   @Html.EditorFor(x => x.ArchivoPublico) }
+                    @*@if (!string.IsNullOrEmpty(Model.Ruta))
+                    {   @Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.Ruta, nombre = Model.Edificio.Nombre, acronimo = Model.Edificio.Acronimo })}
+                    else
+                    {
+                        <div> <em> No Disponible </em> </div>
+                    }*@
+
+                    @*@if (Model.Ruta != null)
+                    {
+                        var path = "~/Resources/Files/Normas" + @Model.Ruta;
+                        <a href="path"> <em>Descargar</em> </a>
+                    }
+                    else
+                    {
+                        <div> <em> No Disponible </em> </div>
+                    }*@
+
+                    @*@Html.TextAreaFor(x => x.NormasConvivencia, new { @class = "form-control wysihtml5", rows = 10 })
+                    @Html.ValidationMessageFor(x => x.NormasConvivencia)*@
+
+                </h4>
+                <div class="ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    @*<div>
+            <div>
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form action="@Url.Action("EditPlanilla")" method="post" onsubmit="return confirm('¿Está seguro de registrar todas las planillas ingresadas?')">
+                            @Html.HiddenFor(x => x.EdificioId)
+                            @Html.HiddenFor(x => x.UnidadTiempoId)
+                            <div class="table-responsive">
+                                <table class="table table-condensed table-cuota-masiva">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" hidden>Monto Horas 25</th>
+                                            <th class="text-center" hidden>Monto Horas 35</th>
+                                            <th class="text-center" hidden>Monto Feriados</th>
+                                            <th class="text-center" hidden>Adelanto Quincena</th>
+                                            <th class="text-center">Trabajador</th>
+                                            <th class="text-center">Puesto</th>
+                                            <th class="text-center">Sueldo Base (S/)</th>
+                                            <th class="text-center">Horas Extras 25%</th>
+                                            <th class="text-center">25% Adicional</th>
+                                            <th class="text-center">Horas Extras 35%</th>
+                                            <th class="text-center">35% Adicional</th>
+                                            <th class="text-center">Feriados Trabajados</th>
+                                            <th class="text-center">Monto Feriados</th>
+                                            <th class="text-center">Descuentos por Ausencia</th>
+                                            <th class="text-center">Aumentos por Reemplazo</th>
+                                            <th class="text-center">Total del Mes</th>
+                                            <th class="text-center">Adelanto Quincena</th>
+                                            <th class="text-center">Segunda Quincena</th>
+                                            <th class="text-center">ESSALUD</th>
+                                            <th class="text-center" hidden>AFP</th>
+                                            @*<th class="text-center">OPCIONES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{bool planillaExistente = true;}
+                                        @for (int i = 0; i < Model.LstTrabajadores.Count; ++i)
+                                        {
+                                            var item = Model.LstTrabajadores[i];
+                                            var nombreCompleto = item.Nombres + " " + item.Apellidos;
+                                            var sueldoBase = "S/ " + item.SueldoBase;
+                                            if (Model.LstPlanilla[i] == null)
+                                            {
+                                                planillaExistente = false;
+                                            }
+                                            var planilla = Model.LstPlanilla[i] ?? new VEH.Intranet.Models.Planilla();
+                                            var adelantoQuincena = Model.LstPlanilla[i] == null ? item.AdelantoQuincena : planilla.AdelantoQuincena;
+                                            <tr class="row-departamento"data-trabajador-id="@item.TrabajadorId">
+                                                <td class="text-center" hidden><span id="proporcion-monto-horas-25-@item.TrabajadorId">@item.MontoHoras25</span></td>
+                                                <td class="text-center" hidden><span id="proporcion-monto-horas-35-@item.TrabajadorId">@item.MontoHoras35</span></td>
+                                                <td class="text-center" hidden><span id="proporcion-monto-feriado-@item.TrabajadorId">@item.MontoFeriado</span></td>
+                                                <td class="text-center" hidden><span id="proporcion-adelanto-quincena-@item.TrabajadorId">@item.AdelantoQuincena</span></td>
+                                                <td class="text-center"><span id="planilla-nombre-@item.TrabajadorId">@nombreCompleto</span></td>
+                                                <td class="text-center"><span id="planilla-puesto-@item.TrabajadorId">@item.Cargo</span></td>
+                                                <td class="text-center"><span id="planilla-sueldo-base-@item.TrabajadorId">@item.SueldoBase</span></td>
+                                                <td class="text-center"><input name="planilla-horas-extras-25-@item.TrabajadorId" type="text" value="@planilla.HorasExtras25"/></td>
+                                                <td class="text-center"><input name="planilla-adicional-25-@item.TrabajadorId" type="text" value="@planilla.MontoHorasExtras25" readonly="readonly" style="@disabledStyle"/></td>
+                                                <td class="text-center"><input name="planilla-horas-extras-35-@item.TrabajadorId" type="text" value="@planilla.HorasExtras35"/></td>
+                                                <td class="text-center"><input name="planilla-adicional-35-@item.TrabajadorId" type="text" value="@planilla.MontoHorasExtras35" readonly="readonly" style="@disabledStyle"/></td>
+                                                <td class="text-center"><input name="planilla-feriados-@item.TrabajadorId" type="text" value="@planilla.Feriado"/></td>
+                                                <td class="text-center"><input name="planilla-monto-feriados-@item.TrabajadorId" type="text" value="@planilla.MontoFeriados"/></td>
+                                                <td class="text-center"><input name="planilla-descuentos-@item.TrabajadorId" type="text" value="@planilla.DescuenoAusencia"/></td>
+                                                <td class="text-center"><input name="planilla-reemplazo-@item.TrabajadorId" type="text" value="@planilla.AumentoReemplazo"/></td>
+                                                <td class="text-center"><input name="planilla-total-mes-@item.TrabajadorId" type="text" value="@planilla.TotalMes" readonly="readonly" style="@disabledStyle"/></td>
+                                                <td class="text-center"><input name="planilla-adelanto-quincena-@item.TrabajadorId" type="text" value="@adelantoQuincena" readonly="readonly"/></td>
+                                                <td class="text-center"><input name="planilla-segunda-quincena-@item.TrabajadorId" type="text" value="@planilla.SegundaQuincena" readonly="readonly" style="@disabledStyle"/></td>
+                                                <td class="text-center"><input name="planilla-essalud-@item.TrabajadorId" type="text" value="@planilla.ESSALUD" readonly="readonly" style="@disabledStyle"/></td>
+                                                <td class="text-center" hidden><span id="planilla-afp-@item.TrabajadorId">@item.AFP</span></td>
+                                                @*<td class="text-left">
+                                                    @if(planilla != null)
+                                                    {
+                                                        <span><a href="@Url.Action("DetallePlanilla", new { PlanillaId = @planilla.PlanillaId, EdificioId = @Model.EdificioId})">Ver Detalles</a></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>-</text>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="ui-sortable">
+                                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                                    @if (planillaExistente)
+                                    {
+                                        <a href="@Url.Action("ExportPlanillaMensual", "Employee", new {UnidadTiempoId = Model.UnidadTiempoId, EdificioId = Model.EdificioId})" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-print"></i>&nbsp;Exportar</a>
+                                    }
+                                    <a href="@Url.Action("LstEdificio", "Building")" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+}
+

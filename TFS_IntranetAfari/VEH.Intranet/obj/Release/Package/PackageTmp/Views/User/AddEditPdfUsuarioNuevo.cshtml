@@ -1,0 +1,35 @@
+﻿@model VEH.Intranet.ViewModel.User.AddEditPdfUsuarioNuevoViewModel
+@{
+    ViewBag.Title = "Pdf Usuario Nuevo";
+}
+
+@section Breadcrumbs{
+}
+
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="col-md-2 control-label">Archivo Actual</label>
+                <div class="col-md-10">
+                    <a target="_blank" href="@Url.Content("~/Content/Intranet Afari.pdf")"><i class="fa fa-download"></i> Descargar</a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Archivo</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Archivo, new { type = "file", id = "CargaArch" })
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,59 @@
+﻿@model VEH.Intranet.ViewModel.External.ElementosExternosViewModel
+
+@{
+    ViewBag.Title = "Elementos Externos";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Lista de Edificios</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+}
+
+<div>
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2 text-center">Nombre</th>
+                                <th class="col-sm-4 text-center">Icono</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.lstElementoExterno)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.Nombre</td>
+                                    <td class="text-center"><i class="@item.Icono"></i></td>
+                                    <td class="text-center">
+                                        <div class="input-group">
+                                            <div class="input-group-btn btn-xs">
+                                                <a href="@Url.Action("AddEditElementoExterno", "External", new { EdificioId = item.EdificioId, ElementoExternoId = item.MenuPropietarioEdificioId })" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
+                                                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                      
+                                                    <li class="divider"></li>
+                                                    <li><a href="@Url.Action("DeleteElementoExterno","External",new{ ElementoExternoId = item.MenuPropietarioEdificioId, EdificioId = item.EdificioId})" class="btn btn-default btn-xs"><i class="fa fa-times"></i>&nbsp;Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditElementoExterno", "External", new {EdificioId = Model.EdificioId })">
+    <i class="fa fa-plus"></i>&nbsp;Agregar Menu
+</a>

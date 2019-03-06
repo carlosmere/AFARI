@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Eliminar propietario";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("DeletePropietario", "Owner", new { PropietarioId = ViewBag.PropietarioId , DepartamentoId = ViewBag.DepartamentoId, EdificioId = ViewBag.EdificioId }, FormMethod.Post);
+}
+
+¿ Esta seguro que desea eliminar este registro ?
+
+@section Footer
+{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+

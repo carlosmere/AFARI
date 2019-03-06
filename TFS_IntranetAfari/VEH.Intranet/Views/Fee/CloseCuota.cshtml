@@ -1,0 +1,347 @@
+﻿@model VEH.Intranet.ViewModel.Fee.CloseCuotaViewModel
+
+@{
+    ViewBag.Title = "Cerrar Cuotas";
+    //var DictCuotaDepartamento = Model.LstCuota.ToDictionary(x => x.DepartamentoId, x => x);
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+}
+
+@section Styles{
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table-cuota-masiva th {
+            width: 70px;
+        }
+
+        .table-cuota-masiva input {
+            width: 70px;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+}
+
+@section Scripts
+{
+
+    <script>
+
+        function MarcarTodos()
+        {
+            $('.cuotaPorMarcar').each(function (i, e) {
+                $(this).prop("checked",true)
+            });
+        }
+
+        var a=0;
+        $('document').ready(function () {
+            $('.txt-mora').change(function () {
+                var $this = $(this);
+                var fecha_mora = $this.datepicker('getDate');
+                var fecha_inicio_mora = $('#FechaActualMora').datepicker('getDate');
+
+                var dias_mora = (fecha_mora - fecha_inicio_mora) / (60 * 60 * 24 * 1000);
+                var cuotaCerrar =  $this.closest('tr').find('.montotal').text();
+                // if(a%60==0)   alert(cuotaCerrar)
+                a++;
+                dias_mora*=@if(Model.TipoMora.Equals("POR")){@Html.Raw("cuotaCerrar*" + Model.MoraUnitariaGuardad+"/100")}else{@Html.Raw(Model.MoraUnitariaGuardad)};
+                //  if(a%60==0)   alert(dias_mora)
+                a++;
+                if (dias_mora >= 0)
+                {
+                    $this.closest('tr').find('.monto-mora').val(dias_mora.toFixed(2));
+                }
+            })
+
+            var bool=true;
+            $('.txt-fecha-pago').change(function () {
+
+
+                var $this = $(this);
+                var esta = $this.datepicker('getDate');
+                var fecha_inicio_mora = $('#FechaActualMora').datepicker('getDate');//$(this).datepicker('getDate');
+                if(bool)
+                {
+                    bool=false;
+                    $('.txt-fecha-pago').each(function(i,e)
+                    {
+                        var ultimo_seleccionado = $(this).closest('tr').find('input[type="checkbox"][name^="CuotasPorUnidadTiempo"]').last().is(':checked');
+                        if(!ultimo_seleccionado)
+                            $(this).datepicker('setDate', fecha_inicio_mora);
+                    });
+
+
+                    bool=true;
+                }
+            })
+        })
+
+
+
+
+    </script>
+
+
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <div class="row">
+                    <div class="col-md-2">
+                        <dl class="dl-horizontal">
+                            <dt>Nombre</dt>
+                            <dd>@Model.Edificio.Nombre</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-3">
+                        <dl class="dl-horizontal">
+                            <dt>Acumulado Anterior</dt>
+                            <dd>@Model.Acumulado.ToString("F")</dd>
+                            <dt>Unidad de Tiempo</dt>
+                            <dd>@Model.UltimaUnidadTiempoAcumulado</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-3">
+                        <dl class="dl-horizontal">
+                            @if (Model.UnidadTiempoAcumuladoActual != null)
+                            {
+                                <dt>Acumulado Actual</dt>
+                                <dd>@Model.AcumuladoActual.ToString("F")</dd>
+                                <dt>Saldo Actual</dt>
+                                <dd>@Model.SaldoActual.ToString("F")</dd>
+                                <dt>Gastos Actuales</dt>
+                                <dd>@Model.GastosActual.ToString("F")</dd>
+                                <dt>Ingresos Actuales</dt>
+                                <dd>@Model.IngresosActual.ToString("F")</dd>
+                                <dt>Unidad de Tiempo</dt>
+                                <dd>@Model.UnidadTiempoAcumuladoActual</dd>
+                            }
+                        </dl>
+                    </div>
+                    <div class="col-md-2">
+                        @if (Model.UnidadTiempoId.HasValue)
+                        {
+                            <dl class="dl-horizontal">
+                                <dt>Fecha a considerar Mora</dt>
+                                @Html.DateTextBoxFor(x => x.FechaActualMora, new { @class = "text-center" })
+                            </dl>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        @if (Model.UnidadTiempoId.HasValue)
+                        {
+                            <dl class="dl-horizontal">
+                                <dt>Reporte Ingresos y Gastos</dt>
+                            </dl>
+                            <a href="@Url.Action("DownloadReporteDepartamentoIngresosGastos", "Building", new { EdificioId = Model.EdificioId, UnidadTiempoId = Model.UnidadTiempoId, dia = Model.FechaActualMora.Day, mes = Model.FechaActualMora.Month, annio = Model.FechaActualMora.Year })" class="btn btn btn-primary"><i class="fa fa-file-text"></i>&nbsp;Exportar</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+                </div>
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    @Html.HiddenFor(x => x.EdificioId)
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Unidad de tiempo</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.UnidadTiempoId, Model.LstComboUnidadTiempo, new { @class = "form-control select2" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10 ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                <p>&nbsp;</p>
+                <button class="btn btn-default" onclick="MarcarTodos()"> Marcar Todos <span class="fa fa-check"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.UnidadTiempoId.HasValue)
+{
+    var disabledStyle = "background: #e5e9ed;cursor: not-allowed;box-shadow: none;border: 1px solid #ccd0d4;";
+
+    <div>
+        <div>
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+                </div>
+                <div class="panel-body">
+                    <form action="@Url.Action("CloseCuota")" method="post">
+                        @Html.HiddenFor(x => x.EdificioId)
+                        @Html.HiddenFor(x => x.UnidadTiempoId)
+                        @Html.HiddenFor(x=> x.FechaActualMora)
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-cuota-masiva">
+                                <thead>
+                                    <tr>
+                                        @*<th class="text-center"><span id="comun-estado">Pagado</span></th>*@
+                                        <th class="text-center">DPTO.</th>
+                                        @foreach (var UnidadTiempo in Enumerable.Reverse(Model.LstUnidadTiempoString))
+                                        {
+                                            <th class="text-center">@UnidadTiempo  /  PAGADO?  /  ESTADO</th>
+                                            @*<th class="text-center">MORA</th>*@
+                                            @*<th class="text-center">PAGADO</th>*@
+                                            @*<th class="text-center">OBSERVACION</th>*@
+                                        }
+                                        @*<th class="text-center">TOTAL HACER ESTO</th>*@
+                                        <th class="text-center">Mora / Omitir?</th>
+                                        <th>Fecha de pago</th>
+                                        <th>Leyenda</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*data-departamento-id="@item.DepartamentoId">*@
+                                    @for (int j = 0; j < Model.LstDepartamentos.Count; j++)
+                                    {
+                                        @Html.HiddenFor(X=>X.LstDepartamentos[j].DepartamentoId)
+                                        <tr class="row-departamento">
+
+                                            <td class="text-center">@Model.LstDepartamentos[j].Numero</td>
+                                            @foreach (var LstCuota in Enumerable.Reverse(Model.CuotasPorUnidadTiempo))
+                                            {
+
+                                                if (LstCuota.Value.Count > j)
+                                                {
+                                                    var item = LstCuota.Value[j];
+
+                                                    <td class="text-center">
+                                                        <div class="montotal" hidden="hidden">@item.Total</div>
+                                                        @if (Model.CuotasPorUnidadTiempo[LstCuota.Key][j].Pagado)
+                                                        {
+                                                            <em><strike> @item.Total.ToString("F") </strike></em>
+                                                        }
+                                                        else
+                                                        {
+                                                            @item.Total.ToString("F")
+                                                        }
+                                                        @if (item.Estado.Equals(ConstantHelpers.EstadoCerrado))
+                                                        {
+                                                            @Html.HiddenFor(x => x.CuotasPorUnidadTiempo[LstCuota.Key][j].Pagado, true)
+                                                            <i class="fa fa-check" style="width:70px"></i>
+                                                            <em> CERRADO </em>
+                                                        }
+                                                        else
+                                                        {
+
+
+                                                            @Html.CheckBoxFor(x => x.CuotasPorUnidadTiempo[LstCuota.Key][j].Pagado, new { @class="cuotaPorMarcar" })
+                                                            <em> PENDIENTE </em>
+                                                        }
+
+
+
+                                                    </td>
+
+
+                                                }
+                                            }
+                                            <td class="text-center">
+                                                @{
+                                        double MontoMora = Model.LstDepartamentos[j].MontoMora < 0 ? 0 : (Double)Model.LstDepartamentos[j].MontoMora;
+                                                }
+                                                <input type="text" name="moraDpto@(Model.LstDepartamentos[j].DepartamentoId)" class="monto-mora" value="@(Model.LstDepartamentos[j].OmitirMora?"0.00":Model.LstDepartamentos[j].MontoMora.ToString())">
+                                                  
+
+
+                                                @Html.CheckBoxFor(x => x.LstDepartamentos[j].OmitirMora)
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.LstDepartamentos[j].FechaPago, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker txt-mora txt-fecha-pago"})
+
+
+                                                @*@Html.DateTextBoxFor(X => X.LstDepartamentos[j].FechaPago.Value)*@
+                                            </td>
+                                            <td>
+                                                @if(j<Model.LeyendasPorDepartamento.Count){
+                                                    @Html.EditorFor(X => X.LeyendasPorDepartamento[j], new { @class = "form-control" });
+                                            }
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-2 col-md-offset-10 ui-sortable pull-right">
+                                <button type="submit" class="btn btn-sm btn-primary m-r-5 cancel"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Guardar</button>
+                                <a href="@Url.Action("LstEdificio", "Building")" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Leyendas</h4>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-condensed table-cuota-masiva">
+                        <thead>
+                            <tr>
+
+
+                                <th>Leyenda</th>
+                                <th>Numero</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var ley in Model.LstLeyenda)
+                            {
+
+                                <tr>
+
+
+                                    <td>@ley.Descripcion</td>
+                                    <td>@ley.Numero</td>
+                                    <td><a class="btn btn-default" href="@Url.Action("AddEditLeyenda", "Fee", new { LeyendaId = ley.LeyendaId, UnidadTiempoId = Model.UnidadTiempoId, EdificioId = Model.EdificioId })"><i class="fa fa-edit">&nbsp;</i></a></td>
+                                    <td><a class="btn btn-default" href="@Url.Action("DeleteLeyenda", "Fee", new { LeyendaId = ley.LeyendaId, BalanceEdificioUnidadTiempoId  = ley.BalanceUnidadTiempoEdificioId})"><i class="fa fa-times">&nbsp;</i></a></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                    <a class="btn btn-primary" href="@Url.Action("AddEditLeyenda", "Fee", new { UnidadTiempoId = Model.UnidadTiempoId,EdificioId = Model.EdificioId })"><span class="fa fa-plus">Añadir leyenda</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

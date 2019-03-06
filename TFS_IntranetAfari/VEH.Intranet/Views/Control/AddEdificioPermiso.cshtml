@@ -1,0 +1,24 @@
+﻿@model VEH.Intranet.ViewModel.Control.AddEdificioPermisoViewModel
+@{
+    ViewBag.Title = "Permiso Edificio";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("AddEdificioPermiso", "Control", FormMethod.Post);
+}
+
+@Html.HiddenFor(x => x.UsuarioId)
+<div class="well">
+    @Model.Nombres
+</div>
+<div class="form form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Edificio</label>
+        <div class="col-md-6">
+            @Html.DropDownListFor(x => x.EdificioId, new SelectList(Model.LstEdificio,"EdificioId","Nombre"), new { @class = "form-control select2" })
+        </div>
+    </div>
+</div>
+@section Footer{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+

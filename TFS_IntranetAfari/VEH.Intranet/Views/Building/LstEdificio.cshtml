@@ -1,0 +1,118 @@
+﻿@model VEH.Intranet.ViewModel.Building.LstEdificioViewModel
+
+@{
+    ViewBag.Title = "Edificio";
+
+}
+
+@section Breadcrumbs{
+}
+
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" novalidate="novalidate">
+            <input data-val="true" data-val-number="The field EdificioId must be a number." data-val-required="The EdificioId field is required." id="EdificioId" name="EdificioId" type="hidden" value="3035">
+            <div class="form-group">
+                <label class="col-md-2 control-label ui-sortable">Nombre Edificio</label>
+                <div class="col-md-6 ui-sortable">
+                    @Html.DropDownListFor(x => x.Nombre,new SelectList(Model.LstcmbEdificio, "Nombre", "Nombre"),"[-Seleccione-]",new { @class="form-control select2"})
+                </div>
+                <div class="col-md-2 col-md-offset-10 ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="col-sm-1 text-center">Orden</th>
+                                @*<th class="col-sm-1 text-center">Acrónimo</th>*@
+                                <th class="col-sm-2 text-center">Tipo Inmueble</th>
+                                <th class="col-sm-4 text-center">Nombre</th>
+                                <th class="col-sm-2 text-center">Estado</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstEdificio)
+                            {
+                                <tr>
+                                    <td><a class="btn btn-info" @Data.ModalLink("_AddEditEdificio","Building",new { EdificioId = item.EdificioId })><i class="fa fa-eye"></i></a></td>
+                                    <td class="text-center">@item.Orden</td>
+                                    @*<td class="text-center">@item.Acronimo</td>*@
+                                    <td class="text-center">@item.TipoInmueble.Nombre</td>
+                                    <td class="text-center">@item.Nombre</td>
+                                    <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : "Inactivo")</span></td>
+                                    <td class="text-center">
+                                        <a class="btn btn-default" href="@Url.Action("LstOpcionEdificio","Building",new { EdificioId = item.EdificioId})"><i class="fa fa-bars"></i> Opciones</a>
+                                        <div class="input-group" style="display:none">
+                                            <div class="input-group-btn btn-xs">
+                                                <a href="@Url.Action("AddEditEdificio", "Building", new { EdificioId = item.EdificioId })" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
+                                                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+
+                                                    <li><a href="@Url.Action("BalanceOverview", "Building", new { EdificioId = item.EdificioId })"><i class="fa fa-eye"></i>&nbsp;&nbsp;Estado</a></li>
+                                                    <li><a href="@Url.Action("LstGastoAdmin", "Spending", new { EdificioId = item.EdificioId })"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Adm. Gastos</a></li>
+                                                    <li><a href="@Url.Action("LstIngresoAdmin", "Income", new { EdificioId = item.EdificioId })"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Adm. Ingresos</a></li>
+                                                    <li><a href="@Url.Action("LstNoticiaAdm", "News", new { EdificioId = item.EdificioId })"><i class="fa fa-info-circle"></i>&nbsp;Adm. Noticias</a></li>
+                                                    <li><a href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = item.EdificioId })"><i class="fa fa-desktop"></i>&nbsp;Adm. Departamento</a></li>
+                                                    @*<li><a href="@Url.Action("LstArchivoTrabajador", "Employee", new { EdificioId = item.EdificioId })"><i class="fa fa-file"></i>&nbsp;Adm. Archivo</a></li>*@
+                                                    <li><a href="@Url.Action("EditMasivoCuota", "Fee", new { EdificioId = item.EdificioId })"><i class="fa fa-money"></i>&nbsp;Adm. Cuotas</a></li>
+                                                    <li><a href="@Url.Action("ElementosExternos", "External", new { EdificioId = item.EdificioId })"><i class="fa fa-list"></i>&nbsp;Adm. Menu</a></li>
+                                                    <li><a href="@Url.Action("ItemsGenericos", "External", new { EdificioId = item.EdificioId ,filtroNombre ="",filtroDato="",filtroTipo="Obligaciones",vista="ObligacionesLaborales"})"><i class="fa fa-list"></i>&nbsp;Adm. Obligaciones Laborales</a></li>
+                                                    <li><a href="@Url.Action("ItemsGenericos", "External", new { EdificioId = item.EdificioId, filtroNombre = "", filtroDato = "", filtroTipo = "Equipo", vista = "Equipos" })"><i class="fa fa-list"></i>&nbsp;Adm. Certificados de Equipos</a></li>
+                                                    <li><a href="@Url.Action("LstEquiposSinCertificado", "External", new { EdificioId = item.EdificioId})"><i class="fa fa-cubes"></i>&nbsp;Adm. Equipos sin Certificado</a></li>
+                                                    <li><a href="@Url.Action("CronogramaMantenimientos", "External", new { EdificioId = item.EdificioId, Editar = true })"><i class="fa fa-list"></i>&nbsp;Cronograma de mantenimientos</a></li>
+                                                    <li><a href="@Url.Action("PrintMasivoCuota", "Fee", new { EdificioId = item.EdificioId })"><i class="fa fa-print"></i>&nbsp;Imp. Cuotas</a></li>
+                                                    <li><a href="@Url.Action("EnviarEmailInformativo", "Building", new { EdificioId = item.EdificioId })"><i class="fa fa-envelope"></i>&nbsp;Enviar Correo</a></li>
+                                                    <li><a href='@Url.Action("CuadroMoroso", "Fee", new { EdificioId = item.EdificioId })'><i class="fa fa-frown-o"></i>&nbsp;Cuadro Morosos</a></li>
+                                                    <li><a href="@Url.Action("CerrarCuota", "Fee", new { EdificioId = item.EdificioId })"><i class="fa fa-clock-o"></i>&nbsp;Cerrar Cuotas</a></li>
+                                                  
+                                                    <!--  <li><a href="@Url.Action("EditPlanillaQuincena", "Employee", new { EdificioId = item.EdificioId })"><i class="fa fa-user"></i>&nbsp;Administrar Planillas Quincenales</a></li>
+                                                    <li><a href="@Url.Action("EditPlanilla", "Employee", new { EdificioId = item.EdificioId })"><i class="fa fa-user"></i>&nbsp;Administrar Planillas</a></li>
+                                                    -->
+                                                        <li><a href="@Url.Action("LstInspecciones", "Building", new { EdificioId = item.EdificioId })"><i class="fa fa-book"></i>&nbsp;Reporte Inspecciones</a></li>
+
+                                                    <li><a href="@Url.Action("ArchivosCorregidos", "Building", new { EdificioId = item.EdificioId , UnidadTiempoId=-1})"><i class="fa fa-edit"></i>&nbsp;Subir correción</a></li>
+                                                    @*<li><a href="@Url.Action("UploadReport", "Building", new { EdificioId = item.EdificioId, UnidadTiempoId = -1 })"><i class="fa fa-arrow-up"></i>&nbsp;Subir reporte</a></li>*@
+                                                
+                                                       <li class="divider"></li>
+                                                    <li><a @Data.ModalLink("_ActDeactEdificio", "Building", new { EdificioId = item.EdificioId, Estado = item.Estado })><i class="fa fa-eye@(item.Estado == ConstantHelpers.EstadoActivo ? "-slash" : "")"></i>&nbsp;@(item.Estado == ConstantHelpers.EstadoActivo ? "Desactivar" : "Activar")</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="@Url.Action("DeleteEdificio", "Building", new { EdificioId = item.EdificioId })"><i class="fa fa-trash"></i>&nbsp;Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditEdificio", "Building")"><i class="fa fa-plus"></i>&nbsp;Agregar edificio</a>
+
+@* <a class="btn btn-sm btn-primary" href="@Url.Action("CargaMasiva", "Building")"><i class="fa fa-plus"></i>&nbsp;Carga masiva</a> *@

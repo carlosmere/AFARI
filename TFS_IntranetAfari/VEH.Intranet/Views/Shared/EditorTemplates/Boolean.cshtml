@@ -1,0 +1,12 @@
+﻿@model Boolean?
+
+<div class="form-group">
+    @Html.LabelForModel(new { @class="col-md-2 control-label"})
+    <div class="col-md-2">
+        <div class='make-switch switch' data-off-label='&lt;i class="icon-remove"&gt;&lt;/i&gt;' data-on-label='&lt;i class="icon-ok"&gt;&lt;/i&gt;'>
+            <input @(Model.HasValue && Model.Value ? "checked='checked'" : "") type='checkbox'>
+        </div>
+        @Html.HiddenFor(x => x)
+        @Html.ValidationMessageFor(x => x)
+    </div>
+</div>

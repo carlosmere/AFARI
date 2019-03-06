@@ -1,0 +1,36 @@
+﻿@model VEH.Intranet.ViewModel.Building.AddEditEstadoCuentaBancarioViewModel
+@{
+    ViewBag.Title = "Estado Cuenta Bancario";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("_AddEditEstadoCuentaBancario", "Building", FormMethod.Post,new { enctype = "multipart/form-data" });
+}
+@Html.HiddenFor(x => x.EdiId)
+@Html.HiddenFor(x => x.EstadoCuentaBancarioId)
+<div class="form form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nombre</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Unidad Tiempo</label>
+        <div class="col-md-6">
+            @Html.DropDownListFor(x => x.UnidadTiempoId,new SelectList(Model.LstUnidadTiempo,"UnidadTiempoId","Descripcion"), new { @class = "form-control select2" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Archivo</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.Archivo, new { @class = "form-control" , @type="file"})
+        </div>
+        @if (!String.IsNullOrEmpty(Model.Ruta))
+        {
+            <a href="@Url.Content("~/Files/")@Model.Ruta"><i class="fa fa-download"></i> Descargar</a>
+        }
+    </div>
+</div>
+
+@section Footer{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}

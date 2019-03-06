@@ -1,0 +1,25 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    var model = (VEH.Intranet.ViewModel.Templates.infoViewModel)Model;
+}
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <title>@model.Titulo</title>
+
+</head>
+<body>
+    <div style="font-family:Calibri;font-size:15px">
+        @Html.Raw(model.Mensaje.Replace(" ", "&nbsp;").Replace("\n", "<br/>").ToString())
+    </div>
+    <br />
+    <p style="font-family:Calibri;font-size:15px">    Saludos cordiales,</p>
+    <br />
+    @if (!String.IsNullOrEmpty(model.Firma) && model.Firma.Length > 1)
+    {
+        <img src="http://afari.pe/intranet/Resources/Files/@model.Firma" />
+    }
+</body>
+</html>

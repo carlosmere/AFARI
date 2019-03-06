@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Eliminar usuario";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("DeleteUsuario", "User", new { UsuarioId = ViewBag.UsuarioId, DepartamentoId = ViewBag.DepartamentoId, EdificioId = ViewBag.EdificioId, Tipo = ViewBag.Tipo }, FormMethod.Post);
+}
+
+¿ Esta seguro que desea eliminar este registro ?
+
+@section Footer
+{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+

@@ -1,0 +1,59 @@
+﻿@model VEH.Intranet.ViewModel.Building.AddEditItemActaViewModel
+@{
+	ViewBag.Title = (Model.ItemActaId.HasValue ? "Editar" : "Crear") + " Acta";
+}
+
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+	<li><a href="@Url.Action("LstItemActa", "Building")">Lista de Actas</a></li>
+}
+<div class="well">
+    <strong>Edificio: @Model.NombreEdificio</strong>
+</div>
+
+<div class="panel panel-inverse">
+	<div class="panel-body">
+		<form method="post" class="form-horizontal" enctype="multipart/form-data">
+			@Html.HiddenFor(x => x.ItemActaId)
+            @Html.HiddenFor(x => x.EdificioId)
+			<div class="form-group">
+				<label class="col-md-2 control-label">Nombre</label>
+				<div class="col-md-6">
+					@Html.TextBoxFor(x => x.Nombre, new { @class = "form-control" })
+					<span id="spIdentificadorExiste"> </span>
+					@Html.ValidationMessageFor(x => x.Nombre)
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">Archivo</label>
+				<div class="col-md-4">
+					@Html.TextBoxFor(x => x.Ruta, new { @class = "form-control" , @type = "file"})
+					<span id="spIdentificadorExiste"> </span>
+					@Html.ValidationMessageFor(x => x.Ruta)
+				</div>
+                @if (!String.IsNullOrEmpty(Model.RutaArchivo))
+                {
+                    <a href="@Url.Content("~/Resources/Files/Actas/" + HttpUtility.UrlEncode(Model.RutaArchivo).Replace("+"," "))"><i class="fa fa-download"></i> @Model.Nombre</a>
+                }
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="Numero">Unidad Tiempo</label>
+				<div class="col-md-4">
+					@Html.DropDownListFor(x => x.UnidadTiempoId, new SelectList(Model.LstUnidadTiempo, "UnidadTiempoId", "Descripcion"), "[-Seleccione-]", new { @class = "form-control select2" })
+					@Html.ValidationMessageFor(x => x.UnidadTiempoId)
+				</div>
+			</div>
+			
+			<hr />
+			<div class="form-group">
+				<div class="ui-sortable">
+					<button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+					<a href="@Url.Action("LstItemActa", "Building")" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

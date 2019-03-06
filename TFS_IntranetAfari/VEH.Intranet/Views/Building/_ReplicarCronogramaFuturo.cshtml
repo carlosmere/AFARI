@@ -1,0 +1,30 @@
+﻿@model VEH.Intranet.ViewModel.Building._ReplicarCronogramaViewModel
+@{
+    ViewBag.Title = "Crear Cronograma (Futuro)";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("_ReplicarCronograma", "Building", new { EdificioId = Model.EdificioId }, FormMethod.Post);
+}
+
+@Html.HiddenFor(x => x.EdificioId)
+<div class="form form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Cronograma a Copiar (Año)</label>
+        <div class="col-md-6">
+            @Html.DropDownListFor(x => x.Anio, Model.LstAnios, new { @class = "form-control select2" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Para el año (Futuro)</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.AnioDestino, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+@section Footer{
+    @if (!Model.Error)
+    {
+        <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+    }
+}
+
+

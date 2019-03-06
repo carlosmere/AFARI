@@ -1,0 +1,135 @@
+﻿@model VEH.Intranet.ViewModel.Employee.AddEditTrabajadorViewModel
+@{
+    ViewBag.Title = (Model.TrabajadorId != null ? "Editar" : "Agregar") + " trabajador";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstTrabajadorAdmin", "Employee", new { TrabajadorId = Model.TrabajadorId, EdificioId = Model.EdificioId })">Trabajador</a></li>
+}
+
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+            @Html.HiddenFor(x => x.TrabajadorId)
+
+            @Html.EditorFor(x => x.Nombres, new { ancho = "8" })
+            @Html.EditorFor(x => x.Apellidos, new { ancho = "8" })
+            @Html.EditorFor(x => x.DNI, new { ancho = "3", maxlength = "8" })
+            <div class="form-group">
+                <label class="col-md-2 control-label">Fecha de nacimiento</label>
+                <div class="col-md-3">
+                    @Html.DateTextBoxFor(x => x.FechaNacimiento, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.FechaNacimiento)
+                </div>
+            </div>
+            @Html.EditorFor(x => x.FotoFile)
+            @if (!string.IsNullOrEmpty(Model.Foto))
+            {
+                <div class="form-group">
+
+
+                    <div class="col-md-2">
+
+
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ActionLink("Descargar Archivo", "DescargarArchivoAdmin", new { ruta = Model.Foto, nombre = "foto " + Model.Nombres })
+                    </div>
+                </div>
+
+
+            }
+
+
+            @Html.EditorFor(x => x.AntecedenteFile)
+            @if (!string.IsNullOrEmpty(Model.Antecedentes))
+            {
+                <div class="form-group">
+
+
+                    <div class="col-md-2">
+
+
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ActionLink("Descargar Archivo", "DescargarArchivoAdmin", new { ruta = Model.Antecedentes, nombre = "Antecedentes Policiales " + Model.Nombres })
+
+                    </div>
+                </div>
+
+
+            }
+
+
+
+
+            @*@Html.EditorFor(x => x.PartidaFile)
+            @if (!string.IsNullOrEmpty(Model.Partida))
+            {
+                <div class="form-group">
+
+
+                    <div class="col-md-2">
+
+
+                    </div>
+                    <div class="col-md-8">
+                        @Html.ActionLink("Descargar Archivo", "DescargarArchivoAdmin", new { ruta = Model.Partida, nombre = "Curriculum Vitae " + Model.Nombres })
+
+                    </div>
+                </div>
+
+
+            }*@
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Edificio</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.EdificioId, Model.LstComboEdificio, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.EdificioId)
+                </div>
+            </div>
+            @Html.EditorFor(x => x.Cargo, new { ancho = "6" })
+            <!-- <div class="form-group">
+                 <label class="col-md-2 control-label">Sistema de Pensiones</label>
+                 <div class="col-md-8">
+                     @Html.DropDownListFor(x => x.AFP, Model.LstAFP, new { @class = "form-control", hidden="hiden" })
+                     @Html.ValidationMessageFor(x => x.AFP)
+                 </div>
+             </div>-->
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Fecha de ingreso</label>
+                <div class="col-md-3">
+                    @Html.DateTextBoxFor(x => x.FechaIngreso, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.FechaIngreso)
+                </div>
+            </div>
+            @Html.HiddenFor(X => X.Modalidad)
+            <!--   <div class="form-group">
+                  <label class="col-md-2 control-label">Modalidad</label>
+                  <div class="col-md-3">
+                      @Html.DropDownListFor(x => x.Modalidad, ConstantHelpers.ObtenerComboModalidad(), new { @class = "form-control" })
+                      @Html.ValidationMessageFor(x => x.Modalidad)
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-md-2 control-label">Comisión del flujo</label>
+                  <div class="col-md-3">
+                      @Html.DropDownListFor(x => x.ComisionFlujo, Model.LstComisionFlujo, new { @class = "form-control" })
+                      @Html.ValidationMessageFor(x => x.ComisionFlujo)
+                  </div>
+              </div>-->
+
+            <hr />
+            <div class="form-group">
+                <div class="ui-sortable">
+                    <button type="submit" class="cancel btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                    @*<a @Data.ModalLink("_EditCamposQuincena", "Employee", new { TrabajadorId = Model.TrabajadorId }) class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-star-half-o"></i>&nbsp;&nbsp;Campos Quincena</a>
+                        <a @Data.ModalLink("_EditCamposMensualidad", "Employee", new { TrabajadorId = Model.TrabajadorId }) class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-star"></i>&nbsp;&nbsp;Campos Planilla</a>*@
+                    <a href="@Url.Action("LstTrabajadorAdmin", "Employee", new { TrabajadorId = Model.TrabajadorId })" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

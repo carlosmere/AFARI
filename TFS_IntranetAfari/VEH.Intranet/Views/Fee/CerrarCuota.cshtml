@@ -1,0 +1,399 @@
+﻿@model VEH.Intranet.ViewModel.Fee.CerrarCuotaViewModel
+@{
+    ViewBag.Title = "Cerrar Cuotas";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Lista de Edificios</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdiId })">Opciones Edificio</a></li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <div class="row">
+                    <div class="col-md-2">
+                        <dl class="dl-horizontal">
+                            <dt>Nombre</dt>
+                            <dd>@Model.NombreEdificio</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-3">
+                        <dl class="dl-horizontal">
+                            <dt>Mora</dt>
+                            <dd>@Model.FactorMora.ToString("F2")</dd>
+                            <dt>Tipo Mora</dt>
+                            <dd>@(Model.TipoMora == "POR" ? "Porcentaje" : "Bruto")</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-3">
+                        <dl class="dl-horizontal">
+                            <dt>Día en el mes a</dt>
+                            <dd>@Model.DiaMora / Mes</dd>
+                            <dt>considerar mora</dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div class="">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro Cuotas</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    @Html.HiddenFor(x => x.EdificioId)
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">Departamento</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.DepartamentoId, new SelectList(Model.LstDepartamento, "DepartamentoId", "Numero"), "[-Todos-]", new { @class = "form-control select2" })
+                        </div>
+                        <label class="col-md-2 control-label">Unidad de Tiempo</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.UnidadTiempoFin, Model.LstComboUnidadTiempo, new { @class = "form-control select2" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-1 control-label">Estado</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.Estado, Model.LstEstado,"[-Todos-]", new { @class = "form-control select2" })
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.LstCuota.Count > 0)
+{
+    <form method="post">
+        <h5><i class="fa fa-tag"></i> Leyendas (Estructura: Número . Descripción)</h5>
+        <textarea class="form-control" id="leyendas" name="leyendas" rows="5">@Model.StrLeyendas</textarea>
+        <br />
+        @Html.HiddenFor(x => x.EdificioId)
+        @Html.HiddenFor(x => x.EdiId)
+        @Html.HiddenFor(x => x.UnidadTiempoInicio)
+        @Html.HiddenFor(x => x.UnidadTiempoFin)
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Cuotas</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div class="pull-left">
+                        @if (Model.LstCuota.Count > 0 && Model.LstCuota.Count(x => !x.Pagado) > 0)
+                        {
+                            <a id="anular" class="btn btn-danger btn-sm"><i class="fa fa-ban"></i> Aular Pagos</a>
+                        }
+                    </div>
+                    <div class="">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-filter"></i></span>
+                                <input id="filter" class="form-control" placeholder="Filtro">
+                            </div>
+                        </div>
+                        <div class="col-md-2">&nbsp;</div>
+                    </div>
+                    <div class="pull-right">
+                        @if (Model.LstCuota.Count > 0 && Model.LstCuota.Count( x => !x.Pagado) > 0)
+                        {
+                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Cerrar Cuotas</button>                            
+                        }
+                    </div>
+                    <br />
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Dpto.</th>
+                                <th>Unidad Tiempo</th>
+                                <th>Fecha Pago</th>
+                                <th>Mora</th>
+                                <th>Leyenda</th>
+                                <th>¿Es Pago Adelantado?</th>
+                                <th>Estado</th>
+                                <th>Total</th>
+                                <th style="color:red">Total + Mora</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="fbody">
+                            @foreach (var item in Model.LstCuota)
+                            {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="chk" data-val="@item.CuotaId" />
+                                </td>
+                                <td class="numero">@item.Departamento.Numero</td>
+                                <td>
+                                    @item.UnidadTiempo.Descripcion
+                                </td>
+                                <td>
+                                    @if (item.Pagado == false)
+                                    {
+                                        <input class="fp datepicker" id="fp-@item.CuotaId" name="fp-@item.CuotaId" data-val="@item.CuotaId" data-total="@item.Total" data-mes="@item.UnidadTiempo.Mes" data-anio="@item.UnidadTiempo.Anio" />
+                                    }
+                                    else
+                                    {
+                                        @(item.FechaPagado == null ? String.Empty : item.FechaPagado.Value.ToString("dd/MM/yyyy"));
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Pagado == false)
+                                    {
+                                        <input value="@item.Mora" name="m-@(item.CuotaId)" id="m-@item.CuotaId" />
+                                    }
+                                    else
+                                    {
+                                        @item.Mora
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.Pagado == false)
+                                    {
+                                        if (item.FechaLeyenda.HasValue && item.FechaLeyenda.Value.Month == Model.MesElegido && item.FechaLeyenda.Value.Year == Model.AnioElegido)
+                                        {
+                                            <input value="@(item.Leyenda == 0 ? String.Empty : item.Leyenda.ToString())" name="l-@(item.CuotaId)" id="l-@item.CuotaId" />
+                                        }
+                                        else
+                                        {
+                                            <input value="" name="l-@(item.CuotaId)" id="l-@item.CuotaId" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @item.Leyenda
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.EsAdelantado.HasValue && item.EsAdelantado.Value == true)
+                                    {
+                                        <span>SÍ</span>
+                                    }
+                                    else if (item.EsAdelantado.HasValue && item.EsAdelantado.Value == false)
+                                    {
+                                        <span>NO</span>
+                                    }
+                                    else if (item.Pagado)
+                                    {
+                                        <span>NO</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" class="chk" name="adel-@item.CuotaId" />
+                                    }
+                                </td>
+                                <td>
+                                    <span class="label label-@(item.Pagado ? "success" : "danger")">
+                                        @(item.Pagado ? "Pagado" : "Sin Pagar")
+                                    </span>
+                                </td>
+                                <td>
+                                    <input hidden id="total-@item.CuotaId" value="@item.Total" />
+                                    <strong>@item.Total</strong>
+                                </td>
+                                <td style="color:red" id="tm-@item.CuotaId">
+                                    @(item.Mora + item.Total)
+                                </td>
+                                <td>
+                                    <a class="btn btn-white btn-sm" @Data.ModalLink("_EditarCuota", "Fee", new { CuotaId = item.CuotaId })><i class="fa fa-edit"></i> Editar</a>
+                                </td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Leyendas</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed table-cuota-masiva">
+                <thead>
+                    <tr>
+                        <th>Leyenda</th>
+                        <th>Numero</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var ley in Model.LstLeyenda)
+                    {
+                        <tr>
+                            <td>@ley.Descripcion</td>
+                            <td>@ley.Numero</td>
+                            <td><a class="btn btn-default" href="@Url.Action("AddEditLeyenda", "Fee", new { LeyendaId = ley.LeyendaId, EdificioId = Model.EdiId, DepartamentoId = Model.DepartamentoId, UnidadTiempoId = Model.UnidadTiempoFin })"><i class="fa fa-edit">&nbsp;</i></a></td>
+                            <td><a class="btn btn-default" href="@Url.Action("DeleteLeyenda", "Fee", new { LeyendaId = ley.LeyendaId, BalanceEdificioUnidadTiempoId  = ley.BalanceUnidadTiempoEdificioId, DepartamentoId = Model.DepartamentoId})"><i class="fa fa-times">&nbsp;</i></a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+            <a class="btn btn-primary" href="@Url.Action("AddEditLeyenda", "Fee", new { EdificioId = Model.EdiId, DepartamentoId = Model.DepartamentoId,UnidadTiempoId = Model.UnidadTiempoFin })"><span class="fa fa-plus">Añadir leyenda</span></a>
+        </div>
+    </div>
+    <form hidden action="@Url.Action("AnularCuotas","Fee")" method="post">
+        <input name="lstcuotas" id="lstcuotas"/>
+        <input name="EdificioId" id="EdificioId" value="@Model.EdiId"/>
+        <input name="DepartamentoId" id="DepartamentoId" value="@Model.DepartamentoId"/>
+        <button id="frm-anular"></button>
+    </form>
+}
+@section Scripts{
+    <script>
+        var addZeroes = function (num) {
+            var numberAsString = num.toString();
+
+            if (numberAsString.indexOf('.') === -1) {
+                num = num.toFixed(2);
+                numberAsString = num.toString();
+            } else if (numberAsString.split(".")[1].length < 3) {
+                num = num.toFixed(2);
+                numberAsString = num.toString();
+            }
+
+            return numberAsString
+        };
+
+        $('.fp').on('change', function () {
+            var CuotaId = $(this).attr('data-val');
+            if ($('#fecha-considerar').val() != "") {
+                if ($(this).val() != "") {
+                    var Total = $(this).attr('data-total');
+                    var Mes = parseInt($(this).attr('data-mes'));
+                    var Anio = parseInt($(this).attr('data-anio'));
+                    var FechaConsiderar = new Date();
+                    var diff = 0;
+                    if (parseInt('@DateTime.Now.Year') == Anio && parseInt('@DateTime.Now.Month') == Mes) {
+                        FechaConsiderar = new Date(Anio + '-' + Mes + '-' + '@Model.DiaMora');
+                        diff = (Date.parse($('#fp-' + CuotaId).val()) - FechaConsiderar);
+                    }
+                    else {
+                        FechaConsiderar = new Date(Anio + '-' + Mes + '-'+'@Model.DiaMora');
+                        diff = (Date.parse($('#fp-' + CuotaId).val()) - FechaConsiderar);
+                    }
+
+                    if (diff < 0) diff = 0;
+
+                    var days = Math.round(diff / (1000 * 60 * 60 * 24));
+
+                    if ('@Model.TipoMora' == 'POR') {
+                        var porcentaje = days * parseFloat('@Model.FactorMora');
+                        $('#m-' + CuotaId).val((porcentaje * Total).toFixed(2));
+                        $('#tm-' + CuotaId).text(parseFloat(parseFloat(parseFloat($('#total-' + CuotaId).val()).toFixed(2)) + parseFloat((porcentaje * Total).toFixed(2))).toFixed(2));
+                    }
+                    else {
+                        var cantidad = days * parseFloat('@Model.FactorMora');
+                        $('#m-' + CuotaId).val((cantidad).toFixed(2));
+                        $('#tm-' + CuotaId).text(parseFloat(parseFloat(parseFloat($('#total-' + CuotaId).val()).toFixed(2)) + parseFloat((cantidad).toFixed(2))).toFixed(2));
+                    }
+                }
+                else {
+                    $('#m-' + CuotaId).val('0.00');
+                    $('#tm-' + CuotaId).text(parseFloat($('#total-' + CuotaId).val()).toFixed(2));
+                }
+            }
+            else {
+                $('#m-' + CuotaId).val('0.00');
+                $('#tm-' + CuotaId).text(parseFloat($('#total-' + CuotaId).val()).toFixed(2));
+            }
+
+
+        });
+
+        $('#fecha-considerar').on('change', function () {
+            $('.check').each(function () {
+                if ($(this).is(':checked')) {
+                    $(this).click();
+                    $(this).prop("checked", true);
+                }
+            });
+        });
+        $('#anular').on('click', function () {
+            var valores = '';
+            $('.chk').each(function () {
+                if ($(this).is(':checked')) {
+                    valores += $(this).attr('data-val') + ',';
+                }
+            });
+            $('#lstcuotas').val(valores);
+            $('#frm-anular').click();
+        });
+    </script>
+<script>
+        $("#filter").keyup(function () {
+            //split the current value of searchInput
+            var data = this.value.split(" ");
+            //create a jquery object of the rows
+            var jo = $("#fbody").find("tr");
+            if (this.value == "") {
+                jo.show();
+                return;
+            }
+            //hide all the rows
+            jo.hide();
+
+            //Recusively filter the jquery object to get results.
+            jo.filter(function (i, v) {
+                var $t = $(this).find("td.numero");
+                for (var d = 0; d < data.length; ++d) {
+                    if ($t.is(":contains('" + data[d] + "')") || $t.is(":contains('" + data[d].toUpperCase() + "')")) {
+                        return true;
+                    }
+                }
+                return false;
+            })
+            //show the rows that match.
+            .show();
+        }).focus(function () {
+            this.value = "";
+            $(this).css({
+                "color": "black"
+            });
+            $(this).unbind('focus');
+        }).css({
+            "color": "#C0C0C0"
+        });
+</script>
+<script>
+    $('#save-leyend').on('click', function () {
+        alert();
+            debugger;
+            var model = {};
+            model['EdificioId'] = Model.EdificioId;
+            model['UnidadTiempoId'] = Model.UnidadTiempoId;
+            model['Descripcion'] = $('#Descripcion').val();
+            model['Numero'] = $('#Numero').val();
+            $.ajax({
+                url: '@Url.Action("_AddEditLeyenda", "Fee")',
+                data: model,
+                type: 'POST',
+                success: function () {
+
+                }
+            });
+        });
+</script>
+}

@@ -1,0 +1,85 @@
+﻿@model VEH.Intranet.ViewModel.Home.LoginViewModel
+
+@{
+    ViewBag.Title = "Ingresar";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    @RazorHelpers.Content("plugins/jquery-ui-1.10.4/themes/base/minified/jquery-ui.min.css", Url)
+    @RazorHelpers.Content("plugins/bootstrap-3.1.1/css/bootstrap.min.css", Url)
+    @RazorHelpers.Content("plugins/font-awesome-4.1.0/css/font-awesome.min.css", Url)
+    @RazorHelpers.Content("css/animate.min.css", Url)
+    @RazorHelpers.Content("css/style.min.css", Url)
+    @RazorHelpers.Content("css/style-responsive.min.css", Url)
+    <!-- ================== END BASE CSS STYLE ================== -->
+</head>
+<body>
+    <!-- end #page-loader -->
+    <!-- begin #page-container -->
+    <div id="page-container">
+        <!-- begin login -->
+        <div class="login bg-black animated fadeInDown">
+            <!-- begin brand -->
+            <div class="login-header">
+                <div class="brand">
+                    <img src="@RazorHelpers.Content("img/logo.png", Url)" style="width:190px;height:55px;" />
+                    Intranet
+                </div>
+                <div class="icon">
+                    <i class="fa fa-sign-in"></i>
+                </div>
+            </div>
+            <!-- end brand -->
+            <div class="login-content">
+                <form method="post" action="@Url.Action("Login", "Home")" class="margin-bottom-0">
+                    @MessageHelpers.ShowMessages(TempData)
+                    <div class="form-group m-b-20">
+                        @Html.TextBoxFor(x => x.Codigo, new { placeholder = "Código", @class = "form-control input-lg" })
+                    </div>
+                    <div class="form-group m-b-20">
+                        @Html.PasswordFor(x => x.Contrasena, new { placeholder = "Contraseña", @class = "form-control input-lg" })
+                    </div>
+                    <div class="login-buttons">
+                        <button type="submit" class="btn btn-success btn-block btn-lg">Ingresar</button>
+                    </div>
+                    <br />
+                    <a @Data.ModalLink("_ForgotPassword", "User") href="#" style="color:white" id="recu">Recuperar Contraseña</a>
+                </form>
+            </div>
+        </div>
+        <!-- end login -->
+    </div>
+    
+    <!-- ================== BEGIN BASE JS ================== -->
+    @RazorHelpers.Content("plugins/jquery-1.8.2/jquery-1.8.2.min.js", Url)
+    @RazorHelpers.Content("plugins/bootstrap-3.1.1/js/bootstrap.min.js", Url)
+
+    @RazorHelpers.Script("jquery.validate.js", Url)
+    @RazorHelpers.Script("jquery.validate.unobtrusive.min.js", Url)
+    @RazorHelpers.Script("jquery.unobtrusive-ajax.min.js", Url)
+
+
+    
+    @RazorHelpers.Content("js/apps.min.js", Url)
+    @RazorHelpers.Script("Pages/Shared/Global.js", Url)
+    @if (!String.IsNullOrEmpty(Model.Sistema)) {
+           <script>
+               $('#recu').click();
+           </script>
+    }
+    <!-- ================== END PAGE LEVEL JS ================== -->
+</body>
+</html>

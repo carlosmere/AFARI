@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Eliminar planilla";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("DeletePlanilla", "Staff", new { PlanillaId = ViewBag.PlanillaId, EdificioId = ViewBag.EdificioId, TrabajadorId = ViewBag.TrabajadorId }, FormMethod.Post);
+}
+
+¿ Esta seguro que desea eliminar este registro ?
+
+@section Footer
+{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+
+

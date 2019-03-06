@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="353ebfac78bb463ebe771b050764d7be" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_92747_intranetModel.AFP" Width="1.5" PointX="18" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Anuncio" Width="1.5" PointX="15.75" PointY="79.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ArchivoCorrecionEdificio" Width="1.5" PointX="3" PointY="63.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ArchivoGasto" Width="1.5" PointX="16.5" PointY="56.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ArchivoIngreso" Width="1.5" PointX="16.5" PointY="48.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ArchivoTrabajador" Width="1.5" PointX="6" PointY="63.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.BalanceUnidadTiempoEdificio" Width="1.5" PointX="3" PointY="58.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ComisionAFP" Width="1.5" PointX="20.25" PointY="45.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Cronograma" Width="1.5" PointX="11.25" PointY="54.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Cuota" Width="1.5" PointX="3" PointY="67.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.CuotaComun" Width="1.5" PointX="6" PointY="57.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DatoEdificio" Width="1.5" PointX="6" PointY="66.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Departamento" Width="1.5" PointX="11.25" PointY="61" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DepartamentoHistorico" Width="1.5" PointX="18.75" PointY="70.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DepartamentoPropietario" Width="1.5" PointX="18.75" PointY="73.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DetalleCronograma" Width="1.5" PointX="13.5" PointY="54.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DetalleGasto" Width="1.5" PointX="16.5" PointY="52.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DetalleIngreso" Width="1.5" PointX="16.5" PointY="82.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DetalleMensualidad" Width="1.5" PointX="18" PointY="77.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.DetalleQuincena" Width="1.5" PointX="18" PointY="86.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Edificio" Width="1.5" PointX="9" PointY="58.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.EmailValidacion" Width="1.5" PointX="21.75" PointY="69" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.EstadoCuentaBancario" Width="1.5" PointX="14.25" PointY="63.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Gasto" Width="1.5" PointX="14.25" PointY="58.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.GastoCuotaComun" Width="1.5" PointX="8.25" PointY="54.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Ingreso" Width="1.5" PointX="14.25" PointY="67" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Inquilino" Width="1.5" PointX="15.75" PointY="72" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Inspeccion" Width="1.5" PointX="11.25" PointY="89.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ItemActa" Width="1.5" PointX="11.25" PointY="69.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Leyenda" Width="1.5" PointX="5.25" PointY="54.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.MenuPropietarioEdificio" Width="1.5" PointX="11.25" PointY="100.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.NivelEstado" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Noticia" Width="1.5" PointX="11.25" PointY="104" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.PermisoEdificio" Width="1.5" PointX="21.75" PointY="76.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Planilla" Width="1.5" PointX="25.5" PointY="61.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.PlanillaQuincena" Width="1.5" PointX="22.5" PointY="61.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.PlanillaR" Width="1.5" PointX="17.25" PointY="63.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Propietario" Width="1.5" PointX="13.5" PointY="70.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.PropietarioInquilino" Width="1.5" PointX="21" PointY="72.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ReciboMes" Width="1.5" PointX="17.25" PointY="60.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ReporteEdificioUnidadTiempo" Width="1.5" PointX="17.25" PointY="67.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.TipoDescuento" Width="1.5" PointX="18" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.TipoInmueble" Width="1.5" PointX="6.75" PointY="71.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Trabajador" Width="1.5" PointX="20.25" PointY="61.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Ubigeo" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.UDepartamento" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.UDistrito" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.UnidadTiempo" Width="1.5" PointX="0.75" PointY="61.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.UnidadTiempoReciboDepartamento" Width="1.5" PointX="19.5" PointY="57.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.UProvincia" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Usuario" Width="1.5" PointX="13.5" PointY="78.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Visita" Width="1.5" PointX="22.75" PointY="65.125" IsExpanded="true" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ComisionAFP_AFP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Trabajador_AFP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Anuncio_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ArchivoCorrecionEdificio_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ArchivoCorrecionEdificio_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ArchivoGasto_Gasto" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ArchivoIngreso_Ingreso" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ArchivoTrabajador_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ArchivoTrabajador_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_BalanceUnidadTiempoEdificio_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_BalanceUnidadTiempoEdificio_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Leyenda_BalanceUnidadTiempoEdificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ComisionAFP_TipoDescuento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Cronograma_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DetalleCronograma_Cronograma" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_CuotaComun_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_CuotaComun_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_GastoCuotaComun_CuotaComun" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DatoEdificio_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DatoEdificio_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Departamento_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Departamento_TipoInmueble" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DepartamentoHistorico_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DepartamentoPropietario_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Propietario_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_UnidadTiempoReciboDepartamento_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Usuario_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Visita_Departamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DepartamentoHistorico_Propietario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DepartamentoPropietario_Propietario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DetalleGasto_Gasto" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_DetalleIngreso_Ingreso" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Trabajador_DetalleMensualidad" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Trabajador_DetalleQuincena" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Edificio_TipoInmueble" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Edificio_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_EmailValidacion_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_EstadoCuentaBancario_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Gasto_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Ingreso_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Inspeccion_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ItemActa_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_MenuPropietarioEdificio_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Noticia_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PermisoEdificio_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PlanillaR_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ReciboMes_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ReporteEdificioUnidadTiempo_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Trabajador_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Visita_Edificio" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_EmailValidacion_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_EstadoCuentaBancario_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Gasto_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Ingreso_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Inquilino_Propietario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PropietarioInquilino_Inquilino" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ItemActa_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PermisoEdificio_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Planilla_Trabajador" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Planilla_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PlanillaQuincena_Trabajador" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PlanillaQuincena_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PlanillaR_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_PropietarioInquilino_Propietario" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ReciboMes_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ReporteEdificioUnidadTiempo_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_UProvincia_UDepartamento" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_UDistrito_UProvincia" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_UnidadTiempoReciboDepartamento_UnidadTiempo" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Visita_Usuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ConsumoIndividual" Width="1.5" PointX="5.25" PointY="74.5" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

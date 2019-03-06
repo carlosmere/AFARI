@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VEH.Intranet", "VEH.Intranet\VEH.Intranet.csproj", "{5A85A1EA-150D-4A0B-A968-530A03339351}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A85A1EA-150D-4A0B-A968-530A03339351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A85A1EA-150D-4A0B-A968-530A03339351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A85A1EA-150D-4A0B-A968-530A03339351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A85A1EA-150D-4A0B-A968-530A03339351}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F873484-7FAB-4FD9-ABFB-E1BA2E07AD9C}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfsafari.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = VEH.Intranet\\VEH.Intranet.csproj
+		SccProjectName1 = VEH.Intranet
+		SccLocalPath1 = VEH.Intranet
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Eliminar detalle de gasto";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("DeleteDetalleGasto", "Spending", new { DetalleGastoId = ViewBag.DetalleGastoId, GastoId = ViewBag.GastoId, EdificioId = ViewBag.EdificioId }, FormMethod.Post);
+}
+
+¿ Esta seguro que desea eliminar este registro ?
+
+@section Footer
+{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+

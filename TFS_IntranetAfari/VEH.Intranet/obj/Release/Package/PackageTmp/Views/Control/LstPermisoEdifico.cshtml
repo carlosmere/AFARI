@@ -1,0 +1,47 @@
+﻿@model VEH.Intranet.ViewModel.Control.LstPermisoEdificoViewModel
+@{
+    ViewBag.Title = "Permisos por Edifico";
+}
+
+
+@section Breadcrumbs{
+}
+
+<div>
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2 text-center">Código</th>
+                                <th class="col-sm-2 text-center">Password</th>
+                                <th class="col-sm-4 text-center">Nombres y Apellidos</th>
+                                <th class="col-sm-1 text-center">Estado</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstUsuario)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.Codigo</td>
+                                    <td>@item.Password</td>
+                                    <td>@(item.Nombres + " " + item.Apellidos)</td>
+                                    <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : "Inactivo")</span></td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("AddEditUsuarioPermiso", "Control", new { UsuarioId = item.UsuarioId })" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar Permisos</a>&nbsp;
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

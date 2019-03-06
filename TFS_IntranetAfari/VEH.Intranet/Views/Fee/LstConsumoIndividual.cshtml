@@ -1,0 +1,60 @@
+﻿@model VEH.Intranet.ViewModel.Fee.LstConsumoIndividualViewModel
+@{
+    ViewBag.Title = "Lista de Consumos individuales";
+}
+@Html.HiddenFor(x => x.EdificioId)
+@Html.HiddenFor(x => x.UnidadTiempoId)
+<label>Edificio: @Model.NombreEdificio</label><br />
+<label>Unidad Tiempo: @Model.NombreUnidadTiempo</label><br />
+
+<div>
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Tipo Inmueble</th>
+                            <th class="text-center">Nro Inmueble.</th>
+                            <th class="text-center">Unidad Tiempo</th>
+                            <th class="text-center">Detalle de Consumo</th>
+                            <th class="text-center">Monto</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LstConsumoIndividual)
+                        {
+                            <tr>
+                                <td class="text-center">@item.Cuota.Departamento.TipoInmueble.Nombre</td>
+                                <td class="text-center">@item.Cuota.Departamento.Numero</td>
+                                <td class="text-center">@item.Cuota.UnidadTiempo.Descripcion</td>
+                                <td class="text-center"><strong>@item.Detalle.ToUpper()</strong></td>
+                                <td class="text-center">@item.Monto</td>
+
+                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-btn btn-xs">
+                                            <a @Data.ModalLink("_AddEditConsumoIndividual", "Fee", new { CuotaId = item.CuotaId, ConsumoIndividualId = item.ConsumoIndividualId, EdificioId = Model.EdificioId, UnidadTiempoId = Model.UnidadTiempoId }) class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="@Url.Action("DeleteConsumoIndividual", "Fee", new { ConsumoIndividualId = item.ConsumoIndividualId })"><i class="fa fa-trash"></i> Eliminar</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a class="btn btn-sm btn-primary" @Data.ModalLink("_AddEditMConsumoIndividual", "Fee", new { EdificioId = Model.EdificioId, UnidadTiempoId = Model.UnidadTiempoId })><i class="fa fa-plus"></i>&nbsp;Agregar consumo individual</a>
+                <a class="btn btn-default" href="@Url.Action("EditMasivoCuota","Fee",new { EdificioId = Model.EdificioId , UnidadTiempoId = Model.UnidadTiempoId})"><i class="fa fa-arrow-left"></i> Atrás</a>
+            </div>
+        </div>
+    </div>
+</div>

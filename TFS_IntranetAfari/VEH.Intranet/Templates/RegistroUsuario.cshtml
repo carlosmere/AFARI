@@ -1,0 +1,55 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    dynamic model = ((dynamic)Model);
+}
+
+<table border='0' cellpadding='0' cellspacing='0' width='100%'>
+    <tr style="background:#247e7b">
+        <td align='center' valign='top'>
+            <img src="http://afari.pe/intranet/Content/img/logo-afari.png" width="187" height="54" />
+        </td>
+    </tr>
+
+    <tr>
+        <td valign='top' style="background:#3eb6b5;color:white">
+            <br />
+            <center>
+                <h2 style='color: white !important'>
+                    ¡ NUEVO REGISTRO DE USUARIO AFARI !
+                </h2>
+            </center>
+            <div style="margin-left: 10px; margin-right: 10px;color:white">
+                <p style='margin: 1em 0; text-align: justify;color:white'>
+                    <bold>Hola @Html.Raw(model.Nombre)</bold><br />
+                    <br />
+                    Usted acaba de ser registrado en el sistema de <strong> AFARI</strong>.
+                    <br>
+                    Esto ayudará a que usted tenga una verdadera gestión de los ingresos y gastos de su edificio e información de su departamento.
+                    <br>
+                    <b>Solo debe digitar su usuario y contraseña en el sistema:</b>
+                    <br>
+                <p>Usuario: <b>@Html.Raw(model.Usuario)</b></p>
+                <p>Contraseña: <b>@Html.Raw(model.Password)</b></p>
+
+                <br />
+                <div>
+                    Saludos Cordiales,<br />
+                    Afari.<br />
+                    Administración y Corretaje Inmobiliario.
+                </div>
+                <br>
+                <br>
+            </div>
+            <br />
+        </td>
+    </tr>
+    <tr style="background:#247e7b;color:white;">
+        <td>
+            <center>
+                <div style="margin: 10px 10px 10px 10px;">
+                    <strong><i>Esta dirección electrónica es utilizada únicamente para el envío de estos mensajes, por lo que agradeceremos no responder el mismo.</i></strong>
+                </div>
+            </center>
+        </td>
+    </tr>
+</table>

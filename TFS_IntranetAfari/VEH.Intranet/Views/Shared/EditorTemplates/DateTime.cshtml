@@ -1,0 +1,9 @@
+﻿@model DateTime?
+
+<div class="form-group">
+    @Html.LabelForModel(new { @class="col-md-2 control-label"})
+    <div class="@(ViewData.ContainsKey("ancho") && ViewData["ancho"] != null ? "col-md-" + ViewData["ancho"].ToString() + "" : "col-md-2")">
+        @Html.DateTextBoxFor(x => x, new { @class="form-control"})
+        @Html.ValidationMessageFor(x => x)
+    </div>
+</div>

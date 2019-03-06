@@ -1,0 +1,40 @@
+﻿@model VEH.Intranet.ViewModel.Building.AddEditTipoInmuebleViewModel
+@{
+    ViewBag.Title = (Model.TipoInmuebleId != null ? "Editar" : "Agregar") + " Tipo Inmueble";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstTipoInmuebles", "Building")">Tipos de Inmuebles</a></li>
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <form method="post" class="form-horizontal">
+                    @Html.HiddenFor(x => x.TipoInmuebleId)
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Nombre</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor( x => x.Nombre, new { @class="form-control"})
+                            @Html.ValidationMessageFor(x => x.Nombre)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Acrónimo</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(x => x.Acronimo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Acronimo)
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                            <a href="@Url.Action("LstTipoInmuebles", "Building")" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

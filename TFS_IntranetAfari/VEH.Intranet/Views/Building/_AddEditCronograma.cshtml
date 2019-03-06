@@ -1,0 +1,32 @@
+﻿@model VEH.Intranet.ViewModel.Building._AddEditCronogramaViewModel
+@{
+    ViewBag.Title = "Cronograma";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("_AddEditCronograma", "Building", FormMethod.Post);
+}
+@Html.HiddenFor(x => x.EdificioId)
+@Html.HiddenFor(x => x.CronogramaId)
+<div class="form form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Orden</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.Orden, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Nombre</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Anio</label>
+        <div class="col-md-6">
+            @Html.DropDownListFor(x => x.Anio, Model.LstAnios, new { @class = "form-control select2" })
+        </div>
+    </div>
+</div>
+
+@section Footer{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}

@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSInfoInspecciones" targetNamespace="http://tempuri.org/DSInfoInspecciones.xsd" xmlns:mstns="http://tempuri.org/DSInfoInspecciones.xsd" xmlns="http://tempuri.org/DSInfoInspecciones.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSInfoInspecciones" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSInfoInspecciones" msprop:Generator_UserDSName="DSInfoInspecciones">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DTInfo" msprop:Generator_TableClassName="DTInfoDataTable" msprop:Generator_TableVarName="tableDTInfo" msprop:Generator_RowChangedName="DTInfoRowChanged" msprop:Generator_TablePropName="DTInfo" msprop:Generator_RowDeletingName="DTInfoRowDeleting" msprop:Generator_RowChangingName="DTInfoRowChanging" msprop:Generator_RowEvHandlerName="DTInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="DTInfoRowDeleted" msprop:Generator_RowClassName="DTInfoRow" msprop:Generator_UserTableName="DTInfo" msprop:Generator_RowEvArgName="DTInfoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Titulo" msprop:Generator_ColumnVarNameInTable="columnTitulo" msprop:Generator_ColumnPropNameInRow="Titulo" msprop:Generator_ColumnPropNameInTable="TituloColumn" msprop:Generator_UserColumnName="Titulo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario" msprop:Generator_TableClassName="DTInspeccionUnitarioDataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario" msprop:Generator_RowChangedName="DTInspeccionUnitarioRowChanged" msprop:Generator_TablePropName="DTInspeccionUnitario" msprop:Generator_RowDeletingName="DTInspeccionUnitarioRowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitarioRowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitarioRowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitarioRowDeleted" msprop:Generator_RowClassName="DTInspeccionUnitarioRow" msprop:Generator_UserTableName="DTInspeccionUnitario" msprop:Generator_RowEvArgName="DTInspeccionUnitarioRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario1" msprop:Generator_TableClassName="DTInspeccionUnitario1DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario1" msprop:Generator_TablePropName="DTInspeccionUnitario1" msprop:Generator_RowDeletingName="DTInspeccionUnitario1RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario1RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario1RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario1RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario1" msprop:Generator_RowChangedName="DTInspeccionUnitario1RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario1RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario2" msprop:Generator_TableClassName="DTInspeccionUnitario2DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario2" msprop:Generator_TablePropName="DTInspeccionUnitario2" msprop:Generator_RowDeletingName="DTInspeccionUnitario2RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario2RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario2RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario2RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario2" msprop:Generator_RowChangedName="DTInspeccionUnitario2RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario2RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario2Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario3" msprop:Generator_TableClassName="DTInspeccionUnitario3DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario3" msprop:Generator_TablePropName="DTInspeccionUnitario3" msprop:Generator_RowDeletingName="DTInspeccionUnitario3RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario3RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario3RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario3RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario3" msprop:Generator_RowChangedName="DTInspeccionUnitario3RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario3RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario3Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario4" msprop:Generator_TableClassName="DTInspeccionUnitario4DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario4" msprop:Generator_TablePropName="DTInspeccionUnitario4" msprop:Generator_RowDeletingName="DTInspeccionUnitario4RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario4RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario4RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario4RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario4" msprop:Generator_RowChangedName="DTInspeccionUnitario4RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario4RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario4Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario5" msprop:Generator_TableClassName="DTInspeccionUnitario5DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario5" msprop:Generator_TablePropName="DTInspeccionUnitario5" msprop:Generator_RowDeletingName="DTInspeccionUnitario5RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario5RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario5RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario5RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario5" msprop:Generator_RowChangedName="DTInspeccionUnitario5RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario5RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario5Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario6" msprop:Generator_TableClassName="DTInspeccionUnitario6DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario6" msprop:Generator_TablePropName="DTInspeccionUnitario6" msprop:Generator_RowDeletingName="DTInspeccionUnitario6RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario6RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario6RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario6RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario6" msprop:Generator_RowChangedName="DTInspeccionUnitario6RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario6RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario6Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario7" msprop:Generator_TableClassName="DTInspeccionUnitario7DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario7" msprop:Generator_TablePropName="DTInspeccionUnitario7" msprop:Generator_RowDeletingName="DTInspeccionUnitario7RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario7RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario7RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario7RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario7" msprop:Generator_RowChangedName="DTInspeccionUnitario7RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario7RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario7Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario8" msprop:Generator_TableClassName="DTInspeccionUnitario8DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario8" msprop:Generator_TablePropName="DTInspeccionUnitario8" msprop:Generator_RowDeletingName="DTInspeccionUnitario8RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario8RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario8RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario8RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario8" msprop:Generator_RowChangedName="DTInspeccionUnitario8RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario8RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario8Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario9" msprop:Generator_TableClassName="DTInspeccionUnitario9DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario9" msprop:Generator_TablePropName="DTInspeccionUnitario9" msprop:Generator_RowDeletingName="DTInspeccionUnitario9RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario9RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario9RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario9RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario9" msprop:Generator_RowChangedName="DTInspeccionUnitario9RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario9RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario9Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario10" msprop:Generator_TableClassName="DTInspeccionUnitario10DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario10" msprop:Generator_TablePropName="DTInspeccionUnitario10" msprop:Generator_RowDeletingName="DTInspeccionUnitario10RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario10RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario10RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario10RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario10" msprop:Generator_RowChangedName="DTInspeccionUnitario10RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario10RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario10Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario11" msprop:Generator_TableClassName="DTInspeccionUnitario11DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario11" msprop:Generator_TablePropName="DTInspeccionUnitario11" msprop:Generator_RowDeletingName="DTInspeccionUnitario11RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario11RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario11RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario11RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario11" msprop:Generator_RowChangedName="DTInspeccionUnitario11RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario11RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario11Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario12" msprop:Generator_TableClassName="DTInspeccionUnitario12DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario12" msprop:Generator_TablePropName="DTInspeccionUnitario12" msprop:Generator_RowDeletingName="DTInspeccionUnitario12RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario12RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario12RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario12RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario12" msprop:Generator_RowChangedName="DTInspeccionUnitario12RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario12RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario12Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario13" msprop:Generator_TableClassName="DTInspeccionUnitario13DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario13" msprop:Generator_TablePropName="DTInspeccionUnitario13" msprop:Generator_RowDeletingName="DTInspeccionUnitario13RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario13RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario13RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario13RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario13" msprop:Generator_RowChangedName="DTInspeccionUnitario13RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario13RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario13Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario14" msprop:Generator_TableClassName="DTInspeccionUnitario14DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario14" msprop:Generator_TablePropName="DTInspeccionUnitario14" msprop:Generator_RowDeletingName="DTInspeccionUnitario14RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario14RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario14RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario14RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario14" msprop:Generator_RowChangedName="DTInspeccionUnitario14RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario14RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario14Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario15" msprop:Generator_TableClassName="DTInspeccionUnitario15DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario15" msprop:Generator_TablePropName="DTInspeccionUnitario15" msprop:Generator_RowDeletingName="DTInspeccionUnitario15RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario15RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario15RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario15RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario15" msprop:Generator_RowChangedName="DTInspeccionUnitario15RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario15RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario15Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario16" msprop:Generator_TableClassName="DTInspeccionUnitario16DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario16" msprop:Generator_TablePropName="DTInspeccionUnitario16" msprop:Generator_RowDeletingName="DTInspeccionUnitario16RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario16RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario16RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario16RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario16" msprop:Generator_RowChangedName="DTInspeccionUnitario16RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario16RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario16Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario17" msprop:Generator_TableClassName="DTInspeccionUnitario17DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario17" msprop:Generator_TablePropName="DTInspeccionUnitario17" msprop:Generator_RowDeletingName="DTInspeccionUnitario17RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario17RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario17RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario17RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario17" msprop:Generator_RowChangedName="DTInspeccionUnitario17RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario17RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario17Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario18" msprop:Generator_TableClassName="DTInspeccionUnitario18DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario18" msprop:Generator_TablePropName="DTInspeccionUnitario18" msprop:Generator_RowDeletingName="DTInspeccionUnitario18RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario18RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario18RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario18RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario18" msprop:Generator_RowChangedName="DTInspeccionUnitario18RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario18RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario18Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario19" msprop:Generator_TableClassName="DTInspeccionUnitario19DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario19" msprop:Generator_TablePropName="DTInspeccionUnitario19" msprop:Generator_RowDeletingName="DTInspeccionUnitario19RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario19RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario19RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario19RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario19" msprop:Generator_RowChangedName="DTInspeccionUnitario19RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario19RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario19Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario20" msprop:Generator_TableClassName="DTInspeccionUnitario20DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario20" msprop:Generator_TablePropName="DTInspeccionUnitario20" msprop:Generator_RowDeletingName="DTInspeccionUnitario20RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario20RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario20RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario20RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario20" msprop:Generator_RowChangedName="DTInspeccionUnitario20RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario20RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario20Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario21" msprop:Generator_TableClassName="DTInspeccionUnitario21DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario21" msprop:Generator_TablePropName="DTInspeccionUnitario21" msprop:Generator_RowDeletingName="DTInspeccionUnitario21RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario21RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario21RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario21RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario21" msprop:Generator_RowChangedName="DTInspeccionUnitario21RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario21RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario21Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario22" msprop:Generator_TableClassName="DTInspeccionUnitario22DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario22" msprop:Generator_TablePropName="DTInspeccionUnitario22" msprop:Generator_RowDeletingName="DTInspeccionUnitario22RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario22RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario22RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario22RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario22" msprop:Generator_RowChangedName="DTInspeccionUnitario22RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario22RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario22Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario23" msprop:Generator_TableClassName="DTInspeccionUnitario23DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario23" msprop:Generator_TablePropName="DTInspeccionUnitario23" msprop:Generator_RowDeletingName="DTInspeccionUnitario23RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario23RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario23RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario23RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario23" msprop:Generator_RowChangedName="DTInspeccionUnitario23RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario23RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario23Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario24" msprop:Generator_TableClassName="DTInspeccionUnitario24DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario24" msprop:Generator_TablePropName="DTInspeccionUnitario24" msprop:Generator_RowDeletingName="DTInspeccionUnitario24RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario24RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario24RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario24RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario24" msprop:Generator_RowChangedName="DTInspeccionUnitario24RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario24RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario24Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario25" msprop:Generator_TableClassName="DTInspeccionUnitario25DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario25" msprop:Generator_TablePropName="DTInspeccionUnitario25" msprop:Generator_RowDeletingName="DTInspeccionUnitario25RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario25RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario25RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario25RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario25" msprop:Generator_RowChangedName="DTInspeccionUnitario25RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario25RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario25Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario26" msprop:Generator_TableClassName="DTInspeccionUnitario26DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario26" msprop:Generator_TablePropName="DTInspeccionUnitario26" msprop:Generator_RowDeletingName="DTInspeccionUnitario26RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario26RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario26RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario26RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario26" msprop:Generator_RowChangedName="DTInspeccionUnitario26RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario26RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario26Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario27" msprop:Generator_TableClassName="DTInspeccionUnitario27DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario27" msprop:Generator_TablePropName="DTInspeccionUnitario27" msprop:Generator_RowDeletingName="DTInspeccionUnitario27RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario27RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario27RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario27RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario27" msprop:Generator_RowChangedName="DTInspeccionUnitario27RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario27RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario27Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario28" msprop:Generator_TableClassName="DTInspeccionUnitario28DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario28" msprop:Generator_TablePropName="DTInspeccionUnitario28" msprop:Generator_RowDeletingName="DTInspeccionUnitario28RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario28RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario28RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario28RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario28" msprop:Generator_RowChangedName="DTInspeccionUnitario28RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario28RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario28Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario29" msprop:Generator_TableClassName="DTInspeccionUnitario29DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario29" msprop:Generator_TablePropName="DTInspeccionUnitario29" msprop:Generator_RowDeletingName="DTInspeccionUnitario29RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario29RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario29RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario29RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario29" msprop:Generator_RowChangedName="DTInspeccionUnitario29RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario29RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario29Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario30" msprop:Generator_TableClassName="DTInspeccionUnitario30DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario30" msprop:Generator_TablePropName="DTInspeccionUnitario30" msprop:Generator_RowDeletingName="DTInspeccionUnitario30RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario30RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario30RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario30RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario30" msprop:Generator_RowChangedName="DTInspeccionUnitario30RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario30RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario30Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario31" msprop:Generator_TableClassName="DTInspeccionUnitario31DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario31" msprop:Generator_TablePropName="DTInspeccionUnitario31" msprop:Generator_RowDeletingName="DTInspeccionUnitario31RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario31RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario31RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario31RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario31" msprop:Generator_RowChangedName="DTInspeccionUnitario31RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario31RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario31Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario32" msprop:Generator_TableClassName="DTInspeccionUnitario32DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario32" msprop:Generator_TablePropName="DTInspeccionUnitario32" msprop:Generator_RowDeletingName="DTInspeccionUnitario32RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario32RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario32RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario32RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario32" msprop:Generator_RowChangedName="DTInspeccionUnitario32RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario32RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario32Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario33" msprop:Generator_TableClassName="DTInspeccionUnitario33DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario33" msprop:Generator_TablePropName="DTInspeccionUnitario33" msprop:Generator_RowDeletingName="DTInspeccionUnitario33RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario33RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario33RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario33RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario33" msprop:Generator_RowChangedName="DTInspeccionUnitario33RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario33RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario33Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario34" msprop:Generator_TableClassName="DTInspeccionUnitario34DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario34" msprop:Generator_TablePropName="DTInspeccionUnitario34" msprop:Generator_RowDeletingName="DTInspeccionUnitario34RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario34RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario34RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario34RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario34" msprop:Generator_RowChangedName="DTInspeccionUnitario34RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario34RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario34Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario35" msprop:Generator_TableClassName="DTInspeccionUnitario35DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario35" msprop:Generator_TablePropName="DTInspeccionUnitario35" msprop:Generator_RowDeletingName="DTInspeccionUnitario35RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario35RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario35RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario35RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario35" msprop:Generator_RowChangedName="DTInspeccionUnitario35RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario35RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario35Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInspeccionUnitario36" msprop:Generator_TableClassName="DTInspeccionUnitario36DataTable" msprop:Generator_TableVarName="tableDTInspeccionUnitario36" msprop:Generator_TablePropName="DTInspeccionUnitario36" msprop:Generator_RowDeletingName="DTInspeccionUnitario36RowDeleting" msprop:Generator_RowChangingName="DTInspeccionUnitario36RowChanging" msprop:Generator_RowEvHandlerName="DTInspeccionUnitario36RowChangeEventHandler" msprop:Generator_RowDeletedName="DTInspeccionUnitario36RowDeleted" msprop:Generator_UserTableName="DTInspeccionUnitario36" msprop:Generator_RowChangedName="DTInspeccionUnitario36RowChanged" msprop:Generator_RowEvArgName="DTInspeccionUnitario36RowChangeEvent" msprop:Generator_RowClassName="DTInspeccionUnitario36Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Fecha" msprop:Generator_ColumnVarNameInTable="columnFecha" msprop:Generator_ColumnPropNameInRow="Fecha" msprop:Generator_ColumnPropNameInTable="FechaColumn" msprop:Generator_UserColumnName="Fecha" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:string" minOccurs="0" />
+              <xs:element name="NumeroPregunta" msprop:Generator_ColumnVarNameInTable="columnNumeroPregunta" msprop:Generator_ColumnPropNameInRow="NumeroPregunta" msprop:Generator_ColumnPropNameInTable="NumeroPreguntaColumn" msprop:Generator_UserColumnName="NumeroPregunta" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

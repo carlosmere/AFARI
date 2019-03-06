@@ -1,0 +1,77 @@
+﻿@model VEH.Intranet.ViewModel.Building.BalanceOverviewViewModel
+@{
+    ViewBag.Title = "Reporte general del edificio";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Lista de Edificios</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+}
+<div class="well">
+    <strong><i class="fa fa-building"></i> EDIFICIO: @Model.NombreEdificio</strong>
+</div>
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            @Html.HiddenFor(x => x.EdificioId)
+            <div class="form-group">
+                <label class="col-md-2 control-label">Unidad de tiempo</label>
+                <div class="col-md-8">
+                    @Html.DropDownListFor(x => x.UnidadTiempoId, new SelectList(Model.LstUnidadTiempo, "UnidadTiempoId", "Descripcion"), new { @class = "form-control select2" })
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-10 ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title"><i class="fa fa-tasks"></i>&nbsp;&nbsp;Balance General</h4>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <table class="table table-striped table-borderd">
+                <tbody>
+                    <tr>
+                        <td>Ingresos</td>
+                        <td>@Model.Ingresos.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <td>Gastos</td>
+                        <td>@Model.Gastos.ToString("#,##0.00")</td>
+                    </tr>
+
+                    <tr>
+                        <td>Saldo</td>
+                        <td>@Model.Saldo.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <td>Saldo Anterior</td>
+                        <td>@Model.SaldoAnterior.ToString("#,##0.00")</td>
+                    </tr>
+                    <tr>
+                        <td>Saldo acumulado</td>
+                        <td>@Model.Acumulado.ToString("#,##0.00")</td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

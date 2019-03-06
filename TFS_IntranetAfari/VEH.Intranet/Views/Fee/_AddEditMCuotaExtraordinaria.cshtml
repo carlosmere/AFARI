@@ -1,0 +1,22 @@
+﻿@model VEH.Intranet.ViewModel.Fee._AddEditCuotaExtraordinariaViewModel
+@{
+    ViewBag.Title = "Agregar Cuotas Extraordinarias";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("_AddEditMCuotaExtraordinaria", "Fee", FormMethod.Post);
+}
+@Html.HiddenFor(x => x.EdificioId)
+@Html.HiddenFor(x => x.UnidadTiempoId)
+<label>Edificio: @Model.NombreEdificio</label><br />
+<label>Unidad Tiempo: @Model.NombreUnidadTiempo</label><br />
+<div class="form form-horizontal">
+    <div class="form-group">
+        <label class="col-md-2 control-label">Monto Cuota Extraordinaria</label>
+        <div class="col-md-6">
+            @Html.TextBoxFor(x => x.MontoExtraordinaria, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+@section Footer{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}

@@ -1,0 +1,10 @@
+﻿@model String
+
+<div class='form-group'>
+    @Html.LabelForModel(new { @class = "col-md-2 control-label" })
+
+    <div class="@(ViewData.ContainsKey("ancho") && ViewData["ancho"] != null ? "col-md-" + ViewData["ancho"].ToString() + "" : "col-md-10")">
+        @Html.TextBoxFor(x => x, new { @class = "form-control" , maxlength= (ViewData.ContainsKey("maxlength") && ViewData["maxlength"] != null ? ViewData["maxlength"].ToString() : "999999")  , name= (ViewData.ContainsKey("nameAttr") && ViewData["nameAttr"] != null ? ViewData["nameAttr"].ToString() : "") })
+        @Html.ValidationMessageFor(x => x)
+    </div>
+</div>

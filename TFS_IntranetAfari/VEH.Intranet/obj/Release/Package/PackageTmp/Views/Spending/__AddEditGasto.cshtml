@@ -1,0 +1,63 @@
+﻿@model VEH.Intranet.ViewModel.Spending.AddEditGastoViewModel
+
+@{
+    ViewBag.Title = (Model.GastoId != null ? "Editar" : "Agregar") + " gasto";
+}
+
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Adm. Edificio</a></li>
+    <li><a href="@Url.Action("LstGasto", "Spending", new { EdificioId = Model.Edificio.EdificioId })">Adm. Gasto</a></li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal">
+            @Html.HiddenFor(x => x.GastoId)
+            @Html.HiddenFor(x => x.EdificioId)
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Concepto</label>
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Concepto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Concepto)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Cuota</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Monto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Monto)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Unidad de tiempo</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.UnidadTiempoId, Model.LstComboUnidadTiempo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UnidadTiempoId)
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-md-2 col-md-offset-10 ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                    <a href="@Url.Action("LstGasto", "Spending", new { EdificioId = Model.EdificioId })" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>*@

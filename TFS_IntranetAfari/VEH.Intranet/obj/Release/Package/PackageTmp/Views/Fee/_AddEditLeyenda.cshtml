@@ -1,0 +1,21 @@
+﻿@model VEH.Intranet.ViewModel.Fee.AddEditLeyendaViewModel
+@{
+    ViewBag.Title = "Leyendas";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.PageIcon = "fa fa-tasks";
+    ViewBag.GUID = Guid.NewGuid().ToString();
+}
+
+<div class="row">
+    @Html.HiddenFor(X => X.EdificioId)
+    @Html.HiddenFor(X => X.UnidadTiempoId)
+    @Html.HiddenFor(X => X.BalanceEdificioUnidadTiempoId)
+    @Html.EditorFor(X => X.Descripcion)
+    <p>&nbsp;</p>
+    @Html.EditorFor(X => X.Numero)
+</div>
+
+@section Footer{
+    <a class="btn btn-sm btn-primary" id="save-leyend"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</a>
+}
+

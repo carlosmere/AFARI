@@ -1,0 +1,33 @@
+﻿@model VEH.Intranet.ViewModel.Fee.AddEditLeyendaViewModel
+@{
+    ViewBag.Title = "Leyenda";
+}
+
+
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Añádir o Editar Leyenda</h4>
+    </div>
+    <div class="panel-body">
+        <form method="post">
+           
+            @Html.HiddenFor(X => X.EdificioId)
+            @Html.HiddenFor(X => X.UnidadTiempoId)
+            @Html.HiddenFor(X => X.BalanceEdificioUnidadTiempoId)
+            @Html.EditorFor(X => X.Descripcion)
+            <p>&nbsp;</p>
+            @Html.EditorFor(X => X.Numero)
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="ui-sortable">
+                        <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                        <a href="@Url.Action("CerrarCuota", "Fee", new { EdificioId = Model.EdificioId , DepartamentoId = Model.DepartamentoId})" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                    </div>
+                </div>
+            </div>
+          
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@model VEH.Intranet.ViewModel.User.LstUsuarioViewModel
+
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = Model.EdificioId })">Departamento</a></li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-desktop"></i>&nbsp;Departamento</h4>
+                <dl class="dl-horizontal">
+                    <dt>Número</dt>
+                    <dd>@Model.Departamento.Numero</dd>
+                    <dt>Piso</dt>
+                    <dd>@Model.Departamento.Piso</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2 text-center">Código</th>
+                                <th class="col-sm-2 text-center">Password</th>
+                                <th class="col-sm-4 text-center">Nombres y Apellidos</th>
+                                <th class="col-sm-1 text-center">Rol</th>
+                                <th class="col-sm-1 text-center">Estado</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstUsuario)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.Codigo</td>
+                                    <td>@item.Password</td>
+                                    <td>@(item.Nombres + " " + item.Apellidos)</td>
+                                    <td class="text-center">Propietario</td>
+                                    <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : item.Estado == ConstantHelpers.EstadoTemporal ? "Activo":"Inactivo")</span></td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("AddEditUsuario", "User", new { UsuarioId = item.UsuarioId, DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })" class="btn btn-default btn-xs" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar</a>&nbsp;
+                                        <a @Data.ModalLink("_DeleteUsuario", "User", new { UsuarioId = item.UsuarioId, DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId, Tipo = ConstantHelpers.ROL_PROPIETARIO }) class="btn btn-default btn-xs" ><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Eliminar</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditUsuario", "User", new { DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })"><i class="fa fa-plus"></i>&nbsp;Agregar usuario</a>&nbsp;&nbsp;
+<a class="btn btn-sm btn-default" href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = Model.EdificioId })"><i class="fa fa-arrow-left"></i>&nbsp;Regresar</a>
+

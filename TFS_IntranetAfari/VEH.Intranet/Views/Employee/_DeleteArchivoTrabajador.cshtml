@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Editar Campos Quincena";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("DeleteArchivoTrabajador", "Employee", new { ArchivoTrabajadorId = ViewBag.ArchivoTrabajadorId, EdificioId = ViewBag.EdificioId }, FormMethod.Post);
+}
+
+¿ Esta seguro que desea eliminar este registro ?
+
+@section Footer
+{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+
+
+

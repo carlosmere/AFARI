@@ -1,0 +1,157 @@
+﻿@model VEH.Intranet.ViewModel.Fee.CuadroMorosoViewModel
+@{
+    ViewBag.Title = "Cuadro de Morosos - " + Model.NombreEdificio;
+    ViewBag.Section = "CuadroMoroso";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Lista de Edificios</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.Id })">Opciones Edificio</a></li>
+}
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title"><i class="fa fa-frown-o"></i>&nbsp;&nbsp;Cuadro de Morosos</h4>
+    </div>
+    <div class="panel-body">
+        <p><h4>Cuotas Ordinarias</h4></p>
+        <div style="overflow-x:auto;">
+            <table class="table table-striped table-hover table-bordered" id="table2excel">
+                <thead>
+
+                    <tr>
+                        <td class=""><strong>@Model.TipoEdificio</strong></td>
+                        <td class="col-sm-3"><strong>PROPIETARIO</strong></td>
+                        @if (Model.ContNombreInquilino > 0)
+                        {
+                            <td><strong>INQUILINO </strong></td>
+                        }
+                        @foreach (var unidad in Model.LstMeses)
+                        {
+                            <td><strong>@unidad.Value</strong></td>
+                        }
+                        <td><strong>TOTAL</strong></td>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.LstCuadro)
+                    {
+                        <tr>
+                            @{
+                                var c = item.Split('#');
+                                for (int i = 0; i < c.Length; i++)
+                                {
+                                    if (!String.IsNullOrEmpty(c[i]) || Model.ContNombreInquilino > 0)
+                                    {
+                                        if (i == c.Length - 1)
+                                        {   
+                                            <td><strong>@(c[i] == "0" ? String.Empty : c[i])</strong></td>
+                                        }
+                                        else
+                                        {
+                                            <td>@(c[i] == "0" ? String.Empty : c[i])</td>
+                                        }
+                                    }
+                                }
+                            }
+                        </tr>
+                                }
+                    <tr>
+                        <td class=""><strong>TOTALES</strong></td>
+                        <td class="col-sm-3"></td>
+                        @if (Model.ContNombreInquilino > 0)
+                        {
+                            <td></td>
+                        }
+                        @foreach (var unidad in Model.LstMeses)
+                        {
+                            <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadro[unidad.Key]))</strong></td>
+                        }
+                        <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadro[-1]))</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        @if (Model.LstCuadroExtraordinaria.Count > 0)
+        {
+            <p><h4>Cuotas Extraordinarias</h4></p>
+            <div style="overflow-x:auto;">
+                <table class="table table-striped table-hover table-bordered" id="table2excel">
+                    <thead>
+
+                        <tr>
+                            <td class=""><strong>@Model.TipoEdificio</strong></td>
+                            <td class="col-sm-3"><strong>PROPIETARIO</strong></td>
+                            @if (Model.ContNombreInquilino > 0)
+                            {
+                                <td><strong>INQUILINO </strong></td>
+                            }
+                            @foreach (var unidad in Model.LstMesesExtraordinaria)
+                            {
+                                <td><strong>@unidad.Value</strong></td>
+                            }
+                            <td><strong>TOTAL</strong></td>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.LstCuadroExtraordinaria)
+                        {
+                            <tr>
+                                @{
+                                    var c = item.Split('#');
+                                    for (int i = 0; i < c.Length; i++)
+                                    {
+                                        if (!String.IsNullOrEmpty(c[i]) || Model.ContNombreInquilino > 0)
+                                        {
+                                            if (i == c.Length - 1)
+                                            {
+                                                <td><strong>@(c[i] == "0" ? String.Empty : c[i])</strong></td>
+                                            }
+                                            else
+                                            {
+                                                <td>@(c[i] == "0" ? String.Empty : c[i])</td>
+                                            }
+                                        }
+                                    }
+                                }
+                                @*@foreach (var c in item.Split('#'))
+                                {
+                                    if ((!String.IsNullOrEmpty(c) || Model.ContNombreInquilino > 0))
+                                    {
+                                        <td>@(c == "0" ? String.Empty : c)</td>
+                                    }
+                                }*@
+                            </tr>
+                        }
+                        <tr>
+                            <td class=""><strong>TOTALES</strong></td>
+                            <td class="col-sm-3"></td>
+                            @if (Model.ContNombreInquilino > 0)
+                            {
+                                <td></td>
+                            }
+                            @foreach (var unidad in Model.LstMesesExtraordinaria)
+                            {
+                                <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadroExtraordinario[unidad.Key]))</strong></td>
+                            }
+                            <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadroExtraordinario[-1]))</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        }
+        @if (Session.GetRol() == AppRol.Administrador)
+        {
+            <a href="@Url.Action("DescargarCuadroMoroso",new { EdificioId = Model.Id})" class="btn btn-default"><span class="fa fa-table"></span> Exportar a Excel</a>
+        }
+    </div>
+</div>

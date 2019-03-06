@@ -1,0 +1,101 @@
+﻿@model VEH.Intranet.ViewModel.Departament.AddEditDepartamentoViewModel
+@{
+    ViewBag.Title = "Ver Departamento";
+}
+
+@section Breadcrumbs{
+
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstDepartamento", "Departament")">Departamento</a></li>
+
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.NombreEdificio</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr class="">
+                            <td class="col-sm-1"><strong>Lectura de Agua:</strong></td>
+                            <td class="col-sm-1">@Math.Round(Model.LecturaAgua, 2)</td>
+                            <td class="col-sm-1"><strong>Propietario:</strong></td>
+                            <td class="col-sm-1">@Model.Propietario</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>Factor de gasto:</strong></td>
+                            <td class="">@(Model.FactorGasto != 0 ? Math.Round(Model.FactorGasto, 2).ToString() : "")</td>
+                            <td class="col-sm-1"><strong>Nro Documento:</strong></td>
+                            <td class="col-sm-1">@Model.DniPropietario</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>M2 Departamento:</strong></td>
+                            <td class="">@Model.DepartamentoM2</td>
+                            <td class="col-sm-1"><strong>Contacto Propietario:</strong></td>
+                            <td class="col-sm-1">@Model.ContactoPropietario</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>Estacionamiento:</strong></td>
+                            <td class="">@Model.Estacionamiento</td>
+                            <td class="col-sm-1"><strong>Inquilino:</strong></td>
+                            <td class="col-sm-1">@Model.Inquilino</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>M2 Estacionamiento:</strong></td>
+                            <td class="">@Model.EstacionamientoM2</td>
+                            <td class="col-sm-1"><strong>Nro Documento:</strong></td>
+                            <td class="col-sm-1">@Model.DniPropietario</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>Deposito:</strong></td>
+                            <td class="">@Model.Deposito</td>
+                            <td class="col-sm-1"><strong>Contacto Inquilino:</strong></td>
+                            <td class="col-sm-1">@Model.ContactoInquilino</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>M2 Deposito:</strong></td>
+                            <td class="">@Model.DepositoM2</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>Area Total:</strong></td>
+                            <td class="">@(Model.AreaTotalM2.HasValue ? Model.AreaTotalM2.Value : (Model.DepositoM2 ?? 0) + (Model.EstacionamientoM2 ?? 0) + (Model.DepartamentoM2 ?? 0))</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>PDistribucion:</strong></td>
+                            <td class="">@(Model.PDistribucion != 0 ? Math.Round(Model.PDistribucion, 2).ToString() : "")</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="">
+                            <td class=""><strong>Cuota por default:</strong></td>
+                            <td class="">@Model.CuotaDefault</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = Model.EdificioId })" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Regresar</a>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@model VEH.Intranet.ViewModel.Staff.LstPlanillaViewModel
+
+@{
+    ViewBag.Title = "Planillas";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstTrabajadorAdmin", "Employee", new { TrabajadorId = Model.TrabajadorId })">Trabajador</a></li>
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Acrónimo</dt>
+                    <dd>@Model.Edificio.Acronimo </dd>
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-briefcase"></i>&nbsp;Trabajador</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Trabajador.Nombres  @Model.Trabajador.Apellidos</dd>
+                    <dt>DNI</dt>
+                    <dd>@Model.Trabajador.DNI</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2 text-center">Unidad tiempo</th>
+                                <th class="col-sm-2 text-center">Horas extras</th>
+                                <th class="col-sm-2 text-center">Aporte obligatorio</th>
+                                <th class="col-sm-2 text-center">Total descuentos</th>
+                                <th class="col-sm-2 text-center">Sueldo total neto</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstPlanilla)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.UnidadTiempo.Descripcion</td>
+                                    <td>@String.Format("{0:0,0.00}", item.HorasExtras)</td>
+                                    <td>@String.Format("{0:0,0.00}", item.AporteObligatorio)</td>
+                                    <td>@String.Format("{0:0,0.00}", item.TotalDescuentos)</td>
+                                    <td>@String.Format("{0:0,0.00}", item.SueldoTotalNeto)</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-xs btn-default" href="@Url.Action("AddEditPlanilla", "Staff", new { PlanillaId = item.PlanillaId, EdificioId = Model.EdificioId, TrabajadorId = Model.TrabajadorId })"><i class="fa fa-pencil"></i>&nbsp;Editar</a>&nbsp;
+                                        <a class="btn btn-xs btn-default" @Data.ModalLink("_DeletePlanilla", "Staff", new { PlanillaId = item.PlanillaId, EdificioId = Model.EdificioId, TrabajadorId = Model.TrabajadorId })><i class="fa fa-trash-o"></i>&nbsp;Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-default" href="@Url.Action("LstTrabajadorAdmin", "Employee", new { TrabajadorId = Model.TrabajadorId})"><i class="fa fa-arrow-left"></i>&nbsp;Regresar</a>
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditPlanilla", "Staff", new { EdificioId = Model.EdificioId, TrabajadorId = Model.TrabajadorId })"><i class="fa fa-plus"></i>&nbsp;Agregar planilla</a>

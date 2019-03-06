@@ -1,0 +1,246 @@
+﻿@model VEH.Intranet.ViewModel.Building.EnviarEmailInformativoViewModel
+@{
+    ViewBag.Title = "Enviar email informativo Masivo";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Lista de Edificios</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+}
+@section Scripts{
+    <script>
+        $('#frmEmail').on('submit', function () {
+            e.preventDefault();
+            $("#filter").val('').keyup();
+            $(this).submit();
+        });
+
+        function Agregar() {
+            var unArchivoMas = '<input type="file" name="Archivos" /><br />';
+            $("#conjuntoArchivos").append(unArchivoMas);
+        }
+    </script>
+<script>
+    $('#pro').on('click', function () {
+        $('#inq').prop('checked', false);
+        $('#all').prop('checked', false);
+            $('.chk').each(function () {
+                if ($(this).attr('data-tipo') == 'False')
+                    $(this).prop('checked', true);
+                else
+                    $(this).prop('checked', false);
+            });
+        });
+        $('#inq').on('click', function () {
+            $('#pro').prop('checked', false);
+            $('#all').prop('checked', false);
+            $('.chk').each(function () {
+                if ($(this).attr('data-tipo') == 'True')
+                    $(this).prop('checked', true);
+                else
+                    $(this).prop('checked', false);
+            });
+        });
+
+        $('#all').on('click', function () {
+            $('#pro').prop('checked', false);
+            $('#inq').prop('checked', false);
+            $('.chk').each(function () {
+                    $(this).prop('checked', true);
+
+            });
+        });
+</script>
+<script>
+        $("#filter").keyup(function () {
+            //split the current value of searchInput
+            var data = this.value.split(" ");
+            //create a jquery object of the rows
+            var jo = $("#fbody").find("tr");
+            if (this.value == "") {
+                jo.show();
+                return;
+            }
+            //hide all the rows
+            jo.hide();
+
+            //Recusively filter the jquery object to get results.
+            jo.filter(function (i, v) {
+                var $t = $(this);
+                for (var d = 0; d < data.length; ++d) {
+                    if ($t.is(":contains('" + data[d] + "')") || $t.is(":contains('" + data[d].toUpperCase() + "')")) {
+                        return true;
+                    }
+                }
+                return false;
+            })
+            //show the rows that match.
+            .show();
+        }).focus(function () {
+            this.value = "";
+            $(this).css({
+                "color": "black"
+            });
+            $(this).unbind('focus');
+        }).css({
+            "color": "#C0C0C0"
+        });
+</script>
+}
+<form method="post" class="form-horizontal" enctype="multipart/form-data" id="frmEmail">
+
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <div class="panel-title">Enviar mensaje a los propietarios del edificio: @Model.NombreEdificio</div>
+
+        </div>
+        <div class="panel-body">
+            @Html.HiddenFor(x => x.EdificioId)
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Asunto</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Asunto, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.Asunto)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">CC</label>
+                <div class="col-md-6">
+                    <label>Separar correros por <strong style="color:red;font-size:18px">,</strong> | Ejemplo: 123@hotmail.com<strong style="color:red;font-size:18px">,</strong>654@gmail.com</label>
+                    @Html.TextBoxFor(x => x.CopiaCarbon, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Mensaje</label>
+                <div class="col-md-6">
+                    @Html.TextAreaFor(x => x.Mensaje, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.Mensaje)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Archivo Adjunto</label>
+                <div class="col-md-6" id="conjuntoArchivos">
+                    <input type="file" name="Archivos" /><br />
+                </div>
+                <div class="btn btn-default" onclick="Agregar()"><span class="fa fa-plus"></span></div>
+            </div>
+
+            <div class="panel-heading">
+
+            </div>
+
+
+
+            @if (!String.IsNullOrEmpty(Session.GetCorreo()))
+            {
+                <button class="btn btn-default">Enviar&nbsp;<span class="fa fa-envelope"></span></button>
+            }
+            else
+            {
+                <label style="color:red">No tiene una dirección de correo asignada. Por favor agregar dirección de correo para poder enviar correos.</label>
+            }
+
+        </div>
+    </div>
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <div class="panel-title">Destinatarios</div>
+
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <center>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="fa fa-bookmark" style="color:#a8e3ec"></span> <strong>PROPIETARIO</strong>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="fa fa-bookmark" style="color:#fff2c0"></span> <strong>INQUILINO</strong>
+                    </div>
+                </center>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Filtro: </label>
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-filter"></i></span>
+                        <input id="filter" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-2">&nbsp;</div>
+            </div>
+            <div class="form-group">
+                <center>
+                <div class="">
+                    <input type="checkbox" id="all" /> <strong>Marcar Todos</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" id="pro"/> <strong>Marcar Propietarios</strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" id="inq"/> <strong>Marcar Inquilinos</strong>
+                </div>
+                </center>
+            </div>
+
+            @{
+                var index = -1;
+            }
+            <center>
+                <table class="table table-bordered" style="width:60%">
+                    <thead>
+                        <tr>
+                            <th class="col-md-2">Dpto</th>
+                            <th class="col-md-5">Nombre</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="fbody">
+                    @{ List<String> LstNombre = new List<String>();}
+                    @foreach (var destinatario in Model.lstDestinatario)
+                    {
+                        if (!String.IsNullOrEmpty(destinatario.email) && LstNombre.Contains(destinatario.nombre) == false)
+                        {
+                            index++;
+                            <tr style="background-color: @(destinatario.EsInquilino ? "#fff2c0" : "#a8e3ec")">
+                                <td>
+                                    <span></span>
+                                    @destinatario.dpto
+                                </td>
+                                <td>@destinatario.nombre</td>
+                                <td>
+                                    <input type="checkbox" class="chk" value="true" checked="checked" name="check[@index]" data-tipo="@destinatario.EsInquilino" /><br />
+                                    <input type="hidden" value="false" name="check[@index]" />
+                                    <input name="lstDestinatario[@index].dpto" value="@destinatario.dpto" type="hidden" />
+                                    <input name="lstDestinatario[@index].nombre" value="@destinatario.nombre" type="hidden" />
+                                    <input name="lstDestinatario[@index].email" value="@destinatario.email" type="hidden" />
+                                </td>
+                            </tr>
+                            LstNombre.Add(destinatario.nombre);
+                        }
+                    }
+                    </tbody>
+                </table>
+            </center>
+            @*<div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Dpto:@destinatario.dpto / @(destinatario.nombre)</label>
+                        <div class="col-md-6">
+                            <input type="checkbox" value="true" checked="checked" name="check[@index]" /><br />
+                            <input type="hidden" value="false" name="check[@index]"/>
+                        </div>
+                        <input name="lstDestinatario[@index].dpto" value="@destinatario.dpto" type="hidden" />
+                        <input name="lstDestinatario[@index].nombre" value="@destinatario.nombre" type="hidden" />
+                        <input name="lstDestinatario[@index].email" value="@destinatario.email" type="hidden"/>
+                    </div>
+                </div>*@
+
+
+
+        </div>
+    </div>
+    <input type="checkbox" value="true" checked="checked" name="check[@(index+1)]" hidden/><br />
+    <input type="hidden" value="false" name="check[@(index+1)]" />
+    <input name="lstDestinatario[@(index+1)].dpto" value="0" type="hidden" />
+    <input name="lstDestinatario[@(index+1)].nombre" value="@Session.GetNombreRemitente()" type="hidden" />
+    <input name="lstDestinatario[@(index+1)].email" value="@Session.GetCorreo()" type="hidden" />
+</form>

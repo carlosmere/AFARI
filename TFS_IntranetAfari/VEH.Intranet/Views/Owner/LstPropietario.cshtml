@@ -1,0 +1,94 @@
+﻿@model VEH.Intranet.ViewModel.Owner.LstPropietarioViewModel
+
+@{
+    ViewBag.Title = "Propietarios";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = Model.EdificioId })">Departamento</a></li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" novalidate="novalidate">
+            <input data-val="true" data-val-number="The field EdificioId must be a number." data-val-required="The EdificioId field is required." id="EdificioId" name="EdificioId" type="hidden" value="3035">
+            <div class="form-group">
+                <label class="col-md-2 control-label ui-sortable">Estado</label>
+                <div class="col-md-6 ui-sortable">
+                    @Html.HiddenFor(x => x.DepartamentoId)
+                    @Html.DropDownListFor(x => x.Estado, Model.LstEstado, "[-Seleccione-]", new { @class = "form-control select2" })
+                </div>
+                <div class="col-md-2 col-md-offset-10 ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1 text-center">Nro. Documento</th>
+                                <th class="col-sm-2 text-center">Nombres y Apellidos</th>
+                                <th class="col-sm-1 text-center">Parentesco</th>
+                                <th class="col-sm-1 text-center">Estado</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstPropietario)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.NroDocumento</td>
+                                    <td class="text-center">@(item.Nombres + " " + item.ApellidoPaterno + " " + item.ApellidoMaterno)</td>
+                                    <td class="text-center">@item.ParentescoTitular</td>
+                                    <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : "Inactivo")</span></td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("AddEditPropietario", "Owner", new { PropietarioId = item.PropietarioId, DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar</a>
+                                        <a href="@Url.Action("ViewPropietario", "Owner", new { PropietarioId = item.PropietarioId, DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })" class="btn btn-default btn-xs"><i class="fa fa-eye"></i>&nbsp;&nbsp;Ver</a>
+                                        <a @Data.ModalLink("_DeletePropietario", "Owner", new { PropietarioId = item.PropietarioId, DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId }) class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Eliminar</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-default" href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = Model.EdificioId })"><i class="fa fa-arrow-left"></i>&nbsp;Regresar</a>&nbsp;&nbsp;
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditPropietario", "Owner", new { DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })"><i class="fa fa-plus"></i>&nbsp;Agregar propietario</a>
+

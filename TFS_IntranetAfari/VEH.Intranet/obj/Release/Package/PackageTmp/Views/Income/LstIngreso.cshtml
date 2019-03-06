@@ -1,0 +1,126 @@
+﻿@model VEH.Intranet.ViewModel.Income.LstDetalleArchivoIngresoViewModel
+@{
+    ViewBag.Title = "Ingresos";
+}
+
+@section Breadcrumbs{
+
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.LstArchivo.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+                </div>
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Unidad de tiempo</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.IngresoId, Model.LstIngreso, "[-Seleccione-]", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10 ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.IngresoId.HasValue) { 
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <ul class="nav nav-tabs">
+            <li class="@(Model.Pestania == 1 ? "active" : "")"><a href="#tab1" data-toggle="tab"><i class="fa fa-shopping-cart"></i>&nbsp;Detalle</a></li>
+            <li class="@(Model.Pestania != 1 ? "active" : "")"><a href="#tab2" data-toggle="tab"><i class="fa fa-file"></i>&nbsp;Archivos</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade @(Model.Pestania == 1 ? "active" : "") in" id="tab1">
+                <div class="panel panel-inverse">
+                   @* <div class="panel-heading">
+                        <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+                    </div>*@
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-8 text-center">Concepto</th>
+                                        <th class="col-sm-2 text-center">Monto</th>
+                                        <th class="col-sm-2 text-center">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstDetalle.LstDetalleIngreso)
+                                    {
+                                        <tr>
+                                            <td>@item.Concepto</td>
+                                            <td class="text-center">@String.Format("{0:0,0.00}", item.Monto)</td>
+                                            <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : "Inactivo")</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @Html.PagedListPager(Model.LstDetalle.LstDetalleIngreso, page => Url.Action("LstIngreso", new { IngresoId = Model.IngresoId, np1 = page, pestania = 1 }), ConstantHelpers.Bootstrap3Pager)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade @(Model.Pestania != 1 ? "active" : "") in" id="tab2">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="col-sm-12 text-center">Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstArchivo.LstArchivoIngreso)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(item.Ruta))
+                                                { <a href="@Url.Action("DescargarArchivo", "Income", new { ruta = item.Ruta, nombre = item.Nombre, acronimo = Model.LstArchivo.Edificio.Acronimo, unidadmedida = Model.LstArchivo.DescripcionUnidadMedida })" title="Clic para descargar">@item.Nombre</a>}
+                                                else
+                                                { @item.Nombre }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @Html.PagedListPager(Model.LstArchivo.LstArchivoIngreso, page => Url.Action("LstIngreso", new { IngresoId = Model.IngresoId, np2 = page, pestania = 2 }), ConstantHelpers.Bootstrap3Pager)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

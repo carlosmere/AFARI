@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = (ViewBag.Estado == ConstantHelpers.EstadoActivo ? "Desactivar" : "Activar") + " edificio";
+    Layout = ConstantHelpers.Layout.MODAL_LAYOUT_PATH;
+    ViewBag.Form = new ModalFormHelpers("ActDeactEdificio", "Building", new { EdificioId = ViewBag.EdificioId }, FormMethod.Post);
+}
+
+¿ Está seguro que desea realizar esta operación ?
+
+@section Footer
+{
+    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
+}
+
+

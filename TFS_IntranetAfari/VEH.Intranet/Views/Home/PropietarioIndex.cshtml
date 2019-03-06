@@ -1,0 +1,178 @@
+﻿@model VEH.Intranet.ViewModel.Home.PropietarioIndexViewModel
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+@section Breadcrumbs{
+
+}
+
+<div class="row">
+    <div class="col-md-4 col-sm-6">
+        <div class="widget widget-state bg-blue">
+            <div class="state-icon"><i class="fa fa-building-o"></i></div>
+            <div class="state-info">
+                <h4>EDIFICIO</h4>
+                <p>@Model.DesEdificio</p>
+            </div>
+            <div class="state-link">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="widget widget-state bg-green">
+            <div class="state-icon"><i class="fa fa-desktop"></i></div>
+            <div class="state-info">
+                <h4>DEPARTAMENTO</h4>
+                <p>@Model.DesDepartamento</p>
+            </div>
+            <div class="state-link">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+        <div class="widget widget-state bg-red">
+            <div class="state-icon"><i class="fa fa-clock-o"></i></div>
+            <div class="state-info">
+                <h4>UNIDAD DE TIEMPO</h4>
+                <p>@Model.DesUnidadTiempo</p>
+            </div>
+            <div class="state-link">
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.AlertaMora && Model.LstCuadro.Count > 0)
+{
+    <div id="modal-transaccion" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog" role="document" style="width:90%;margin-left:auto;margin-right:auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo-transaccion" style="color:red"><strong><i class="fa fa-ban"></i> USTED PRESENTA PAGOS PENDIENTES</strong></h5>
+                </div>
+                <div class="modal-body">
+                    <h5>Por favor ponerse al día en los siguientes pagos:</h5>
+                    <div class="result" style="display: block;">
+                        <center>
+                            <p><h4 style="background-color:#329898;color:white"><strong>Cuotas Ordinarias</strong></h4></p>
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <td class="">#</td>
+                                        <td class="col-sm-3"><strong>PROPIETARIO</strong></td>
+                                        @if (Model.ContNombreInquilino > 0)
+                                        {
+                                            <td><strong>INQUILINO </strong></td>
+                                        }
+                                        @foreach (var unidad in Model.LstMeses)
+                                        {
+                                            <td><strong>@unidad.Value</strong></td>
+                                        }
+                                        <td><strong>TOTAL</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.LstCuadro)
+                                    {
+                                        <tr>
+                                            @foreach (var c in item.Split('#'))
+                                            {
+                                                if (!String.IsNullOrEmpty(c) || Model.ContNombreInquilino > 0)
+                                                {
+                                                    <td>@(c == "0" ? String.Empty : c)</td>
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                    <tr style="background-color:#80808030;">
+                                        <td class=""><strong>TOTALES</strong></td>
+                                        <td class="col-sm-3"></td>
+                                        @if (Model.ContNombreInquilino > 0)
+                                        {
+                                            <td></td>
+                                        }
+                                        @foreach (var unidad in Model.LstMeses)
+                                        {
+                                            <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadro[unidad.Key]))</strong></td>
+                                        }
+                                        <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadro[-1]))</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                        @if (Model.LstCuadroExtraordinaria.Count > 0)
+                        {
+                            <center>
+                                <p><h4 style="background-color:#ff6464;color:white"><strong>Cuotas Extraordinarias</strong></h4></p>
+                                <table class="table m-0">
+                                    <thead>
+
+                                        <tr>
+                                            <td class=""><strong>#</strong></td>
+                                            <td class="col-sm-3"><strong>PROPIETARIO</strong></td>
+                                            @if (Model.ContNombreInquilino > 0)
+                                            {
+                                                <td><strong>INQUILINO </strong></td>
+                                            }
+                                            @foreach (var unidad in Model.LstMesesExtraordinaria)
+                                            {
+                                                <td><strong>@unidad.Value</strong></td>
+                                            }
+                                            <td><strong>TOTAL</strong></td>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        @foreach (var item in Model.LstCuadroExtraordinaria)
+                                        {
+                                            <tr>
+                                                @foreach (var c in item.Split('#'))
+                                                {
+                                                    if (!String.IsNullOrEmpty(c) || Model.ContNombreInquilino > 0)
+                                                    {
+                                                        <td>@(c == "0" ? String.Empty : c)</td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                        <tr style="background-color:#80808030">
+                                            <td class=""><strong>TOTALES</strong></td>
+                                            <td class="col-sm-3"></td>
+                                            @if (Model.ContNombreInquilino > 0)
+                                            {
+                                                <td></td>
+                                            }
+                                            @foreach (var unidad in Model.LstMesesExtraordinaria)
+                                            {
+                                                <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadroExtraordinario[unidad.Key]))</strong></td>
+                                            }
+                                            <td><strong>@(String.Format("{0:#,##0.00}", Model.LstTotalCuadroExtraordinario[-1]))</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </center>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+}
+
+@section Scripts{
+    <script>
+        @if (Model.AlertaMora && Model.LstCuadro.Count > 0)
+        {
+            @:$('#modal-transaccion').modal('show');
+        }
+    </script>
+}

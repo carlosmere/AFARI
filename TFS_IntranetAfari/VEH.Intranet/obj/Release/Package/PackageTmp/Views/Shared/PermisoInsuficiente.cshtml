@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Permisos insuficientes";
+    var ReturnUrl = Request.UrlReferrer != null && Request.UrlReferrer != Request.Url ? Request.UrlReferrer.ToString() : Url.Action("Dashboard", "Home").ToString();
+    
+}
+
+<div class="row">
+    <div class="3">
+        <div class="text-center">
+            <hr />
+            <h1><i class="icon-remove-sign"></i> No tiene los permisos necesarios.</h1>
+            <p class="text-muted">Para solicitar el permiso correspondiente debe comunicarse con el administrador del sistema.</p>
+            <hr />
+            <a class="btn btn-danger btn-large" href="@ReturnUrl"><i class="icon-arrow-left"></i> Regresar</a>
+        </div>
+    </div>
+</div>

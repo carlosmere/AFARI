@@ -1,0 +1,65 @@
+﻿@model VEH.Intranet.ViewModel.Spending.LstArchivoGastoViewModel
+@{
+    ViewBag.Title = "Archivo de gasto";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstGasto", "Spending")">Gasto</a></li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                    <dt>Unidad medida</dt>
+                    <dd>@Model.DescripcionUnidadMedida</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-12 text-center">Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstArchivoGasto)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.Ruta))
+                                        { 
+                                            @*<a href="@Url.Action("DescargarArchivo", "Spending", new { ruta = item.Ruta, nombre = item.Nombre, acronimo = Model.Edificio.Acronimo, unidadmedida = Model.DescripcionUnidadMedida })" title="Clic para descargar">@item.Nombre</a>*@
+                                            <a target="_blank" href="@Url.Content("~/Resources/Files/")@Model.Edificio.Acronimo@("/")@(HttpUtility.UrlEncode(item.Ruta))">@item.Nombre</a>
+                                        }
+                                        else
+                                        { @item.Nombre }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model.LstArchivoGasto, page => Url.Action("LstArchivoGasto", new { GastoId = Model.GastoId, np = page }), ConstantHelpers.Bootstrap3Pager)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-default" href="@Url.Action("LstGasto", "Spending")"><i class="fa fa-arrow-left"></i>&nbsp;Regresar</a>&nbsp;
+
+

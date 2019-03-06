@@ -1,0 +1,86 @@
+﻿@model VEH.Intranet.ViewModel.Employee.LstTrabajadorViewModel
+
+@{
+    ViewBag.Title = "Trabajadores";
+}
+@section Breadcrumbs{
+}
+
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Edificio</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.EdificioId, Model.LstComboEdificio, "[-Seleccione-]", new { @class = "form-control select2" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-2 col-md-offset-10 ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-3 text-center">Nombres y Apellidos</th>
+                                <th class="col-sm-2 text-center">DNI</th>
+                                <th class="col-sm-2 text-center">Edificio</th>
+                                <th class="col-sm-2 text-center">Cargo</th>
+                                <th class="col-sm-2 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstTrabajador)
+                            {
+                                <tr>
+                                    <td>@item.Nombres @item.Apellidos</td>
+                                    <td class="text-center">@item.DNI</td>
+                                    <td class="text-center">@item.Edificio.Nombre</td>
+                                    <td class="text-center">@item.Cargo</td>
+                                    <td class="text-center">
+                                        <div class="input-group">
+                                            <div class="input-group-btn btn-xs">
+                                                <a class="btn btn-xs btn-default" href="@Url.Action("AddEditTrabajador", "Employee", new { TrabajadorId = item.TrabajadorId })"><i class="fa fa-pencil"></i>&nbsp;Editar</a>&nbsp;                                              
+                                                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    @*<li><a href="@Url.Action("LstPlanillaAdmin", "Staff", new { TrabajadorId = item.TrabajadorId, EdificioId = item.EdificioId })"><i class="fa fa-calculator"></i>&nbsp;Adm. Planilla</a>     </li>
+                                                    <li class="divider"></li>*@
+                                                    <li><a class="btn" @Data.ModalLink("_DeleteTrabajador", "Employee", new { TrabajadorId = item.TrabajadorId, EdificioId = item.EdificioId })><i class="fa fa-trash-o"></i>&nbsp;Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditTrabajador", "Employee", new { EdificioId = Model.EdificioId })"><i class="fa fa-plus"></i>&nbsp;Agregar trabajador</a>

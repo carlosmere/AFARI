@@ -1,0 +1,45 @@
+﻿@model VEH.Intranet.ViewModel.TimeUnit.LstUnidadDeTiempoViewModel
+
+@{
+    ViewBag.Title = "Unidad de tiempo";
+}
+@section Breadcrumbs{}
+
+<div> @*class="row">*@
+    <div> @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1 text-center">N° Orden</th>
+                                <th class="col-sm-6 text-center">Descripción</th>
+                                <th class="col-sm-3 text-center">Es activo</th>
+                                <th class="col-sm-3 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstUnidadDeTiempo.OrderBy(x =>-x.Orden))
+                            {
+                                <tr>
+                                    <td class="text-center">@item.Orden</td>
+                                    <td class="text-center">@item.Descripcion.ToUpper()</td>
+                                    <td class="text-center"><span class="label @(item.EsActivo ? "label-success" : "")">@(item.EsActivo ? "Activo" : "")</span></td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("AddEditUnidadDeTiempo", "TimeUnit", new { UnidadDeTiempoId = item.UnidadTiempoId })" class="btn btn-default btn-xs" ><i class="fa fa-pencil"></i>&nbsp;&nbsp;Editar</a>
+                                        <a @Data.ModalLink("_DeleteUnidadDeTiempo", "TimeUnit", new { UnidadTiempoId = item.UnidadTiempoId }) class="btn btn-default btn-xs" ><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditUnidadDeTiempo", "TimeUnit")"><i class="fa fa-plus"></i>&nbsp;Agregar unidad de tiempo</a>

@@ -1,0 +1,105 @@
+﻿@model VEH.Intranet.ViewModel.Spending.LstDetalleGastoViewModel
+@{
+    ViewBag.Title = "Detalle de gasto";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+    <li><a href="@Url.Action("LstGastoAdmin", "Spending", new { EdificioId = Model.EdificioId })">Gasto</a></li>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-money"></i>&nbsp;Gasto</h4>
+                <dl class="dl-horizontal">
+                    <dt>Unidad de tiempo</dt>
+                    <dd>@Model.DescripcionUnidadMedida</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" action="@Url.Action("GuardarOrdenDetalleGasto","Spending")">
+    @Html.HiddenFor( x => x.EdificioId)
+    @Html.HiddenFor( x => x.GastoId)
+    <div>
+        <div>
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" data-scrollbar="true" data-height="280px">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1 text-center">Orden</th>
+                                    <th class="col-sm-4 text-center">Concepto</th>
+                                    <th class="col-sm-2 text-center">Monto</th>
+                                    <th class="col-sm-1 text-center">Estado</th>
+                                    <th class="col-sm-2 text-center">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.LstDetalleGasto)
+                                {
+                                    var montoString = String.Format("{0:0,0.00}", item.Monto);
+                                    <tr>
+                                        <td>
+                                            <input hidden name="id-@item.DetalleGastoId" />
+                                            @item.Orden
+                                        </td>
+                                        <td>@item.Concepto</td>
+                                        <td class="text-center">
+                                            @if (montoString[0] == '0')
+                                            {
+                                                <span>@montoString.Substring(1)</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@montoString</span>
+                                            }
+                                        </td>
+                                        <td class="text-center"><span class="label @(item.Estado == ConstantHelpers.EstadoActivo ? "label-success" : "label-danger")">@(item.Estado == ConstantHelpers.EstadoActivo ? "Activo" : "Inactivo")</span></td>
+                                        <td class="text-center">
+                                            <a class="btn btn-xs btn-default" href="@Url.Action("AddEditDetalleGasto", "Spending", new { DetalleGastoId = item.DetalleGastoId, GastoId = Model.GastoId, EdificioId = Model.EdificioId })"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
+                                            <a @Data.ModalLink("_DeleteDetalleGasto", "Spending", new { DetalleGastoId = item.DetalleGastoId, GastoId = item.GastoId, EdificioId = Model.EdificioId }) class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Eliminar</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @*@Html.PagedListPager(Model.LstDetalleGasto, page => Url.Action("LstDetalleGastoAdmin", new { GastoId = Model.GastoId, EdificioId = Model.EdificioId , np = page }), ConstantHelpers.Bootstrap3Pager)*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pull-left">
+        <a class="btn btn-sm btn-default" href="@Url.Action("LstGastoAdmin", "Spending", new { EdificioId = Model.EdificioId })"><i class="fa fa-arrow-left"></i>&nbsp;Regresar</a>&nbsp;
+        <a class="btn btn-sm btn-primary" href="@Url.Action("AddEditDetalleGasto", "Spending", new { GastoId = Model.GastoId, EdificioId = Model.EdificioId })"><i class="fa fa-plus"></i>&nbsp;Agregar detalle gasto</a>
+    </div>
+    <div class="pull-right" style="padding-right:50px">
+        <button class="btn btn-sm btn-warning" type="submit"><i class="fa fa-sort-amount-asc"></i>&nbsp;Guardar Orden</button>&nbsp;
+    </div>
+</form>
+@section Scripts{
+    <script>
+        $('tbody').sortable();
+    </script>
+}

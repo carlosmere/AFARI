@@ -1,0 +1,63 @@
+﻿@model VEH.Intranet.ViewModel.External.AddEditItemGenericoViewModel
+@{
+    ViewBag.Title = (Model.itemId.HasValue ? "Editar" : "Agregar")+" Item Genérico";
+}
+
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal" enctype="multipart/form-data" id="formPrincipal">
+            @Html.HiddenFor(X => X.EdificioId)
+            @Html.HiddenFor(X => X.vista)
+            @Html.HiddenFor(X=>X.tipo)
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Orden</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Orden)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Nombre</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.nombre)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Unidad de tiempo (Solo si aplica)</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.UnidadTiempoId, new SelectList(Model.LstUnidadTiempo, "UnidadTiempoId", "Descripcion", Model.UnidadTiempoId), "[-Seleccione--]", new { @class = "form-control select2"})
+                    @Html.ValidationMessageFor(x => x.file)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Archivo</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.file, new { @class = "form-control",type="file" })
+                    @Html.ValidationMessageFor(x => x.file)
+                </div>
+            </div>
+            @*<div class="form-group">
+                <label class="col-md-2 control-label">¿Aplica al cronograma de mantenimiento?</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.AplicaMantenimiento,new {type="checkbox" })
+                    @Html.ValidationMessageFor(x => x.AplicaMantenimiento)
+                </div>
+            </div>*@
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#AplicaMantenimiento").click(function () {
+            if ($(this).is(':checked')) {
+                $(this).val(true)
+            }
+            else {
+                $(this).val(false)
+            }
+        });
+    </script>
+}

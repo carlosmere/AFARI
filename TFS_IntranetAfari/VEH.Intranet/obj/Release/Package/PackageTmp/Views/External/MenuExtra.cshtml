@@ -1,0 +1,11 @@
+﻿@model VEH.Intranet.ViewModel.External.MenuExtraViewModel
+@{
+    ViewBag.Title = "";
+    ViewBag.Section = Model.menu.Nombre;
+}
+
+<h2><i class="@Model.menu.Icono"></i>@Model.menu.Nombre</h2>
+<br />
+<a class="btn btn-default" href="@Url.Content("~/Resources/Files/")@Model.menu.Documento"><i class="fa fa-download"></i> Descargar</a>
+<br />
+<object type="application/pdf" data="@Url.Action("DescargarDocumentoMenu", "External", new { menuId = Model.menu.MenuPropietarioEdificioId })" name="test" width="100%" height="500"></object>

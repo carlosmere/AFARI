@@ -1,0 +1,67 @@
+﻿@model VEH.Intranet.ViewModel.News.LstNoticiaViewModel
+
+@{
+    ViewBag.Title = "Noticias";
+    ViewBag.Section = "Noticias";
+}
+@section Breadcrumbs{
+
+}
+@section Scripts{
+    @RazorHelpers.Content("plugins/isotope/jquery.isotope.min.js", Url)
+    @RazorHelpers.Content("plugins/lightbox/js/lightbox-2.6.min.js", Url)
+    @RazorHelpers.Content("js/gallery.demo.min.js", Url)
+
+    <script>
+        $(document).ready(function () {
+            Gallery.init();
+        });
+    </script>
+
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div id="gallery" class="gallery">
+            @foreach (var item in Model.LstNoticia)
+            {
+                <div class="image gallery-group">
+                    <div class="image-info">
+                        <h5 class="title">@item.Titulo</h5>
+                        <div class="pull-right">
+                            <small>Fecha : </small>@String.Format("{0:dd/MM/yyyy}", item.Fecha)
+                        </div>
+                        <div class="">
+                            <small> <b>Hora : @item.Fecha.ToDateTime().ToLongTimeString() </b> </small>
+                            @*<span class="star active"></span>
+                            <span class="star active"></span>
+                            <span class="star active"></span>
+                            <span class="star active"></span>
+                            <span class="star"></span>*@
+                        </div>
+                        <div class="desc">
+                            @(item.Sumilla + " ... ")
+                            <a @Data.ModalLink("_DetailNoticia", "News", new { NoticiaId = item.NoticiaId }) style="cursor:pointer">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div style="clear: both;">
+            @Html.PagedListPager(Model.LstNoticia, page => Url.Action("LstNoticia", new { np = page }), ConstantHelpers.Bootstrap3Pager)
+        </div>
+    </div>
+</div>

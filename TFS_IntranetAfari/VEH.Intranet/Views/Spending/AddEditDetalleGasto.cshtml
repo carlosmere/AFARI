@@ -1,0 +1,228 @@
+﻿@model VEH.Intranet.ViewModel.Spending.AddEditDetalleGastoViewModel
+@{
+    ViewBag.Title = (Model.DetalleGastoId != null ? "Editar" : "Agregar") + " detalle de gasto";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstGastoAdmin", "Spending", new { EdificioId = Model.EdificioId })">Gasto</a></li>
+    <li><a href="@Url.Action("LstDetalleGastoAdmin", "Spending", new { GastoId = Model.GastoId, EdificioId = Model.EdificioId })">Detalle de gasto</a></li>
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                    <dt>Unidad medida</dt>
+                    <dd>@Model.DescripcionUnidadMedida</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal">
+            @Html.HiddenFor(x => x.GastoId)
+            @Html.HiddenFor(x => x.DetalleGastoId)
+            @Html.HiddenFor(x => x.EdificioId)
+            <div class="form-group">
+                <label class="col-md-2 control-label">Orden</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(x => x.Orden, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Orden)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Concepto</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.Concepto, new { @class = "", @cols = "58" , @rows="5", @style= "resize: none;" })
+                    @Html.ValidationMessageFor(x => x.Concepto)
+                </div>
+                <label class="col-md-2 control-label">&nbsp;</label>
+                <label class="col-md-10" style="color:red">
+                    Para generar un salto de linea, presione la tecla "Enter".
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Monto</label>
+                <div class="col-md-3 mr">
+                    @Html.TextBoxFor(x => x.Monto, new { @class = "form-control", id = "montoTotal" })
+                    @Html.ValidationMessageFor(x => x.Monto)
+                </div>
+                @if (Model.DetalleGastoId.HasValue)
+                {
+                    <label class="col-md-2 control-label">Agregar al monto (- para sustracción) Ejemplo: 5 -10 + 20</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(x => x.MontoAdicional, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Monto)
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Pagado</label>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(x => x.Pagado, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Pagado)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Ordinario</label>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(x => x.Ordinario, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Ordinario)
+                </div>
+            </div>
+
+            <hr />
+
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Detalles</label>
+                <div class="col-md-10">
+                    <textarea type="text" id="campo" style="resize:none" rows="5" cols="54"></textarea>
+                </div>
+                <label class="col-md-2 control-label">&nbsp;</label>
+                <label class="col-md-10" style="color:red">
+                    Para generar un salto de linea, presione la tecla "Enter".
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Monto</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="monto" />
+                </div>
+            </div>
+
+            <hr />
+            <button type="button" class="btn btn-default pull-right" onclick="AgregarDetalle()"><i class="fa fa-plus"></i>&nbsp;Agregar detalle</button>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <br />
+            <div class="form-group" id="detalles">
+                @foreach (var det in Model.detalles)
+                {
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input readonly="readonly" class="form-control" name="campo@(det.Item1)" value="@(det.Item1)">
+                            </div>
+                            <div class="col-sm-5">
+                                <input class="form-control" name="detalle@(det.Item1)" value="@(det.Item2.ToDecimal())" onchange="updateMonto()">
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-default" onclick="borrar(this)">
+                                    X
+                                </button>
+                            </div>
+                        </div><br />
+                    </div>
+                }
+            </div>
+            <br />
+            <hr />
+            <div class="form-group">
+                <div class="ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                    <a href="@Url.Action("LstDetalleGastoAdmin", "Spending", new { GastoId = Model.GastoId, EdificioId = Model.EdificioId })" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+        jQuery.fn.ForceNumericOnly =
+function () {
+    return this.each(function () {
+        $(this).keydown(function (e) {
+            var key = e.charCode || e.keyCode || 0;
+            // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers ONLY
+            // home, end, period, and numpad decimal
+            return (
+                key == 8 ||
+                key == 9 ||
+                key == 13 ||
+                key == 46 ||
+                key == 110 ||
+                key == 190 ||
+                (key >= 35 && key <= 40) ||
+                (key >= 48 && key <= 57) ||
+                (key >= 96 && key <= 105));
+        });
+    });
+};
+
+        function updateMonto() {
+            montoTotal = 0;
+            $("[name^='detalle']").each(
+
+                function () {
+                    montoTotal += parseFloat($(this).val()) || 0;
+                }
+
+                );
+            $("#montoTotal").val(montoTotal);
+        }
+        $("#monto").ForceNumericOnly();
+
+        function borrar(a) {
+            $(a).parent().parent().remove();
+            updateMonto();
+        }
+
+        function AgregarDetalle() {
+            var monto = $("#monto").val();
+            var campo = $("#campo").val();
+            var detalles = $("#detalles");
+            var nuevoDiv = $(document.createElement('div'));
+            var nuevoDetalleDiv = $(document.createElement('div'));
+            nuevoDetalleDiv.addClass("col-sm-5");
+            var nuevoCampoDiv = $(document.createElement('div'));
+            nuevoCampoDiv.addClass("col-sm-6");
+
+            var nuevoDetalle = $(document.createElement('input'));
+            var nuevoCampo = $(document.createElement('input'));
+            nuevoDetalle.on("change", updateMonto);
+            nuevoCampo.ForceNumericOnly();
+            nuevoCampo.attr("readonly", "readonly");
+            nuevoCampo.addClass("form-control");
+            nuevoCampo.val(campo);
+            nuevoCampo.attr("name", "campo" + campo);
+            nuevoDetalle.addClass("form-control");
+
+            nuevoDetalleDiv.append(nuevoDetalle);
+            nuevoCampoDiv.append(nuevoCampo);
+            nuevoDetalle.val(monto);
+            nuevoDetalle.attr("name", "detalle" + campo);
+            nuevoDiv.append(nuevoCampoDiv);
+            nuevoDiv.append(nuevoDetalleDiv);
+            var nuevoBotonDiv = $(document.createElement("div"));
+            nuevoBotonDiv.addClass("col-sm-1");
+            var nuevoBoton = $(document.createElement("button"));
+            nuevoBoton.attr("type", "button");
+            nuevoBoton.text("X");
+            nuevoBoton.addClass("btn btn-default");
+            nuevoBoton.click(
+                function () {
+                    $(this).parent().parent().remove();
+                    updateMonto();
+                }
+                );
+            nuevoBotonDiv.append(nuevoBoton);
+            nuevoDiv.append(nuevoBotonDiv)
+            detalles.append(nuevoDiv);
+
+            updateMonto();
+        }
+
+        var montoTotal = 0;
+
+
+    </script>
+
+}

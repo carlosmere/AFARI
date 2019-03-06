@@ -1,0 +1,372 @@
+﻿@model VEH.Intranet.ViewModel.Building.AddEditEdificioViewModel
+
+@{
+    ViewBag.Title = (Model.EdificioId != null ? "Editar" : "Agregar") + " edificio";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#UDepartamentoId").change(function (e) {
+                e.preventDefault()
+
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("ListarComboProvincias")",
+                    data: { "UDepartamentoId": this.value },
+                    success: function (data) {
+                        var ddlProvincias = $("#UProvinciaId");
+                        AgregarSeleccione(ddlProvincias)
+                        AgregarSeleccione($("#UDistritoId"))
+                        $.each(data, function (id, option) {
+                            ddlProvincias.append($('<option></option>').val(option.Value).html(option.Text));
+                        });
+                    }
+                })
+            })
+
+            $("#UProvinciaId").change(function (e) {
+                e.preventDefault()
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("ListarComboDistritos")",
+                    data: { "UProvinciaId": this.value },
+                    success: function (data) {
+                        var ddlDistritos = $("#UDistritoId")
+                        AgregarSeleccione(ddlDistritos)
+                        $.each(data, function (id, option) {
+                            ddlDistritos.append($('<option></option>').val(option.Value).html(option.Text));
+                        });
+                    }
+                })
+            })
+
+            $("#Identificador").change(function (e) {
+                e.preventDefault()
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@Url.Action("VerificarIdentificadorEdificio")",
+                    data: { "Identificador": this.value },
+                    success: function (data) {
+                        $("#spIdentificadorExiste").empty().html("")
+                        if (!data) { $("#spIdentificadorExiste").html('<i class="fa fa-times"></i> <span style="color:#e5603b"> El código de identificador ya existe</span>') }
+                        else { $("#spIdentificadorExiste").html('<i style="color:#7cdda7" class="fa fa-check"></i> <span ></span>') }
+                        //else { $("#spUsuarioExiste").html('<i class="fa fa-check"></i> <span style="color:#7cdda7"> El código de usuario esta disponible</span>') }
+                    }
+                })
+            })
+
+            function AgregarSeleccione(objeto) {
+                objeto.html("");
+                objeto.append($('<option></option>').val("").html("[-Seleccione-]"));
+            }
+        })
+    </script>
+}
+@*@section Scripts{
+        @RazorHelpers.Content("plugins/password-indicator/js/password-indicator.js", Url)
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                var handleFormPasswordIndicator = function () {
+                    "use strict";
+                    $("#password-indicator-visible").passwordStrength({ targetDiv: "#passwordStrengthDiv2" })
+                };
+                var FormPlugins = function () { "use strict"; return { init: function () { handleFormPasswordIndicator(); } } }()
+                FormPlugins.init();
+
+                $("#Codigo").change(function (e) {
+                    e.preventDefault()
+                    $.ajax({
+                        cache: false,
+                        type: "GET",
+                        url: "@Url.Action("VerificarCodigoUsuario")",
+                        data: { "codigo": this.value },
+                        success: function (data) {
+                            $("#spUsuarioExiste").empty().html("")
+                            if (!data) { $("#spUsuarioExiste").html('<i class="fa fa-times"></i> <span style="color:#e5603b"> El código de usuario ya existe</span>') }
+                            else { $("#spUsuarioExiste").html('<i style="color:#7cdda7" class="fa fa-check"></i> <span ></span>') }
+                            //else { $("#spUsuarioExiste").html('<i class="fa fa-check"></i> <span style="color:#7cdda7"> El código de usuario esta disponible</span>') }
+                        }
+                    })
+                })
+            })
+        </script>
+    }*@
+
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal" enctype="multipart/form-data">
+            @Html.HiddenFor(x => x.EdificioId)
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Orden</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Orden, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.Orden)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Acronimo</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Acronimo, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.Acronimo)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Nombre</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.Nombre)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="Numero">Tipo</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(x => x.TipoInmuebleId, new SelectList(Model.LstTipoInmueble, "TipoInmuebleId", "Nombre"), "[-Seleccione-]", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.TipoInmuebleId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Dirección</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.Direccion, new { @class = "form-control", rows = "3" })
+                    @Html.ValidationMessageFor(x => x.Direccion)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Referencia</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.Referencia, new { @class = "form-control", rows = "3" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">N° Departamentos</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.NroDepartamentos, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.NroDepartamentos)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Monto Cuota</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.MontoCuota, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.MontoCuota)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Departamento</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.UDepartamentoId, Model.LstComboDepartamento, "[-Seleccione-]", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UDepartamentoId)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Provincia</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.UProvinciaId, Model.LstComboProvincia, "[-Seleccione-]", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UProvinciaId)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Distrito</label>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.UDistritoId, Model.LstComboDistrito, "[-Seleccione-]", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UDistritoId)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Identificador</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Identificador, new { @class = "form-control" })
+                    <span id="spIdentificadorExiste"> </span>
+                    @Html.ValidationMessageFor(x => x.Identificador)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Mora</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(x => x.PMora, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.PMora)
+                </div>
+                <div class="col-md-2">
+                    <label>@Html.RadioButton("TipoMora", "POR", new { @class = "form-control" })Porcentaje</label>
+                    <label>@Html.RadioButton("TipoMora", "BRU", new { @class = "form-control" })Bruto</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Día a contar en el mes para mora (Cierra Cuotas)</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(x => x.DiaMora, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.DiaMora)
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <label class="col-md-2 control-label">Fecha de Vencimiento de Cuotas</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(x => x.DiaEmisionCuota, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.DiaEmisionCuota)
+                    </div>
+                </div>*@
+            <div class="form-group">
+                <label class="col-md-2 control-label">Nro. de Cuenta</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.NroCuenta, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.NroCuenta)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Saldo Anterior.</label>
+                <div class="col-md-2">
+                    @Html.TextBoxFor(x => x.SaldoHistorico, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.NroCuenta)
+                </div>
+                <label class="col-md-2 control-label">Unidad Tiempo Asociado</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(x => x.SaldoAnteriorUnidadTiempo, new SelectList(Model.LstUnidadTiempo,"UnidadTiempoId","Descripcion"), "[-Seleccione-]", new { @class = "form-control select2" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Desfase Recibos</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Desfase, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Desfase)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Nombre pago via internet recibo</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Representante, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Representante)
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <label class="col-md-2 control-label">Email Encargado (Correos Masivos)</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.EmailEncargado, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.EmailEncargado)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Nombre Encargado (Correos Masivos)</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.NombreEncargado, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.NombreEncargado)
+                    </div>
+                </div>*@
+            <div class="form-group">
+                <label class="col-md-2 control-label">Nombre Pago (Recibos)</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.NombrePago, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.NombrePago)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Presupuesto Mensual</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.PresupuestoMensual, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.PresupuestoMensual)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="LecturaAgua">Factor de Gastos - Area Comun</label>
+                <div class="col-md-3">
+                    <select name="@Html.NameFor(x => x.FactorAreaComun)" class="form-control">
+                        <option value="IGU" @(Model.FactorAreaComun == "IGU" ? "selected" : "")>TODOS IGUALES</option>
+                        <option value="GAS" @(Model.FactorAreaComun == "GAS" ? "selected" : "")>FACTOR DE GASTO</option>
+                        <option value="CON" @(Model.FactorAreaComun == "CON" ? "selected" : "")>CONSUMO DE AGUA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="LecturaAgua">Factor de Gastos - Alcantarillado</label>
+                <div class="col-md-3">
+                    <select name="@Html.NameFor(x => x.FactorAlcantarillado)" class="form-control">
+                        <option value="IGU" @(Model.FactorAlcantarillado == "IGU" ? "selected" : "")>TODOS IGUALES</option>
+                        <option value="GAS" @(Model.FactorAlcantarillado == "GAS" ? "selected" : "")>FACTOR DE GASTO</option>
+                        <option value="CON" @(Model.FactorAlcantarillado == "CON" ? "selected" : "")>CONSUMO DE AGUA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="LecturaAgua">Factor de Gastos - Cargo Fijo</label>
+                <div class="col-md-3">
+                    <select name="@Html.NameFor(x => x.FactorCargoFijo)" class="form-control">
+                        <option value="IGU" @(Model.FactorCargoFijo == "IGU" ? "selected" : "")>TODOS IGUALES</option>
+                        <option value="GAS" @(Model.FactorCargoFijo == "GAS" ? "selected" : "")>FACTOR DE GASTO</option>
+                        <option value="CON" @(Model.FactorCargoFijo == "CON" ? "selected" : "")>CONSUMO DE AGUA</option>
+                    </select>
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <label class="col-md-2 control-label">Firma</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(x => x.Firma, new { @class = "form-control", type = "file" })
+                        @Html.ValidationMessageFor(x => x.Firma)
+                        @if (!string.IsNullOrEmpty(Model.RutaFirma))
+                        {   @Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.RutaFirma, nombre = "Firma "+Model.Nombre, acronimo = Model.Acronimo })}
+                        else
+                        {
+                            <div> <em> No Subido </em> </div>
+                        }
+                    </div>
+                </div>*@
+            <div class="form-group">
+
+
+                <label class="col-md-2 control-label">Archivo normas convivencia</label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Archivo, new { @class = "form-control", type = "file" })
+                    @Html.ValidationMessageFor(x => x.Archivo)
+
+                    @if (!string.IsNullOrEmpty(Model.Ruta))
+                    {   @Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.Ruta, nombre = Model.Nombre, acronimo = Model.Acronimo })}
+                    else
+                    {
+                        <div> <em> No Subido </em> </div>
+                    }
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-danger" href="@Url.Action("DeleteNormasConvivencia", "Building", new { EdificioId = Model.EdificioId })"><i class="fa fa-trash"></i> Borrar</a>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Mensaje Mora (Recibo)</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.MensajeMora, new { @class = "form-control", rows = "3" })
+                    @Html.ValidationMessageFor(x => x.MensajeMora)
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                    <a href="@Url.Action("LstEdificio", "Building")" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

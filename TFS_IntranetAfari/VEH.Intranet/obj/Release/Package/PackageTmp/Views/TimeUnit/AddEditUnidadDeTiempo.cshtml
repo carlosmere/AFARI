@@ -1,0 +1,47 @@
+﻿@model VEH.Intranet.ViewModel.TimeUnit.AddEditUnidadDeTiempoViewModel
+@{
+    ViewBag.Title = (Model.UnidadTiempoId.HasValue ? "Editar " : "Agregar ") + "unidad de tiempo";
+    Model.EsActivo = Model.UnidadTiempoId.HasValue ? Model.EsActivo : true;
+}
+@section Breadcrumbs{
+<li><a href="@Url.Action("LstUnidadDeTiempo", "TimeUnit")">Unidad tiempo</a></li>
+}
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal">
+            @Html.HiddenFor(x => x.UnidadTiempoId)
+
+            @Html.EditorFor(x => x.Anio, new { ancho = "2", maxlength = "4" })
+            <div class="form-group">
+                <label class="col-md-2 control-label">Mes</label>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(x => x.Mes, ConstantHelpers.ObtenerComboMeses(), "[-Seleccione-]", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Mes)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Es activo</label>
+                <div class="col-md-1">
+                    @Html.CheckBoxFor(x => x.EsActivo, new { style = "margin-top:0.8em" })
+                    @Html.ValidationMessageFor(x => x.EsActivo)
+                </div>
+            </div>
+            @if (Model.UnidadTiempoId.HasValue) { 
+            <div class="form-group">
+                <label class="col-md-2 control-label">Orden N°</label>
+                <div class="col-md-1">
+                    @Html.TextBoxFor(x => x.Orden, new { style = "margin-top:0.8em" })
+                    @Html.ValidationMessageFor(x => x.Orden)
+                </div>
+            </div>
+            }
+            <hr />
+            <div class="form-group">
+                <div class="ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                    <a href="@Url.Action("LstUnidadDeTiempo", "TimeUnit", new { UnidadTiempoId = Model.UnidadTiempoId })" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

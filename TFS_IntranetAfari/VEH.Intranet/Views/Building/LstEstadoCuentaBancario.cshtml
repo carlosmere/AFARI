@@ -1,0 +1,97 @@
+﻿@model VEH.Intranet.ViewModel.Building.LstEstadoCuentaBancarioViewModel
+
+@{
+    ViewBag.Title = "Estados de Cuentas bancarios";
+}
+
+@section Breadcrumbs{
+    @if (Session.GetRol() == AppRol.Administrador)
+    {
+        <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+        <li><a href="@Url.Action("LstOpcionEdificio", "Building", new { EdificioId = Model.EdificioId })">Opciones Edificio</a></li>
+    }
+}
+
+<div class="well">
+    <strong>Edificio: @Model.NombreEdificio</strong>
+</div>
+<div class="row">
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" novalidate="novalidate">
+                @Html.HiddenFor(x => x.EdificioId)
+                <div class="form-group">
+                    <label class="col-md-2 control-label ui-sortable">Año</label>
+                    <div class="col-md-6 ui-sortable">
+                        @Html.DropDownListFor(x => x.Anio, Model.LstAnios, new { @class = "form-control select2" })
+                    </div>
+                    <div class="col-md-2 col-md-offset-10 ui-sortable">
+                        <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div> 
+    <div>
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Unidad Tiempo</th>
+                                <th>Nombre</th>
+                                <th>Archivo</th>
+                                @if (Session.GetRol() == AppRol.Administrador)
+                                {
+                                    <th></th>
+                                }
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstEstadoCuentaBancario)
+                            {
+                                <tr>
+                                    <td>@item.UnidadTiempo.Descripcion</td>
+                                    <td>@item.Nombre</td>
+                                    <td>
+                                        <a target="_blank" href="@Url.Content("~/Files/"+item.Ruta)"><i class="fa fa-download"></i> Descargar</a>
+                                    </td>
+                                    @if (Session.GetRol() == AppRol.Administrador)
+                                    {
+                                        <td>
+                                            <div class="input-group">
+                                                <div class="input-group-btn btn-xs">
+                                                    <a @Data.ModalLink("_AddEditEstadoCuentaBancario", "Building", new { EdificioId = Model.EdiId, EstadoCuentaBancarioId = item.EstadoCuentaBancarioId }) class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
+                                                    <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="@Url.Action("DeleteEstadoCuentaBancario", "Building", new {EdificioId = Model.EdiId, EstadoCuentaBancarioId = item.EstadoCuentaBancarioId , Anio = Model.Anio})"><i class="fa fa-trash"></i>&nbsp;Eliminar</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Session.GetRol() == AppRol.Administrador)
+{
+    <a class="btn btn-sm btn-primary" @Data.ModalLink("_AddEditEstadoCuentaBancario", "Building", new { EdificioId = Model.EdiId })><i class="fa fa-plus"></i>&nbsp;Agregar Estado de Cuenta Bancario</a>
+}

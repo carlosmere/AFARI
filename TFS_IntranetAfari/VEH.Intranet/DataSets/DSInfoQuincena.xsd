@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSInfoQuincena" targetNamespace="http://tempuri.org/DSInfoQuincena.xsd" xmlns:mstns="http://tempuri.org/DSInfoQuincena.xsd" xmlns="http://tempuri.org/DSInfoQuincena.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSInfoQuincena" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSInfoQuincena" msprop:Generator_UserDSName="DSInfoQuincena">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DTQuincena" msprop:Generator_TableClassName="DTQuincenaDataTable" msprop:Generator_TableVarName="tableDTQuincena" msprop:Generator_TablePropName="DTQuincena" msprop:Generator_RowDeletingName="DTQuincenaRowDeleting" msprop:Generator_RowChangingName="DTQuincenaRowChanging" msprop:Generator_RowEvHandlerName="DTQuincenaRowChangeEventHandler" msprop:Generator_RowDeletedName="DTQuincenaRowDeleted" msprop:Generator_UserTableName="DTQuincena" msprop:Generator_RowChangedName="DTQuincenaRowChanged" msprop:Generator_RowEvArgName="DTQuincenaRowChangeEvent" msprop:Generator_RowClassName="DTQuincenaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Trabajador" msprop:Generator_ColumnVarNameInTable="columnTrabajador" msprop:Generator_ColumnPropNameInRow="Trabajador" msprop:Generator_ColumnPropNameInTable="TrabajadorColumn" msprop:Generator_UserColumnName="Trabajador" type="xs:string" minOccurs="0" />
+              <xs:element name="Puesto" msprop:Generator_ColumnVarNameInTable="columnPuesto" msprop:Generator_ColumnPropNameInRow="Puesto" msprop:Generator_ColumnPropNameInTable="PuestoColumn" msprop:Generator_UserColumnName="Puesto" type="xs:string" minOccurs="0" />
+              <xs:element name="SueldoBase" msprop:Generator_ColumnVarNameInTable="columnSueldoBase" msprop:Generator_ColumnPropNameInRow="SueldoBase" msprop:Generator_ColumnPropNameInTable="SueldoBaseColumn" msprop:Generator_UserColumnName="SueldoBase" type="xs:string" minOccurs="0" />
+              <xs:element name="Movilidad" msprop:Generator_ColumnVarNameInTable="columnMovilidad" msprop:Generator_ColumnPropNameInRow="Movilidad" msprop:Generator_ColumnPropNameInTable="MovilidadColumn" msprop:Generator_UserColumnName="Movilidad" type="xs:string" minOccurs="0" />
+              <xs:element name="Bonificacion" msprop:Generator_ColumnVarNameInTable="columnBonificacion" msprop:Generator_ColumnPropNameInRow="Bonificacion" msprop:Generator_ColumnPropNameInTable="BonificacionColumn" msprop:Generator_UserColumnName="Bonificacion" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalQuincena" msprop:Generator_ColumnVarNameInTable="columnTotalQuincena" msprop:Generator_ColumnPropNameInRow="TotalQuincena" msprop:Generator_ColumnPropNameInTable="TotalQuincenaColumn" msprop:Generator_UserColumnName="TotalQuincena" type="xs:string" minOccurs="0" />
+              <xs:element name="Seguro" msprop:Generator_ColumnVarNameInTable="columnSeguro" msprop:Generator_ColumnPropNameInRow="Seguro" msprop:Generator_ColumnPropNameInTable="SeguroColumn" msprop:Generator_UserColumnName="Seguro" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DTInfo" msprop:Generator_TableClassName="DTInfoDataTable" msprop:Generator_TableVarName="tableDTInfo" msprop:Generator_TablePropName="DTInfo" msprop:Generator_RowDeletingName="DTInfoRowDeleting" msprop:Generator_RowChangingName="DTInfoRowChanging" msprop:Generator_RowEvHandlerName="DTInfoRowChangeEventHandler" msprop:Generator_RowDeletedName="DTInfoRowDeleted" msprop:Generator_UserTableName="DTInfo" msprop:Generator_RowChangedName="DTInfoRowChanged" msprop:Generator_RowEvArgName="DTInfoRowChangeEvent" msprop:Generator_RowClassName="DTInfoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Titulo" msprop:Generator_ColumnVarNameInTable="columnTitulo" msprop:Generator_ColumnPropNameInRow="Titulo" msprop:Generator_ColumnPropNameInTable="TituloColumn" msprop:Generator_UserColumnName="Titulo" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

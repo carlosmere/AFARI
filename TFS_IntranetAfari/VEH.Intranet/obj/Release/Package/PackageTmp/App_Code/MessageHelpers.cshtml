@@ -1,0 +1,45 @@
+﻿@helper ShowMessages(System.Web.Mvc.TempDataDictionary TempData){
+    
+    List<VEH.Intranet.Helpers.FlashMessage> messages = (List<VEH.Intranet.Helpers.FlashMessage>)TempData["FlashMessages"];
+        
+    if(messages != null)
+    {
+        <div class="row-fluid">
+            @foreach (var message in messages)
+            {
+                var alert_class = "";
+                var alert_btn_class = "";
+                var icon_class = "";
+                               
+                switch(message.Type)
+                {
+                    case VEH.Intranet.Helpers.MessageType.Error: alert_class = "alert-danger"; alert_btn_class = "btn-danger"; icon_class = "icon-remove-sign"; break;
+                    case VEH.Intranet.Helpers.MessageType.Info: alert_class = "alert-info"; alert_btn_class = "btn-info"; icon_class = "icon-info-sign"; break;
+                    case VEH.Intranet.Helpers.MessageType.Warning: alert_class = "alert-warning"; alert_btn_class = "btn-warning"; icon_class = "icon-exclamation-sign"; break;
+                    case VEH.Intranet.Helpers.MessageType.Success: alert_class = "alert-success"; alert_btn_class = "btn-success"; icon_class = "icon-ok-sign"; break;
+                }
+                
+                <div class="alert @(!message.Inline ? "alert-block" : "") @alert_class alert-dismissable">
+                <a class="close" data-dismiss="alert" href="#">&times;</a>
+
+                @if(!message.Inline){
+                    <h4><i class='@icon_class'></i> @(message.Title)</h4>
+                    <p>@(message.Body)</p>
+                }
+
+                @if(message.Inline){
+                    <i class='@icon_class'></i> <strong>@(message.Title)</strong> @(message.Body)
+                }
+        
+                @if(message.Actions != null && message.Actions.Count>0){
+                    <p>
+                    @foreach(var action in message.Actions){
+                        <a class="btn @(message.Actions.First() == action?alert_btn_class:"")" href="@action.Action">@action.Text</a>
+                        }
+                    </p>
+                    }
+                    </div>
+            }  
+       </div> 
+    }
+}

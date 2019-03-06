@@ -1,0 +1,210 @@
+﻿@model VEH.Intranet.ViewModel.Fee.AddEditCuotaViewModel
+
+@{
+    ViewBag.Title = (Model.CuotaId != null ? "Editar" : "Agregar") + " cuota";
+}
+
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstEdificio", "Building")">Edificio</a></li>
+    <li><a href="@Url.Action("LstDepartamento", "Departament", new { EdificioId = Model.Edificio.EdificioId })">Departamento</a></li>
+    <li><a href="@Url.Action("LstCuota", "Fee", new { DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })">Cuota</a></li>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#LecturaAgua").change(function (e) {
+                e.preventDefault()
+                var lectura_actual = parseFloat(this.value)
+                var lectura_anterior = parseFloat($("#hid_LecturaAgua").val())
+                if (lectura_actual > lectura_anterior) { $("#ConsumoAgua").val(parseFloat(lectura_actual - lectura_anterior).toFixed(2)) }
+                else { $("#ConsumoAgua").val("") }
+            })
+
+            $("#Monto").change(function (e) {
+                e.preventDefault()
+                if ($.trim(this.value) != "" && $.trim($("#ConsumoAguaTotal").val()) != "") {
+                    var cuota = parseFloat(this.value)
+                    var consumoaguatotal = parseFloat($("#ConsumoAguaTotal").val())
+                    if (cuota != 0 && !isNaN(cuota) && consumoaguatotal != 0 && !isNaN(consumoaguatotal))
+                        $("#Total").val((cuota + consumoaguatotal).toFixed(2))
+                }
+                else
+                    $("#Total").val("")
+            })
+            $("#IGV").change(function (e) {
+                e.preventDefault()
+                if ($.trim(this.value) != "" && $.trim($("#ConsumoAguaTotal").val()) != "") {
+                    var suma = parseFloat(this.value) + parseFloat($("#ConsumoAguaTotal").val())
+                    if (suma != 0 && !isNaN(suma))
+                        $("#Total").val(suma.toFixed(2))
+                }
+            })
+
+            $('[nameAttr="vehRecibo_"]').change(function (e) {
+                e.preventDefault()
+                var consumosoles = parseFloat($("#ConsumoSoles").val())
+                var areacomun = parseFloat($("#AreaComun").val())
+                var alcantarillado = parseFloat($("#Alcantarillado").val())
+                var cargofijo = parseFloat($("#CargoFijo").val())
+                //debugger
+                if ($.trim($("#ConsumoSoles").val()) != "" && $.trim($("#AreaComun").val()) != "" &&
+                    $.trim($("#Alcantarillado").val()) != "" && $.trim($("#CargoFijo").val()) != "") {
+                    var suma = consumosoles + areacomun + alcantarillado + cargofijo
+                    var igv = suma * 0.18
+                    var consumototal = parseFloat(suma + igv)
+
+                    if (igv != 0 && !isNaN(igv)) $("#IGV").val(parseFloat(igv).toFixed(2))
+                    else $("#IGV").val("")
+
+                    if (consumototal != 0 && !isNaN(consumototal)) $("#ConsumoAguaTotal").val(parseFloat(consumototal).toFixed(2))
+                    else $("#ConsumoAguaTotal").val("")
+
+                    if (igv != 0 && !isNaN(igv) && consumototal != 0 && !isNaN(consumototal)) {
+                        if ($.trim($("#Monto").val()) != "") {
+                            var cuota = parseFloat($("#Monto").val())
+                            $("#Total").val((consumototal + cuota).toFixed(2))
+                        }
+                        else
+                            $("#Total").val("")
+                    }
+                }
+                else {
+                    $("#IGV").val("")
+                    $("#ConsumoAguaTotal").val("")
+                    $("#Total").val("")
+                }
+            })
+        })
+    </script>
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-building-o"></i>&nbsp;Edificio</h4>
+                <dl class="dl-horizontal">
+                    <dt>Nombre</dt>
+                    <dd>@Model.Edificio.Nombre</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <h4><i class="fa fa-desktop"></i>&nbsp;Departamento</h4>
+                <dl class="dl-horizontal">
+                    <dt>Número</dt>
+                    <dd>@Model.Departamento.Numero</dd>
+                    <dt>Piso</dt>
+                    <dd>@Model.Departamento.Piso</dd>
+                    <dt>Lectura de agua</dt>
+                    <dd>@String.Format("{0:0,0.00}", Model.LecturaAguaAnterior)</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-inverse">
+    <div class="panel-body">
+        <form method="post" class="form-horizontal">
+            <input type="hidden" id="hid_LecturaAgua" name="hid_LecturaAgua"  value="@Model.LecturaAguaAnterior"/>
+            @Html.HiddenFor(x => x.CuotaId)
+            @Html.HiddenFor(x => x.EdificioId)
+            @Html.HiddenFor(x => x.DepartamentoId)
+
+            <div class="form-group">
+                <label class="col-md-2 control-label"><span style="color: #e5603b; font-weight: bold">&nbsp;*&nbsp;</span>Lectura de agua</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.LecturaAgua, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.LecturaAgua)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Consumo de agua</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.ConsumoAgua, new { @class = "form-control", @readonly = "readonly" })
+                    @*@Html.ValidationMessageFor(x => x.ConsumoAgua)*@
+                </div>
+            </div>
+            @Html.EditorFor(x => x.ConsumoMes, new { ancho = "3" })
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Consumo S./</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.ConsumoSoles, new { @class = "form-control", nameAttr = "vehRecibo_" })
+                    @Html.ValidationMessageFor(x => x.ConsumoSoles)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Area Comun S./</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.AreaComun, new { @class = "form-control", nameAttr = "vehRecibo_" })
+                    @Html.ValidationMessageFor(x => x.AreaComun)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Alcantarillado</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.Alcantarillado, new { @class = "form-control", nameAttr = "vehRecibo_" })
+                    @Html.ValidationMessageFor(x => x.Alcantarillado)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Cargo fijo</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.CargoFijo, new { @class = "form-control", nameAttr = "vehRecibo_" })
+                    @Html.ValidationMessageFor(x => x.CargoFijo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">IGV</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.IGV, new { @class = "form-control", @readonly = "readonly" })
+                    @*@Html.ValidationMessageFor(x => x.IGV)*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Consumo agua total</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.ConsumoAguaTotal, new { @class = "form-control", @readonly = "readonly" })
+                    @*@Html.ValidationMessageFor(x => x.ConsumoAguaTotal)*@
+                </div>
+            </div>
+            @Html.EditorFor(x => x.Monto, new { ancho = "3" })
+            <div class="form-group">
+                <label class="col-md-2 control-label">Total</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(x => x.Total, new { @class = "form-control", @readonly = "readonly" })
+                    @*@Html.ValidationMessageFor(x => x.Total)*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Unidad de tiempo</label>
+                <div class="col-md-3">
+                    @Html.DropDownListFor(x => x.UnidadTiempoId, Model.LstComboUnidadTiempo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.UnidadTiempoId)
+                </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                    <a href="@Url.Action("LstCuota", "Fee", new { DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                </div>
+            </div>
+        </form>
+        <span style="color: #e5603b; font-weight: bold">* El valor debe ser mayor a la lectura de agua anterior.</span>
+    </div>
+</div>

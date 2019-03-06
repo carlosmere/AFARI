@@ -1,0 +1,69 @@
+﻿@model VEH.Intranet.ViewModel.Fee.LstCuotaExtraordinariaViewModel
+@{
+    ViewBag.Title = "Lista de Cuotas Extraordinarias";
+}
+@Html.HiddenFor(x => x.EdificioId)
+@Html.HiddenFor(x => x.UnidadTiempoId)
+<label>Edificio: @Model.NombreEdificio</label><br />
+<label>Unidad Tiempo: @Model.NombreUnidadTiempo</label><br />
+
+<div>
+    <div class="panel panel-inverse">
+        <div class="panel-heading">
+            <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tipo Inmueble</th>
+                            <th>Nro Inmueble.</th>
+                            <th>Unidad Tiempo</th>
+                            <th>Fecha Pago</th>
+                            <th>Mora</th>
+                            <th>Leyenda</th>
+                            <th>Estado</th>
+                            <th>Cuota Extraordinaria</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LstCutoaExtraordinaria)
+                        {
+                            <tr>
+                                <td class="text-center">@item.Departamento.Numero</td>
+                                <td class="text-center">@item.Departamento.TipoInmueble.Nombre</td>
+                                <td class="text-center">@item.UnidadTiempo.Descripcion</td>
+                                <td class="text-center">@item.FechaPagado</td>
+                                <td class="text-center">@item.Mora</td>
+                                <td class="text-center">@item.Leyenda</td>
+                                <td class="text-center">
+                                    <span class="label label-@(item.Pagado ? "success" : "danger")">
+                                        @(item.Pagado ? "Pagado" : "Sin Pagar")
+                                    </span>
+                                </td>
+                                <td class="text-center">@item.CuotaExtraordinaria</td>
+                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-btn btn-xs">
+                                            <a @Data.ModalLink("AddEditCuotaExtraordinaria", "Fee", new { CuotaId = item.CuotaId, EdificioId = Model.EdificioId, UnidadTiempoId = Model.UnidadTiempoId }) class="btn btn-default btn-xs"><i class="fa fa-pencil"></i>&nbsp;Editar</a>
+                                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="@Url.Action("DeleteCuotaExtraordinaria", "Fee", new { CuotaId = item.CuotaId })"><i class="fa fa-trash"></i> Eliminar</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a class="btn btn-sm btn-primary" @Data.ModalLink("AddEditCuotaExtraordinaria", "Fee", new { EdificioId = Model.EdificioId, UnidadTiempoId = Model.UnidadTiempoId })><i class="fa fa-plus"></i>&nbsp;Agregar cuota</a>
+                <a class="btn btn-default" href="@Url.Action("EditMasivoCuota","Fee",new { EdificioId = Model.EdificioId , UnidadTiempoId = Model.UnidadTiempoId})"><i class="fa fa-arrow-left"></i> Atrás</a>
+            </div>
+        </div>
+    </div>
+</div>
