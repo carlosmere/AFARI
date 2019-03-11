@@ -87,10 +87,10 @@
                         <tr>
                             <td class=""><strong>@Model.TipoEdificio</strong></td>
                             <td class="col-sm-3"><strong>PROPIETARIO</strong></td>
-                            @if (Model.ContNombreInquilino > 0)
+                            @*if (Model.ContNombreInquilino > 0)
                             {
                                 <td><strong>INQUILINO </strong></td>
-                            }
+                            }*@
                             @foreach (var unidad in Model.LstMesesExtraordinaria)
                             {
                                 <td><strong>@unidad.Value</strong></td>

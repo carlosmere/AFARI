@@ -401,7 +401,7 @@ namespace VEH.Intranet.ViewModel.Fee
                             ContNombreInquilino++;
                         }
 
-                        Registro += "#" + NombreInquilino;
+                        //Registro += "#" + NombreInquilino;
 
                         foreach (var mes in LstMesesExtraordinaria)
                         {
@@ -516,7 +516,7 @@ namespace VEH.Intranet.ViewModel.Fee
                                     ContNombreInquilino++;
                                 }
 
-                                Registro += "#" + NombreInquilino;
+                                //Registro += "#" + NombreInquilino;
 
                                 foreach (var mes in LstMesesExtraordinaria)
                                 {

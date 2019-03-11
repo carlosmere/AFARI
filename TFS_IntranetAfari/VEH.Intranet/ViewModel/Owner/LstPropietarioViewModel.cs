@@ -36,14 +36,16 @@ namespace VEH.Intranet.ViewModel.Owner
 
             LstPropietario = new List<Propietario>();
 
-            var query = datacontext.context.Propietario.OrderBy(x => x.Nombres).Where(x => x.DepartamentoId == DepartamentoId
-            && x.Estado == ConstantHelpers.EstadoActivo).AsQueryable();
+            var query = datacontext.context.Propietario.OrderBy(x => x.Nombres).Where(x => x.DepartamentoId == DepartamentoId).AsQueryable();
 
             if (!String.IsNullOrEmpty(this.Estado) && this.Estado == "2")
             {
                 query = query.Where(x => x.Estado != ConstantHelpers.EstadoPendiente && x.Estado != ConstantHelpers.EstadoActivo);
             }
-
+            else
+            {
+                query = query.Where(x => x.Estado == ConstantHelpers.EstadoActivo);
+            }
             LstPropietario = query.ToList();
         }
     }

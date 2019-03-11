@@ -34,7 +34,7 @@ namespace VEH.Intranet.Controllers
                 reporteLogic.context = context;
 
                 var edificioNombre = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId).Nombre;
-                var titulo = "Cronograma de Mantenimientos\n " + edificioNombre + " Año " + Anio.ToString();
+                var titulo = "Cronograma de Mantenimientos\n " + edificioNombre + "\nAño " + Anio.ToString();
 
                 List<Cronograma> LstCronograma = context.Cronograma.Where(x => x.EdificioId == EdificioId
            && x.Estado == ConstantHelpers.EstadoActivo && x.Anio == Anio).OrderBy(x => x.Orden).ToList();             
@@ -1015,7 +1015,8 @@ namespace VEH.Intranet.Controllers
                 List<Cuota> ListCuotas = new List<Cuota>();
                 List<Int32> LstDepartamentoAdelantado = new List<Int32>();
                 var contextAux = new SIVEHEntities();
-                var departamentos = context.Departamento.Where(x => x.EdificioId == edificio.EdificioId && x.Estado == ConstantHelpers.EstadoActivo);
+                //var departamentos = context.Departamento.Where(x => x.EdificioId == edificio.EdificioId && x.Estado == ConstantHelpers.EstadoActivo);
+                var departamentos = context.Departamento.Where(x => x.EdificioId == edificio.EdificioId);
                 foreach (var departamento in departamentos)
                 {
                     var cuotas = contextAux.Cuota.Where(X => X.DepartamentoId == departamento.DepartamentoId && X.Pagado).OrderBy(x => x.DepartamentoId).ThenBy(x => x.CuotaId).ToList();

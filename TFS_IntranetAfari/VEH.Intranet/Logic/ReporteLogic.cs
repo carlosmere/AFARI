@@ -293,7 +293,8 @@ namespace VEH.Intranet.Logic
 
 
                 List<Departamento> LstDepartamentos = new List<Departamento>();
-                LstDepartamentos = context.Departamento.Where(x => x.EdificioId == EdificioId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
+                //LstDepartamentos = context.Departamento.Where(x => x.EdificioId == EdificioId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
+                LstDepartamentos = context.Departamento.Where(x => x.EdificioId == EdificioId).ToList();
                 List<DateTime> LstFechasEmision = new List<DateTime>();
                 Edificio edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId);
 
@@ -567,6 +568,9 @@ namespace VEH.Intranet.Logic
                     Decimal Extraordinaria = listaCuotasPagadas.Sum(x => x.CuotaExtraordinaria) ?? 0;
                     var cantExtraEmitida = listaCuotasPagadas.Count(x => x.UnidadTiempoId == UnidadTiempo && x.CuotaExtraordinaria > 0);
                     cantExtraEmitida += listaCuotasPagadas.Count(x => x.EsExtraordinaria.HasValue && x.EsExtraordinaria == true);
+
+                    if (totalCuota == 0 && LstDepartamentos[i].Estado != ConstantHelpers.EstadoActivo)
+                        continue;
                     //if (totalCuota == Extraordinaria)
                     //{
                     //    totalCuota = 0;
@@ -1294,7 +1298,7 @@ namespace VEH.Intranet.Logic
                 DSInfoReporteEdificio ds = new DSInfoReporteEdificio();
 
                 DataRow titulo = ds.Tables["DTInfo"].NewRow();
-                titulo["UnidadTiempo"] = " " + UnidadTiempo + " EDIFICIO \n" + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
+                titulo["UnidadTiempo"] = " " + UnidadTiempo + "\nEDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
                 //" " + UnidadTiempo + "\n\r EDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
                 ds.Tables["DTInfo"].Rows.Add(titulo);
                 Boolean EsDiferenteCuotatTotal = false;
