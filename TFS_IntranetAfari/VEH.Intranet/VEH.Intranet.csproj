@@ -305,6 +305,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\IncomeController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\SpendingController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\TimeUnitController.cs" />
@@ -391,6 +392,9 @@
     <Compile Include="Models\BalanceUnidadTiempoEdificio.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BE\BaseBE.cs" />
+    <Compile Include="Models\BE\RequestLogin.cs" />
+    <Compile Include="Models\BE\ResponseLogin.cs" />
     <Compile Include="Models\ComisionAFP.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
