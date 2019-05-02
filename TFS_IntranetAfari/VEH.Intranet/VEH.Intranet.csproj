@@ -305,7 +305,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="Controllers\IncomeController.cs" />
-    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\AfariServiceController.cs" />
     <Compile Include="Controllers\SpendingController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\TimeUnitController.cs" />
@@ -365,6 +365,7 @@
     <Compile Include="Helpers\ModalFormHelpers.cs" />
     <Compile Include="Helpers\ModelBinderHelpers.cs" />
     <Compile Include="Helpers\SessionHelpers.cs" />
+    <Compile Include="Helpers\TextMediaTypeFormatter.cs" />
     <Compile Include="Helpers\UbigeoHelper.cs" />
     <Compile Include="Logic\EmailLogic.cs" />
     <Compile Include="Logic\Encriptacion.cs" />
@@ -393,8 +394,21 @@
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BE\BaseBE.cs" />
+    <Compile Include="Models\BE\CuotaBE.cs" />
+    <Compile Include="Models\BE\DepartamentoBE.cs" />
+    <Compile Include="Models\BE\EdificioBE.cs" />
+    <Compile Include="Models\BE\PropietarioBE.cs" />
+    <Compile Include="Models\BE\ReciboMantenimientoBE.cs" />
     <Compile Include="Models\BE\RequestLogin.cs" />
+    <Compile Include="Models\BE\ResponseGetCerrarCuotas.cs" />
+    <Compile Include="Models\BE\ResponseGetDepartamentos.cs" />
+    <Compile Include="Models\BE\ResponseGetEdificios.cs" />
+    <Compile Include="Models\BE\ResponseGetEstadoEdificio.cs" />
+    <Compile Include="Models\BE\ResponseGetPropietarios.cs" />
+    <Compile Include="Models\BE\ResponseGetRecibosMantenimiento.cs" />
+    <Compile Include="Models\BE\ResponseGetUnidadTiempo.cs" />
     <Compile Include="Models\BE\ResponseLogin.cs" />
+    <Compile Include="Models\BE\UnidadTiempoBE.cs" />
     <Compile Include="Models\ComisionAFP.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>

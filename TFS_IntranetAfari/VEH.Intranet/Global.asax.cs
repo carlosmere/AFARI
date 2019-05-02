@@ -31,6 +31,9 @@ namespace VEH.Intranet
             ModelBinders.Binders.Add(typeof(DateTime), new PeruDateTimeModelBinder());
             ModelBinders.Binders.Add(typeof(Decimal), new DecimalModelBinder());
             ModelBinders.Binders.Add(typeof(Decimal?), new DecimalModelBinder());
+
+
+            GlobalConfiguration.Configuration.Formatters.Insert(0, new TextMediaTypeFormatter());
         }
 
         protected void Application_AcquireRequestState(object sender, EventArgs e)
