@@ -16,6 +16,7 @@ using VEH.Intranet.DataSets;
 using VEH.Intranet.Helpers;
 using VEH.Intranet.Models;
 using System.Data.Entity;
+using System.Web.Hosting;
 
 namespace VEH.Intranet.Logic
 {
@@ -1504,7 +1505,221 @@ namespace VEH.Intranet.Logic
                 throw;
             }
         }
+        public String GetReportTableAPI(List<Cuota> listaCuota, String UnidadTiempo)
+        {
+            try
+            {
+                rv.Clear();
+                rv.LocalReport.DataSources.Clear();
+                DSInfoReporteEdificio ds = new DSInfoReporteEdificio();
 
+                DataRow titulo = ds.Tables["DTInfo"].NewRow();
+                titulo["UnidadTiempo"] = " " + UnidadTiempo + "\nEDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
+                //" " + UnidadTiempo + "\n\r EDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
+                ds.Tables["DTInfo"].Rows.Add(titulo);
+                Boolean EsDiferenteCuotatTotal = false;
+                foreach (var cuota in listaCuota)
+                {
+                    DataRow rowDepartamento = ds.Tables["DTDepartamento"].NewRow();
+                    String nombrePropietario = "SIN PROPIETARIO";
+                    if (cuota.Departamento.Propietario.Count > 0)
+                    {
+                        Propietario p = ConstantHelpers.getTitularDepartamento(cuota.Departamento);
+                        nombrePropietario = p.Nombres + " " + p.ApellidoPaterno + " " + p.ApellidoMaterno;
+                    }
+                    rowDepartamento["NroDepartamento"] = cuota.Departamento.Numero;
+                    rowDepartamento["Propietario"] = nombrePropietario;
+                    rowDepartamento["LecturaAnterior"] = cuota.LecturaAgua - cuota.ConsumoAgua;
+                    rowDepartamento["LecturaActual"] = cuota.LecturaAgua;
+                    rowDepartamento["ConsumoDelMes"] = cuota.ConsumoMes.ToString("#,##0.00");
+                    rowDepartamento["AreaComun"] = cuota.AreaComun.ToString("#,##0.00");
+                    rowDepartamento["Alcantarillado"] = cuota.Alcantarillado.ToString("#,##0.00");
+                    rowDepartamento["CargoFijo"] = cuota.CargoFijo.ToString("#,##0.00");
+                    rowDepartamento["IGV"] = cuota.IGV.ToString("#,##0.00");
+                    rowDepartamento["ConsumoAgua"] = cuota.ConsumoAguaTotal.ToString("#,##0.00");
+                    rowDepartamento["ConsumoSoles"] = cuota.ConsumoSoles.ToString("#,##0.00");
+                    rowDepartamento["Cuota"] = cuota.Monto.ToString("#,##0.00");
+                    //rowDepartamento["Extraordinaria"] = (cuota.CuotaExtraordinaria ?? 0).ToString("#,##0.00");
+                    rowDepartamento["Extraordinaria"] = (cuota.CuotaExtraordinaria ?? 0).ToString("#,##0.00");
+                    //rowDepartamento["CuotaExtraordinaria"] = (cuota.CuotaExtraordinaria ?? 0).ToString("#,##0.00");89
+                    rowDepartamento["Otros"] = cuota.ConsumoIndividual.Where(x => x.Estado == ConstantHelpers.EstadoActivo).Sum(x => x.Monto).ToString("#,##0.00");
+                    rowDepartamento["Total"] = (cuota.Total).ToString("#,##0.00");
+
+                    if (cuota.Monto != cuota.Total)
+                    {
+                        EsDiferenteCuotatTotal = true;
+                    }
+
+                    ds.Tables["DTDepartamento"].Rows.Add(rowDepartamento);
+                }
+                Int32 ContColumnNoVisible = 0;
+                String FlagLecturaAnterior = "T";
+                String FlagLecturaActual = "T";
+                String FlagConsumoDelMes = "T";
+                String FlagAreaComun = "T";
+                String FlagAlcantarillado = "T";
+                String FlagCargoFijo = "T";
+                String FlagIGV = "T";
+                String FlagConsumoAgua = "T";
+                String FlagConsumoSoles = "T";
+                String FlagCuota = "T";
+                String FlagExtraordinaria = "T";
+                String FlagOtros = "T";
+
+                DataRow rowDepartamentoTotal = ds.Tables["DTTotalesDepartamento"].NewRow();
+                rowDepartamentoTotal["NroDepartamento"] = "";
+                rowDepartamentoTotal["Propietario"] = "";
+                rowDepartamentoTotal["LecturaAnterior"] = "";
+                var OtrosSum = listaCuota.Sum(X => X.ConsumoIndividual.Where(y => y.Estado == ConstantHelpers.EstadoActivo).Sum(y => y.Monto));
+                rowDepartamentoTotal["Otros"] = OtrosSum.ToString("#,##0.00");
+
+                if (OtrosSum == 0)
+                {
+                    FlagOtros = "F";
+                    ContColumnNoVisible++;
+                }
+                if (listaCuota.Sum(X => X.LecturaAgua) - listaCuota.Sum(X => X.ConsumoAgua) == 0)
+                {
+                    FlagLecturaAnterior = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["LecturaActual"] = "";
+                if (listaCuota.Sum(X => X.LecturaAgua) == 0)
+                {
+                    FlagLecturaActual = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["ConsumoDelMes"] = listaCuota.Sum(X => X.ConsumoMes).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.ConsumoMes) == 0)
+                {
+                    FlagConsumoDelMes = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["AreaComun"] = listaCuota.Sum(X => X.AreaComun).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.AreaComun) == 0)
+                {
+                    FlagAreaComun = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["Alcantarillado"] = listaCuota.Sum(X => X.Alcantarillado).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.Alcantarillado) == 0)
+                {
+                    FlagAlcantarillado = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["CargoFijo"] = listaCuota.Sum(X => X.CargoFijo).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.CargoFijo) == 0)
+                {
+                    FlagCargoFijo = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["IGV"] = listaCuota.Sum(X => X.IGV).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.IGV) == 0)
+                {
+                    FlagIGV = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["ConsumoAgua"] = listaCuota.Sum(X => X.ConsumoAguaTotal).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.ConsumoAguaTotal) == 0)
+                {
+                    FlagConsumoAgua = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["ConsumoSoles"] = listaCuota.Sum(X => X.ConsumoSoles).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.ConsumoSoles) == 0)
+                {
+                    FlagConsumoSoles = "F";
+                    ContColumnNoVisible++;
+                }
+                rowDepartamentoTotal["Cuota"] = listaCuota.Sum(X => X.Monto).ToString("#,##0.00");
+                if (listaCuota.Sum(X => X.Monto) == 0)
+                {
+                    FlagCuota = "F";
+                }
+                var totalExtraordinarias = (listaCuota.Sum(X => X.CuotaExtraordinaria) ?? 0);
+                rowDepartamentoTotal["Extraordinaria"] = totalExtraordinarias.ToString("#,##0.00");
+                if (totalExtraordinarias == 0)
+                {
+                    FlagExtraordinaria = "F";
+                }
+
+                if (EsDiferenteCuotatTotal == false)
+                {
+                    FlagCuota = "F";
+                }
+                rowDepartamentoTotal["Total"] = (listaCuota.Sum(X => X.Total)).ToString("#,##0.00");
+                ds.Tables["DTTotalesDepartamento"].Rows.Add(rowDepartamentoTotal);
+
+                ReportDataSource rdsInfo = new ReportDataSource("DSInfo", ds.Tables["DTInfo"].DefaultView);
+                ReportDataSource rdsDepartamento = new ReportDataSource("DSInfoReporteEdificio", ds.Tables["DTDepartamento"].DefaultView);
+                ReportDataSource rdsTotales = new ReportDataSource("DataSetTotales", ds.Tables["DTTotalesDepartamento"].DefaultView);
+                rv.ProcessingMode = ProcessingMode.Local;
+                rv.LocalReport.EnableExternalImages = true;
+
+                if (ContColumnNoVisible >= 8)
+                {
+                    if (ContColumnNoVisible == 1)
+                    {
+                        rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteEdificio3.rdlc";
+                    }
+                    else
+                    {
+                        rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteEdificio2.rdlc";
+                    }
+                }
+                else
+                {
+                    rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteEdificio.rdlc";
+                }
+
+                rv.LocalReport.DataSources.Add(rdsInfo);
+                rv.LocalReport.DataSources.Add(rdsDepartamento);
+                rv.LocalReport.DataSources.Add(rdsTotales);
+
+                var TipoInmueble = listaCuota.Count > 0 ? listaCuota[0].Departamento.TipoInmueble : null;
+
+                rv.LocalReport.SetParameters(new ReportParameter("TipoInmueble", TipoInmueble.Acronimo));
+                rv.LocalReport.SetParameters(new ReportParameter("TipoInmuebleNombreCompleto", TipoInmueble.Nombre));
+
+                rv.LocalReport.SetParameters(new ReportParameter("FlagLecturaAnterior", FlagLecturaAnterior));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagLecturaActual", FlagLecturaActual));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagConsumoMes", FlagConsumoDelMes));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagAreaComun", FlagAreaComun));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagAlcantarillado", FlagAlcantarillado));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagCargoFijo", FlagCargoFijo));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagIGV", FlagIGV));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagConsumoAgua", FlagConsumoAgua));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagConsumo", FlagConsumoSoles));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagCuota", FlagCuota));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagExtraordinaria", FlagExtraordinaria));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagOtros", FlagOtros));
+
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string filenameExtension;
+                String name = "REPORTE-" + UnidadTiempo + ".pdf";
+                //String fileName = Server.MapPath("~/Resources") + "//" + name;
+                lstNombrePDF.Add(name);
+
+                byte[] bytes = rv.LocalReport.Render(
+                    "PDF", null, out mimeType, out encoding, out filenameExtension,
+                    out streamids, out warnings);
+                byte[] bytesExcel = rv.LocalReport.Render(
+                     "Excel", null, out mimeType, out encoding, out filenameExtension,
+                     out streamids, out warnings);
+
+                lstMemoryStreamPDF.Add(bytes);
+                ExcelArchivo = bytesExcel;
+                lstMemoryStream.Add(new MemoryStream(bytesExcel));
+                return name;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         public String GetReport(Cuota cuota, DateTime fEmision, DateTime fVencimiento, Decimal PresupuestoMes, Decimal TotalM2, UnidadTiempo UnidadTiempoActualGeneral = null, List<Cuota> CuotasDelEdificio = null, UnidadTiempo lastUnidad = null, long? NumeroRecibo = null, bool EsSeparado = false)
         {
             try
@@ -1634,7 +1849,135 @@ namespace VEH.Intranet.Logic
                 throw;
             }
         }
+        public String GetReportAPI(Cuota cuota, DateTime fEmision, DateTime fVencimiento, Decimal PresupuestoMes, Decimal TotalM2, UnidadTiempo UnidadTiempoActualGeneral = null, List<Cuota> CuotasDelEdificio = null, UnidadTiempo lastUnidad = null, long? NumeroRecibo = null, bool EsSeparado = false)
+        {
+            try
+            {
+                rv.Clear();
+                rv.LocalReport.DataSources.Clear();
+                DSInfoReporte ds = new DSInfoReporte();
+                DataRow rowInfo = fillInfo(ds, cuota, fEmision, fVencimiento, PresupuestoMes, TotalM2, CuotasDelEdificio, lastUnidad, UnidadTiempoActualGeneral, NumeroRecibo, EsSeparado);
+                var UnidadTiempoActual = UnidadTiempoActualGeneral;
+                if (UnidadTiempoActual == null)
+                    UnidadTiempoActual = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo);
+                List<Cuota> LstDeuda;
+                if (CuotasDelEdificio != null)
+                    LstDeuda = CuotasDelEdificio.Where(x => x.DepartamentoId == cuota.DepartamentoId && !x.Pagado && x.CuotaId != cuota.CuotaId && x.UnidadTiempoId != UnidadTiempoActual.UnidadTiempoId && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo).ToList();
+                else
+                    LstDeuda = context.Cuota.Where(x => x.DepartamentoId == cuota.DepartamentoId && !x.Pagado && x.CuotaId != cuota.CuotaId && x.UnidadTiempoId != UnidadTiempoActual.UnidadTiempoId && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo).ToList();
 
+                bool first = true;
+                DataRow rowDeuda = ds.Tables["DTDeuda"].NewRow();
+
+                rowDeuda["Mes"] = " ";
+                rowDeuda["Anio"] = " ";
+                rowDeuda["Monto"] = " ";
+                var act = context.UnidadTiempo.FirstOrDefault(x => x.EsActivo);
+                LstDeuda = LstDeuda.Where(X => X.UnidadTiempoId < cuota.UnidadTiempo.UnidadTiempoId && X.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo).OrderBy(X => X.UnidadTiempo.Orden).ToList();
+                foreach (Cuota c in LstDeuda)
+                {
+                    if (first && c.Total != 0)
+                    {
+                        rowDeuda["Mes"] = EsSeparado ? String.Empty : Meses[c.UnidadTiempo.Mes];
+                        rowDeuda["Anio"] = EsSeparado ? String.Empty : c.UnidadTiempo.Anio.ToString();
+                        rowDeuda["Monto"] = EsSeparado ? String.Empty : ("S/" + c.Total.ToString("#,##0.00"));
+                        first = false;
+                    }
+                    else
+                    {
+                        if (c.Total != 0)
+                        {
+                            rowDeuda["Mes"] += "\n" + (EsSeparado ? String.Empty : Meses[c.UnidadTiempo.Mes]);
+                            rowDeuda["Anio"] += "\n" + (EsSeparado ? String.Empty : c.UnidadTiempo.Anio.ToString());
+                            rowDeuda["Monto"] += "\n" + (EsSeparado ? String.Empty : ("S/" + c.Total.ToString("#,##0.00")));
+                        }
+                    }
+                }
+                ds.Tables["DTDeuda"].Rows.Add(rowDeuda);
+
+
+                ds.Tables["DTInfoReporte"].Rows.Add(rowInfo);
+
+                ReportDataSource rdsInfo = new ReportDataSource("DTInfoReporte", ds.Tables["DTInfoReporte"].DefaultView);
+                ReportDataSource rdsDeuda = new ReportDataSource("DTDeuda", ds.Tables["DTDeuda"].DefaultView);
+                rv.ProcessingMode = ProcessingMode.Local;
+                rv.LocalReport.EnableExternalImages = true;
+                rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReportRecibo.rdlc";
+                rv.LocalReport.DataSources.Clear();
+                rv.LocalReport.DataSources.Add(rdsInfo);
+                rv.LocalReport.DataSources.Add(rdsDeuda);
+
+                if (CuotasDelEdificio != null)
+                {
+                    var MensajeMora = (CuotasDelEdificio.Count > 0 ? CuotasDelEdificio[0].Departamento.Edificio.MensajeMora : " ") ?? " ";
+                    var TipoInmueble = (CuotasDelEdificio.Count > 0 ? CuotasDelEdificio[0].Departamento.TipoInmueble.Acronimo : " ") ?? " ";
+                    rv.LocalReport.SetParameters(new ReportParameter("MensajeMora", MensajeMora));
+                    rv.LocalReport.SetParameters(new ReportParameter("TipoInmueble", TipoInmueble));
+                }
+                else
+                {
+                    if (cuota != null)
+                    {
+                        var MensajeMora = (cuota.Departamento.Edificio.MensajeMora ?? String.Empty) ?? " ";
+                        var TipoInmueble = (cuota.Departamento.TipoInmueble.Acronimo ?? String.Empty ?? " ");
+                        rv.LocalReport.SetParameters(new ReportParameter("MensajeMora", MensajeMora));
+                        rv.LocalReport.SetParameters(new ReportParameter("TipoInmueble", TipoInmueble));
+                    }
+                    else
+                    {
+                        rv.LocalReport.SetParameters(new ReportParameter("MensajeMora", " "));
+                        rv.LocalReport.SetParameters(new ReportParameter("TipoInmueble", " "));
+                    }
+
+
+                }
+                rv.LocalReport.SetParameters(new ReportParameter("NombreRecibo", cuota.Departamento.NombreRecibo ?? "-"));
+
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string filenameExtension;
+                string valorCE = EsSeparado ? "CE-" : String.Empty;
+                String nameDOC = valorCE + cuota.Departamento.TipoInmueble.Acronimo + "-" + cuota.Departamento.Numero + "-" + cuota.UnidadTiempo.Descripcion + ".doc";
+                lstNombreDOC.Add(nameDOC);
+
+                String namePDF = valorCE + cuota.Departamento.TipoInmueble.Acronimo + "-" + cuota.Departamento.Numero + "-" + cuota.UnidadTiempo.Descripcion + ".pdf";
+                lstNombrePDF.Add(namePDF);
+
+                //String fileName = Server.MapPath("~/Resources") + "//" + nameDOC;
+
+                byte[] bytes = rv.LocalReport.Render(
+                    "Word", null, out mimeType, out encoding, out filenameExtension,
+                    out streamids, out warnings);
+
+                Warning[] warnings2;
+                string[] streamids2;
+                string mimeType2;
+                string encoding2;
+                string filenameExtension2;
+
+                byte[] bytesPDF = rv.LocalReport.Render(
+                    "PDF", null, out mimeType2, out encoding2, out filenameExtension2,
+                    out streamids2, out warnings2);
+
+                lstMemoryStream.Add(new MemoryStream(bytes));
+
+                lstMemoryStreamPDF.Add(bytesPDF);
+
+                /*using (FileStream fs = new FileStream(fileName, FileMode.Create))
+                {
+                    fs.Write(bytes, 0, bytes.Length);
+                }*/
+                return namePDF;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         private DataRow fillInfo(DSInfoReporte ds, Cuota cuota, DateTime fEmision, DateTime fVencimiento, Decimal presupuestoMes, Decimal TotalM2, List<Cuota> cuotasDelEdificio = null, UnidadTiempo lastUnidad = null, UnidadTiempo UnidadVista = null, long? NumeroRecibo = null, bool EsSeparado = false)
         {
             try

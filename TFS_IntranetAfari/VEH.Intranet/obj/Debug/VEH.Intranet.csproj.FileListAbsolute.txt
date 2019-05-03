@@ -808,6 +808,7 @@ F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\zh-CHT\Microsoft.ReportViewer
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.VisualStudio.Data.Services.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.VisualStudio.Data.Core.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.App.config
+F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csprojAssemblyReference.cache
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.Globalization.Shared.ValidationStrings.resources
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.Globalization.Shared.ValidationStrings.en.resources
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.GenerateResource.cache
