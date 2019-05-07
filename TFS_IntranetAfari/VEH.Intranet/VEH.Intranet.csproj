@@ -394,28 +394,40 @@
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BE\BaseBE.cs" />
+    <Compile Include="Models\BE\CronogramaBE.cs" />
     <Compile Include="Models\BE\CuotaBE.cs" />
     <Compile Include="Models\BE\DepartamentoBE.cs" />
     <Compile Include="Models\BE\DetalleGastoBE.cs" />
     <Compile Include="Models\BE\DetalleIngresoBE.cs" />
     <Compile Include="Models\BE\EdificioBE.cs" />
+    <Compile Include="Models\BE\EstadoCuentaBancarioBE.cs" />
     <Compile Include="Models\BE\GastoBE.cs" />
+    <Compile Include="Models\BE\GetEstadosCuentaBancario.cs" />
     <Compile Include="Models\BE\IngresoBE.cs" />
+    <Compile Include="Models\BE\ItemOL.cs" />
+    <Compile Include="Models\BE\NoticiaBE.cs" />
     <Compile Include="Models\BE\PropietarioBE.cs" />
     <Compile Include="Models\BE\ReciboMantenimientoBE.cs" />
     <Compile Include="Models\BE\RequestLogin.cs" />
     <Compile Include="Models\BE\ResponseGetCerrarCuotas.cs" />
+    <Compile Include="Models\BE\ResponseGetCertificadosEquipos.cs" />
     <Compile Include="Models\BE\ResponseGetDepartamentos.cs" />
     <Compile Include="Models\BE\ResponseGetDetalleGastos.cs" />
     <Compile Include="Models\BE\ResponseGetDetalleIngresos.cs" />
     <Compile Include="Models\BE\ResponseGetEdificios.cs" />
     <Compile Include="Models\BE\ResponseGetEstadoEdificio.cs" />
     <Compile Include="Models\BE\ResponseGetGastos.cs" />
+    <Compile Include="Models\BE\ResponseGetGetCronogramasMantenimientos.cs" />
     <Compile Include="Models\BE\ResponseGetIngresos.cs" />
+    <Compile Include="Models\BE\ResponseGetNoticias.cs" />
+    <Compile Include="Models\BE\ResponseGetObligacionesLaborales.cs" />
     <Compile Include="Models\BE\ResponseGetPropietarios.cs" />
     <Compile Include="Models\BE\ResponseGetRecibosMantenimiento.cs" />
+    <Compile Include="Models\BE\ResponseGetTrabajadores.cs" />
     <Compile Include="Models\BE\ResponseGetUnidadTiempo.cs" />
+    <Compile Include="Models\BE\ResponseGetUnidadTiempoActual.cs" />
     <Compile Include="Models\BE\ResponseLogin.cs" />
+    <Compile Include="Models\BE\TrabajadorBE.cs" />
     <Compile Include="Models\BE\UnidadTiempoBE.cs" />
     <Compile Include="Models\ComisionAFP.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>

@@ -23,6 +23,273 @@ namespace VEH.Intranet.Controllers
         {
             context = new SIVEHEntities();
         }
+        [Route("api/AfariService/GetEstadosCuentaBancario")]
+        [HttpGet]
+        public GetEstadosCuentaBancario GetEstadosCuentaBancario(Int32 edificioId, Int32? anio)
+        {
+            GetEstadosCuentaBancario GetEstadosCuentaBancario = new GetEstadosCuentaBancario();
+            var baseRuta = "http://afari.pe/intranet/Files/";
+            try
+            {
+                try
+                {
+                    var query = context.EstadoCuentaBancario.Where(x => x.EdificioId == edificioId && x.Estado == ConstantHelpers.EstadoActivo).OrderByDescending(x => x.UnidadTiempoId).AsQueryable();
+                    if (anio.HasValue)
+                    {
+                        query = query.Where( x => x.UnidadTiempo.Anio == anio);
+                    }
+
+                    GetEstadosCuentaBancario.lstEstadoCuenta = query.Select(x => new EstadoCuentaBancarioBE
+                    {
+                        estadoCuentaId = x.EstadoCuentaBancarioId,
+                        unidadTiempoId = x.UnidadTiempoId,
+                        descripcionUnidadTiempo = x.UnidadTiempo.Descripcion,
+                        documento = baseRuta + x.Ruta
+                    }).ToList();
+                }
+                catch (Exception ex)
+                {
+                    GetEstadosCuentaBancario.error = true;
+                    GetEstadosCuentaBancario.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                GetEstadosCuentaBancario.error = true;
+                GetEstadosCuentaBancario.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return GetEstadosCuentaBancario;
+        }
+        [Route("api/AfariService/GetCronograma")]
+        [HttpGet]
+        public HttpResponseMessage GetCronograma(Int32 edificioId, Int32 anio)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+
+            try
+            {
+                ReporteLogic reporteLogic = new ReporteLogic();
+                reporteLogic.context = context;
+
+                var objCronograma = context.Cronograma.FirstOrDefault(x => x.Anio == anio && x.EdificioId == edificioId);
+                var lstCronograma = context.Cronograma.Where(x => x.Anio == anio && x.EdificioId == edificioId && x.Estado == ConstantHelpers.EstadoActivo).OrderBy(x => x.Orden).ToList();
+                var edificioNombre = objCronograma.Edificio.Nombre;
+                var titulo = "Cronograma de Mantenimientos\n " + edificioNombre + "\nAño " + objCronograma.Anio.ToString();
+
+                reporteLogic.GetReportMantenimientoAPI(titulo, lstCronograma);
+
+                MemoryStream outputMemoryStream = reporteLogic.getFirstReport();
+
+                if (outputMemoryStream == null)
+                {
+                    response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                }
+
+                response.Content = new StreamContent(outputMemoryStream);
+
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "Cronograma Mantenimiento - " + objCronograma.Edificio.Nombre + " - " + objCronograma.Anio.ToString() + ".pdf"
+                };
+                response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            }
+            catch (Exception ex)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+
+            return response;
+        }
+        [Route("api/AfariService/GetCronogramasMantenimientos")]
+        [HttpGet]
+        public ResponseGetGetCronogramasMantenimientos GetCronogramasMantenimientos(Int32 edificioId)
+        {
+            ResponseGetGetCronogramasMantenimientos ResponseGetGetCronogramasMantenimientos = new ResponseGetGetCronogramasMantenimientos();
+
+            try
+            {
+                try
+                {
+                    var query = context.Cronograma.Where(X => X.EdificioId == edificioId && X.Estado == ConstantHelpers.EstadoActivo).AsQueryable();
+
+                    ResponseGetGetCronogramasMantenimientos.lstCronograma = query.Select(x => new CronogramaBE
+                    {
+                        //cronogramaId = x.CronogramaId,
+                        anio = x.Anio
+                    }).Distinct().OrderByDescending(x => x.anio).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetGetCronogramasMantenimientos.error = true;
+                    ResponseGetGetCronogramasMantenimientos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetGetCronogramasMantenimientos.error = true;
+                ResponseGetGetCronogramasMantenimientos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetGetCronogramasMantenimientos;
+        }
+        [Route("api/AfariService/GetCertificadosEquipos")]
+        [HttpGet]
+        public ResponseGetCertificadosEquipos GetCertificadosEquipos(Int32 edificioId, Int32? anio)
+        {
+            ResponseGetCertificadosEquipos ResponseGetCertificadosEquipos = new ResponseGetCertificadosEquipos();
+            var filtroTipo = "Equipo";
+            var baseRuta = "http://afari.pe/intranet/Resources/Files/";
+            try
+            {
+                try
+                {
+                    var query = context.DatoEdificio.Where(X => X.EdificioId == edificioId && X.Tipo.Contains(filtroTipo)).AsQueryable();
+                    if (anio.HasValue)
+                    {
+                        query = query.Where(x => x.UnidadTiempo.Anio == anio);
+                    }
+
+                    ResponseGetCertificadosEquipos.lstCertficadosEquipos = query.Select(x => new ItemOL
+                    {
+                        id = x.DatoEdificioId,
+                        Nombre = x.Nombre,
+                        unidadTiempoId = x.UnidadTiempoId,
+                        detalleUnidadTiempo = x.UnidadTiempo.Descripcion,
+                        documento = baseRuta + x.Dato,
+                        tipo = x.Tipo.Replace(filtroTipo, String.Empty)
+                    }).OrderBy(x => x.tipo).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetCertificadosEquipos.error = true;
+                    ResponseGetCertificadosEquipos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetCertificadosEquipos.error = true;
+                ResponseGetCertificadosEquipos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetCertificadosEquipos;
+        }
+        [Route("api/AfariService/GetObligacionesLaborales")]
+        [HttpGet]
+        public ResponseGetObligacionesLaborales GetObligacionesLaborales(Int32 edificioId, Int32? anio)
+        {
+            ResponseGetObligacionesLaborales ResponseGetObligacionesLaborales = new ResponseGetObligacionesLaborales();
+            var filtroTipo = "ObligacionesLaborales";
+            var baseRuta = "http://afari.pe/intranet/Resources/Files/";
+            try
+            {
+                try
+                {
+                    var query = context.DatoEdificio.Where(X => X.EdificioId == edificioId && X.Tipo.Contains(filtroTipo)).AsQueryable();
+                    if (anio.HasValue)
+                    {
+                        query = query.Where(x => x.UnidadTiempo.Anio == anio);
+                    }
+
+                    ResponseGetObligacionesLaborales.lstObligacionesLaborales = query.Select(x => new ItemOL
+                    {
+                        id = x.DatoEdificioId,
+                        Nombre = x.Nombre,
+                        unidadTiempoId = x.UnidadTiempoId,
+                        detalleUnidadTiempo = x.UnidadTiempo.Descripcion,
+                        documento = baseRuta + x.Dato,
+                        tipo = x.Tipo.Replace(filtroTipo, String.Empty)
+                    }).OrderBy(x => x.tipo).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetObligacionesLaborales.error = true;
+                    ResponseGetObligacionesLaborales.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetObligacionesLaborales.error = true;
+                ResponseGetObligacionesLaborales.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetObligacionesLaborales;
+        }
+        [Route("api/AfariService/GetNoticias")]
+        [HttpGet]
+        public ResponseGetNoticias GetNoticias(Int32 edificioId)
+        {
+            ResponseGetNoticias ResponseGetNoticias = new ResponseGetNoticias();
+
+            try
+            {
+                try
+                {
+                    var query = context.Noticia
+                                .OrderByDescending(x => x.Fecha)
+                                .Include(x => x.Edificio)
+                                .Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.EdificioId == edificioId).ToList();
+
+                    ResponseGetNoticias.lstNoticia = query.Select(x => new NoticiaBE
+                    {
+                        titulo = x.Titulo,
+                        detalle = x.Detalle,
+                        fecha = x.Fecha
+                    }).OrderByDescending(x => x.fecha).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetNoticias.error = true;
+                    ResponseGetNoticias.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetNoticias.error = true;
+                ResponseGetNoticias.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetNoticias;
+        }
+        [Route("api/AfariService/GetTrabajadores")]
+        [HttpGet]
+        public ResponseGetTrabajadores GetTrabajadores(Int32 edificioId)
+        {
+            ResponseGetTrabajadores ResponseGetTrabajadores = new ResponseGetTrabajadores();
+
+            try
+            {
+                try
+                {
+                    var baseRuta = "http://afari.pe/intranet/Resources/Fotos/";
+                    var query = context.Trabajador
+                                .Include(x => x.Edificio)
+                                .OrderBy(x => x.Nombres)
+                                .OrderBy(x => x.Apellidos)
+                                .Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.Edificio.Estado == ConstantHelpers.EstadoActivo)
+                                .AsQueryable();
+
+                    ResponseGetTrabajadores.lstTrabajador = query.Select( x => new TrabajadorBE { trabajadorId = x.TrabajadorId,
+                    nombre = x.Nombres + " " + x.Apellidos , cargo = x.Cargo , dni = x.DNI ,
+                    foto = baseRuta + (!String.IsNullOrEmpty(x.Foto) ? x.Foto : ("default_worker.png"))
+                    }).OrderBy( x => x.nombre).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetTrabajadores.error = true;
+                    ResponseGetTrabajadores.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetTrabajadores.error = true;
+                ResponseGetTrabajadores.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetTrabajadores;
+        }
         [Route("api/AfariService/GetDetalleIngresos")]
         [HttpGet]
         public ResponseGetDetalleIngresos GetDetalleIngresos(Int32 ingresoId)
@@ -1089,7 +1356,7 @@ namespace VEH.Intranet.Controllers
         }
         [Route("api/AfariService/GetUnidadTiempo")]
         [HttpGet]
-        public ResponseGetUnidadTiempo GetUnidadTiempo()
+        public ResponseGetUnidadTiempo GetUnidadTiempo(bool FlagEsActivo)
         {
             ResponseGetUnidadTiempo ResponseGetEdificios = new ResponseGetUnidadTiempo();
 
@@ -1097,7 +1364,15 @@ namespace VEH.Intranet.Controllers
             {
                 try
                 {
-                    ResponseGetEdificios.lstUnidadTiempo = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo).Select(x => new UnidadTiempoBE { unidadTiempoId = x.UnidadTiempoId, nombre = x.Descripcion, orden = x.Orden }).OrderBy( x => x.orden).ToList();
+                    var query  = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo).Select(x => new UnidadTiempoBE { unidadTiempoId = x.UnidadTiempoId, nombre = x.Descripcion, orden = x.Orden }).OrderBy(x => x.orden).AsQueryable();
+                    if (FlagEsActivo)
+                    {
+                        var unidadTiempoActual = context.UnidadTiempo.FirstOrDefault(x => x.Estado == ConstantHelpers.EstadoActivo
+                    && x.EsActivo == true).UnidadTiempoId;
+
+                        query = query.Where(x => x.unidadTiempoId <= unidadTiempoActual);
+                    }
+                    ResponseGetEdificios.lstUnidadTiempo = query.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -1112,6 +1387,33 @@ namespace VEH.Intranet.Controllers
             }
 
             return ResponseGetEdificios;
+        }
+        [Route("api/AfariService/GetUnidadTiempoActual")]
+        [HttpGet]
+        public ResponseGetUnidadTiempoActual GetUnidadTiempoActual()
+        {
+            ResponseGetUnidadTiempoActual ResponseGetUnidadTiempoActual = new ResponseGetUnidadTiempoActual();
+
+            try
+            {
+                try
+                {
+                    ResponseGetUnidadTiempoActual.unidadTiempoActual = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo
+                    && x.EsActivo == true).Select(x => new UnidadTiempoBE { unidadTiempoId = x.UnidadTiempoId, nombre = x.Descripcion, orden = x.Orden }).FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetUnidadTiempoActual.error = true;
+                    ResponseGetUnidadTiempoActual.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetUnidadTiempoActual.error = true;
+                ResponseGetUnidadTiempoActual.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetUnidadTiempoActual;
         }
         [Route("api/AfariService/GetEstadoEdificio")]
         [HttpGet]

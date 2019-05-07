@@ -612,6 +612,9 @@ C:\Users\cmere\Desktop\TFS_IntranetAfari\VEH.Intranet\obj\Debug\RdlCompile.compi
 C:\Users\cmere\Desktop\TFS_IntranetAfari\VEH.Intranet\obj\Debug\en\VEH.Intranet.resources.dll
 C:\Users\cmere\Desktop\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.dll
 C:\Users\cmere\Desktop\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.pdb
+F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\WebGrease.dll
+F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\fr\Microsoft.ReportViewer.Common.resources.dll
+F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\it\Microsoft.ReportViewer.DataVisualization.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\SqlServerTypes\x64\msvcr120.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\SqlServerTypes\x86\msvcr120.dll
@@ -669,7 +672,6 @@ F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\System.Web.Razor.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\System.Web.WebPages.Deployment.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\System.Web.WebPages.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\System.Web.WebPages.Razor.dll
-F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\WebGrease.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\WebMatrix.Data.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\WebMatrix.WebData.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Org.Mentalis.Security.Cryptography.dll
@@ -747,7 +749,6 @@ F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Mono.Math.xml
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Microsoft.VisualStudio.TemplateWizardInterface.xml
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\de\Microsoft.ReportViewer.Common.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.ReportViewer.Common.resources.dll
-F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\fr\Microsoft.ReportViewer.Common.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\it\Microsoft.ReportViewer.Common.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\ja\Microsoft.ReportViewer.Common.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\ko\Microsoft.ReportViewer.Common.resources.dll
@@ -758,7 +759,6 @@ F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\zh-CHT\Microsoft.ReportViewer
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\de\Microsoft.ReportViewer.DataVisualization.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.ReportViewer.DataVisualization.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
-F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\it\Microsoft.ReportViewer.DataVisualization.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
@@ -808,7 +808,6 @@ F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\zh-CHT\Microsoft.ReportViewer
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.VisualStudio.Data.Services.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.VisualStudio.Data.Core.resources.dll
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.App.config
-F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csprojAssemblyReference.cache
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.Globalization.Shared.ValidationStrings.resources
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.Globalization.Shared.ValidationStrings.en.resources
 F:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.GenerateResource.cache

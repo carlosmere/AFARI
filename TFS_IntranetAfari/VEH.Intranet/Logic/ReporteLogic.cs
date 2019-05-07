@@ -579,7 +579,7 @@ namespace VEH.Intranet.Logic
                     {
                         mostrarExtraordinaria = true;
                     }
-                    
+
                     //}
 
                     Decimal totalMonto = listaCuotasPagadas.Sum(X => X.Monto);
@@ -608,7 +608,7 @@ namespace VEH.Intranet.Logic
                         {
                             rowDepartamento["Cuota"] = "0.00";
 
-                            
+
                         }
                         else
                         {
@@ -620,7 +620,7 @@ namespace VEH.Intranet.Logic
                     {
                         decimal? preCalCuota = 0M;
                         decimal? preCalCuotaExtraordinaria = 0M;
-                        if (listaCuotasPagadas.Count() == listaCuotasPagadas.Count( x => x.CuotaExtraordinaria > 0))
+                        if (listaCuotasPagadas.Count() == listaCuotasPagadas.Count(x => x.CuotaExtraordinaria > 0))
                         {
                             if (listaCuotasPagadas.FirstOrDefault().UnidadTiempoId == UnidadTiempo)
                             {
@@ -685,7 +685,7 @@ namespace VEH.Intranet.Logic
                         }
                         */
                     }
-                    rowDepartamento["Total"] = (mora + totalCuota + Extraordinaria  ).ToString("#,##0.00");
+                    rowDepartamento["Total"] = (mora + totalCuota + Extraordinaria).ToString("#,##0.00");
                     //var balance = context.BalanceUnidadTiempoEdificio.FirstOrDefault( x => x.UnidadDeTiempoId == UnidadTiempo && x.EdificioId == EdificioId);
                     var leyenda = listaCuotasPagadas.Where(X => X.Leyenda != 0 && X.UnidadTiempoId <= UnidadTiempo).OrderByDescending(x => x.UnidadTiempoId).FirstOrDefault();
                     //rowDepartamento["Leyenda"] = leyenda != null ? leyenda.Leyenda.ToString() : String.Empty;
@@ -710,7 +710,7 @@ namespace VEH.Intranet.Logic
                     //}
                     //if (mora > 0)
                     //{
-                       // var a = 0;
+                    // var a = 0;
                     //}
                     ds.Tables["DSIngresos"].Rows.Add(rowDepartamento);
                     TotalIngresosMora += mora;
@@ -1213,29 +1213,29 @@ namespace VEH.Intranet.Logic
                 rv.Clear();
                 rv.LocalReport.DataSources.Clear();
                 DSInfoReporteMantenimiento ds = new DSInfoReporteMantenimiento();
-                
+
                 foreach (var crono in LstCronograma)
                 {
                     DataRow rowCronograma = ds.Tables["DTCronograma"].NewRow();
-                    
+
                     rowCronograma["Nombre"] = crono.Nombre;
-                    for(int i = 1; i <= 12; i++)
+                    for (int i = 1; i <= 12; i++)
                     {
                         var detalle = crono.DetalleCronograma.FirstOrDefault(x => x.Mes == i);
-                        rowCronograma[ConstantHelpers.ObtenerMesPorValorId(i.ToString())] = detalle.EsMarcado ? "X" : detalle.EsRealizado? "." : String.Empty;
+                        rowCronograma[ConstantHelpers.ObtenerMesPorValorId(i.ToString())] = detalle.EsMarcado ? "X" : detalle.EsRealizado ? "." : String.Empty;
                     }
 
                     ds.Tables["DTCronograma"].Rows.Add(rowCronograma);
                 }
-                
+
                 ReportDataSource rdsCronograma = new ReportDataSource("DSInfoReporteMantenimiento", ds.Tables["DTCronograma"].DefaultView);
                 rv.ProcessingMode = ProcessingMode.Local;
                 rv.LocalReport.EnableExternalImages = true;
 
                 rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteMantenimiento.rdlc";
-                
+
                 rv.LocalReport.DataSources.Add(rdsCronograma);
-                
+
                 rv.LocalReport.SetParameters(new ReportParameter("Titulo", Titulo));
 
 
@@ -1260,13 +1260,13 @@ namespace VEH.Intranet.Logic
                     out streamids_excel, out warnings_excel);
 
 
-                String fileName = Server.MapPath("~/Resources") + "\\Mantenimientos "+ NombreEdificio + ".zip";
+                String fileName = Server.MapPath("~/Resources") + "\\Mantenimientos " + NombreEdificio + ".zip";
                 MemoryStream outputMemStream = new MemoryStream();
                 ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
                 zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
 
-                ZipEntry entry_pdf = new ZipEntry("Mantenimientos "+ NombreEdificio + ".pdf");
+                ZipEntry entry_pdf = new ZipEntry("Mantenimientos " + NombreEdificio + ".pdf");
                 entry_pdf.DateTime = DateTime.Now;
                 zipStream.PutNextEntry(entry_pdf);
                 StreamUtils.Copy(new MemoryStream(bytes), zipStream, new byte[4096]);
@@ -1284,6 +1284,57 @@ namespace VEH.Intranet.Logic
                 outputMemStream.Position = 0;
 
                 return outputMemStream;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        public void GetReportMantenimientoAPI(String Titulo, List<Cronograma> LstCronograma)
+        {
+            try
+            {
+                rv.Clear();
+                rv.LocalReport.DataSources.Clear();
+                DSInfoReporteMantenimiento ds = new DSInfoReporteMantenimiento();
+
+                foreach (var crono in LstCronograma)
+                {
+                    DataRow rowCronograma = ds.Tables["DTCronograma"].NewRow();
+
+                    rowCronograma["Nombre"] = crono.Nombre;
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        var detalle = crono.DetalleCronograma.FirstOrDefault(x => x.Mes == i);
+                        rowCronograma[ConstantHelpers.ObtenerMesPorValorId(i.ToString())] = detalle.EsMarcado ? "X" : detalle.EsRealizado ? "." : String.Empty;
+                    }
+
+                    ds.Tables["DTCronograma"].Rows.Add(rowCronograma);
+                }
+
+                ReportDataSource rdsCronograma = new ReportDataSource("DSInfoReporteMantenimiento", ds.Tables["DTCronograma"].DefaultView);
+                rv.ProcessingMode = ProcessingMode.Local;
+                rv.LocalReport.EnableExternalImages = true;
+
+                rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteMantenimiento.rdlc";
+
+                rv.LocalReport.DataSources.Add(rdsCronograma);
+
+                rv.LocalReport.SetParameters(new ReportParameter("Titulo", Titulo));
+
+
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string filenameExtension;
+
+                byte[] bytes = rv.LocalReport.Render(
+                    "PDF", null, out mimeType, out encoding, out filenameExtension,
+                    out streamids, out warnings);
+
+
+                lstMemoryStreamPDF.Add(bytes);                
             }
             catch (Exception ex)
             {
@@ -1727,7 +1778,7 @@ namespace VEH.Intranet.Logic
                 rv.Clear();
                 rv.LocalReport.DataSources.Clear();
                 DSInfoReporte ds = new DSInfoReporte();
-                DataRow rowInfo = fillInfo(ds, cuota, fEmision, fVencimiento, PresupuestoMes, TotalM2, CuotasDelEdificio, lastUnidad, UnidadTiempoActualGeneral,NumeroRecibo,EsSeparado);
+                DataRow rowInfo = fillInfo(ds, cuota, fEmision, fVencimiento, PresupuestoMes, TotalM2, CuotasDelEdificio, lastUnidad, UnidadTiempoActualGeneral, NumeroRecibo, EsSeparado);
                 var UnidadTiempoActual = UnidadTiempoActualGeneral;
                 if (UnidadTiempoActual == null)
                     UnidadTiempoActual = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo);
@@ -2004,7 +2055,7 @@ namespace VEH.Intranet.Logic
                     }
                     else
                     {
-                        var inquilino = context.Inquilino.FirstOrDefault( x => x.PropietarioId == objPropietario.PropietarioId && x.Estado == ConstantHelpers.EstadoActivo);
+                        var inquilino = context.Inquilino.FirstOrDefault(x => x.PropietarioId == objPropietario.PropietarioId && x.Estado == ConstantHelpers.EstadoActivo);
                         if (inquilino != null)
                         {
                             NombrePropietario = inquilino.Nombres;
@@ -2124,7 +2175,7 @@ namespace VEH.Intranet.Logic
                 rowInfo["LecturaActual"] = lecturaActualString;//EsSeparado ? "" : (cuota.LecturaAgua).ToString();
                 rowInfo["ConsumoMes"] = consumoMesString;//EsSeparado ? "" : (cuota.ConsumoAgua).ToString();
 
-                rowInfo["Total"] =  EsSeparado ? 0 : cuota.Total;
+                rowInfo["Total"] = EsSeparado ? 0 : cuota.Total;
 
                 rowInfo["NroUnidad"] = EsSeparado ? "" : ((cuota.Departamento.Numero.ToString()) + (!(String.IsNullOrEmpty(cuota.Departamento.Estacionamiento)) ? "\n" + cuota.Departamento.Estacionamiento : "") + (!(String.IsNullOrEmpty(cuota.Departamento.Deposito)) ? "\n" + cuota.Departamento.Deposito.ToString() : ""));
                 rowInfo["Propietario"] = (TieneRazonSocial ? "RAZON SOCIAL: " : "NOMBRE: ") + NombrePropietario + "\n"
