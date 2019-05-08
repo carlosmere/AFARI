@@ -16,5 +16,6 @@ namespace VEH.Intranet.Models.BE
         public decimal totalConMora { get; set; }
         public Int32 departamentoId { get; set; }
         public string departamentoDescripcion { get; set; }
+        public bool pagado { get; set; }
     }
 }

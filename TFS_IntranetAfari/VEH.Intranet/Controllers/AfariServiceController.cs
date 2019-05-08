@@ -1284,7 +1284,7 @@ namespace VEH.Intranet.Controllers
         }
         [Route("api/AfariService/GetCerrarCuotas")]
         [HttpGet]
-        public ResponseGetCerrarCuotas GetCerrarCuotas(Int32 edificioId,Int32 unidadTiempoIdInicio, Int32 unidadTiempoIdFin, Int32? departamentoId, String estado)
+        public ResponseGetCerrarCuotas GetCerrarCuotas(Int32 edificioId,Int32? unidadTiempoIdInicio, Int32 unidadTiempoIdFin, Int32? departamentoId, String estado)
         {
             ResponseGetCerrarCuotas ResponseGetCerrarCuotas = new ResponseGetCerrarCuotas();
 
@@ -1299,26 +1299,38 @@ namespace VEH.Intranet.Controllers
 
                     if (departamentoId.HasValue)
                     {
-                        var query = context.Cuota.Where(x => x.DepartamentoId == departamentoId && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo && x.UnidadTiempoId <= unidadTiempoIdFin
-                        && x.UnidadTiempoId >= unidadTiempoIdInicio).AsQueryable();
+                        var query = context.Cuota.Where(x => x.DepartamentoId == departamentoId && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo && x.UnidadTiempoId <= unidadTiempoIdFin).AsQueryable();
+                        if (unidadTiempoIdInicio.HasValue)
+                        {
+                            query = query.Where(x => x.UnidadTiempoId >= unidadTiempoIdInicio);
+                        }
                         if (!String.IsNullOrEmpty(estado))
                         {
                             var e = estado == "0" ? false : true;
                             query = query.Where(x => x.Pagado == e);
                         }
                         ResponseGetCerrarCuotas.lstCuota = query.OrderBy(x => x.DepartamentoId).ThenByDescending(x => x.UnidadTiempo.Orden)
-                            .Select(x => new CuotaBE { cuotaId = x.CuotaId, estado = x.Estado, unidadTiempoId = x.UnidadTiempoId,
+                            .Select(x => new CuotaBE {
+                                cuotaId = x.CuotaId,
+                                estado = x.Estado,
+                                unidadTiempoId = x.UnidadTiempoId,
                                 unidadTiempoDescripcion = x.UnidadTiempo.Descripcion,
                                 esPagoAdelantado = x.EsAdelantado,
                                 total = x.Total,
                                 totalConMora = x.Total + x.Mora,
                                 departamentoId = x.DepartamentoId,
-                                departamentoDescripcion = x.Departamento.TipoInmueble.Nombre + " " +x.Departamento.Numero
+                                departamentoDescripcion = x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
+                                pagado = x.Pagado
                             }).ToList();
                     }
                     else
                     {
-                        var query = context.Cuota.Where(x => x.UnidadTiempoId <= unidadTiempoIdFin && x.UnidadTiempoId >= unidadTiempoIdInicio && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo && x.Departamento.EdificioId == edificioId).AsQueryable();
+                        var query = context.Cuota.Where(x => x.UnidadTiempoId <= unidadTiempoIdFin && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo && x.Departamento.EdificioId == edificioId).AsQueryable();
+                        if (unidadTiempoIdInicio.HasValue)
+                        {
+                            query = query.Where(x => x.UnidadTiempoId >= unidadTiempoIdInicio);
+                        }
+
                         if (!String.IsNullOrEmpty(estado))
                         {
                             var e = estado == "0" ? false : true;
@@ -1336,7 +1348,8 @@ namespace VEH.Intranet.Controllers
                                 total = x.Total,
                                 totalConMora = x.Total + x.Mora,
                                 departamentoId = x.DepartamentoId,
-                                departamentoDescripcion = x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero
+                                departamentoDescripcion = x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
+                                pagado = x.Pagado
                             }).ToList();
                     }
                 }
@@ -1372,7 +1385,7 @@ namespace VEH.Intranet.Controllers
 
                         query = query.Where(x => x.unidadTiempoId <= unidadTiempoActual);
                     }
-                    ResponseGetEdificios.lstUnidadTiempo = query.ToList();
+                    ResponseGetEdificios.lstUnidadTiempo = query.OrderByDescending( x => x.unidadTiempoId).ToList();
                 }
                 catch (Exception ex)
                 {
