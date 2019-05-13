@@ -7,6 +7,7 @@ namespace VEH.Intranet.Models.BE
 {
     public class PropietarioBE
     {
+        public int propietarioId { get; set;}
         public String nombreDepartamento { get; set; }
         public String nombrePropietario { get; set; }
         public String telefono { get; set; }

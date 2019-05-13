@@ -393,6 +393,7 @@
     <Compile Include="Models\BalanceUnidadTiempoEdificio.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BE\AdmMenuBE.cs" />
     <Compile Include="Models\BE\BaseBE.cs" />
     <Compile Include="Models\BE\CronogramaBE.cs" />
     <Compile Include="Models\BE\CuotaBE.cs" />
@@ -409,6 +410,7 @@
     <Compile Include="Models\BE\PropietarioBE.cs" />
     <Compile Include="Models\BE\ReciboMantenimientoBE.cs" />
     <Compile Include="Models\BE\RequestLogin.cs" />
+    <Compile Include="Models\BE\ResponseGetAdmMenu.cs" />
     <Compile Include="Models\BE\ResponseGetCerrarCuotas.cs" />
     <Compile Include="Models\BE\ResponseGetCertificadosEquipos.cs" />
     <Compile Include="Models\BE\ResponseGetDepartamentos.cs" />

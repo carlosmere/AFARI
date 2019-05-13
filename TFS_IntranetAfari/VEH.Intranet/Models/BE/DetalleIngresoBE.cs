@@ -7,6 +7,7 @@ namespace VEH.Intranet.Models.BE
 {
     public class DetalleIngresoBE
     {
+        public int detalleIngresoId { get; set; }
         public String nombre { get; set; }
         public Decimal monto { get; set; }
     }

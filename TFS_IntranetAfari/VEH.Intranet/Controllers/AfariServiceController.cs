@@ -176,6 +176,39 @@ namespace VEH.Intranet.Controllers
 
             return ResponseGetCertificadosEquipos;
         }
+        [Route("api/AfariService/GetAdmMenu")]
+        [HttpGet]
+        public ResponseGetAdmMenu GetAdmMenu(Int32 edificioId)
+        {
+            ResponseGetAdmMenu ResponseGetAdmMenu = new ResponseGetAdmMenu();
+            var baseRuta = "http://afari.pe/intranet/Resources/Files/";
+            try
+            {
+                try
+                {
+                    var query = context.MenuPropietarioEdificio.Where(X => X.EdificioId == edificioId && X.Estado == "ACT").AsQueryable();
+
+                    ResponseGetAdmMenu.lstAdmMenuBE = query.Select(x => new AdmMenuBE
+                    {
+                        admMenuId = x.MenuPropietarioEdificioId,
+                        nombre = x.Nombre,
+                        documento = baseRuta + x.Documento
+                    }).OrderBy(x => x.nombre).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetAdmMenu.error = true;
+                    ResponseGetAdmMenu.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetAdmMenu.error = true;
+                ResponseGetAdmMenu.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetAdmMenu;
+        }
         [Route("api/AfariService/GetObligacionesLaborales")]
         [HttpGet]
         public ResponseGetObligacionesLaborales GetObligacionesLaborales(Int32 edificioId, Int32? anio)
@@ -234,9 +267,10 @@ namespace VEH.Intranet.Controllers
 
                     ResponseGetNoticias.lstNoticia = query.Select(x => new NoticiaBE
                     {
+                        noticiaId = x.NoticiaId,
                         titulo = x.Titulo,
                         detalle = x.Detalle,
-                        fecha = x.Fecha
+                        fecha = x.Fecha.Value.ToString("dd/MM/yyyy")
                     }).OrderByDescending(x => x.fecha).ToList();
                 }
                 catch (Exception ex)
@@ -310,6 +344,7 @@ namespace VEH.Intranet.Controllers
 
                     ResponseGetDetalleIngresos.lstDetalleIngreso = query.Select(x => new DetalleIngresoBE
                     {
+                        detalleIngresoId = x.DetalleIngresoId,
                         nombre = x.Concepto,
                         monto = x.Monto
                     }).ToList();
@@ -384,6 +419,7 @@ namespace VEH.Intranet.Controllers
 
                     ResponseGetDetalleGastos.lstDetalleGasto = query.Select(x => new DetalleGastoBE
                     {
+                        detalleGastoId = x.DetalleGastoId,
                         nombre = x.Concepto,
                         monto = x.Monto
                     }).ToList();
@@ -1186,7 +1222,9 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     ResponseGetPropietarios.lstPropietario = context.Propietario.Where(x => x.Estado == ConstantHelpers.EstadoActivo
-                    && x.Departamento.EdificioId == edificioId).OrderBy( x => x.DepartamentoId).Select(x => new PropietarioBE { nombreDepartamento =  x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
+                    && x.Departamento.EdificioId == edificioId).OrderBy( x => x.DepartamentoId).Select(x => new PropietarioBE {
+                        propietarioId = x.PropietarioId,
+                        nombreDepartamento =  x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
                         nombrePropietario = x.Nombres + " " + x.ApellidoPaterno + " " + x.ApellidoMaterno,
                         telefono = x.Telefono,
                     email = x.Email}).ToList();
