@@ -176,6 +176,52 @@ namespace VEH.Intranet.Controllers
 
             return ResponseGetCertificadosEquipos;
         }
+        [Route("api/AfariService/GetNormasConvivencia")]
+        [HttpGet]
+        public HttpResponseMessage GetNormasConvivencia(Int32 edificioId)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            try
+            {
+                try
+                {
+                    var edificio = context.Edificio.FirstOrDefault(X => X.EdificioId == edificioId);
+                    var baseRuta = "http://afari.pe/intranet/Resources/Files/" + edificio.Acronimo + "/" + edificio.NormasConvivencia;
+
+                    MemoryStream outputMemoryStream = null;
+
+                    using (FileStream file = new FileStream(baseRuta, FileMode.Open, FileAccess.Read))
+                    {
+                        file.CopyTo(outputMemoryStream);
+                    }
+
+                    if (outputMemoryStream == null)
+                    {
+                        response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                    }
+
+                    response.Content = new StreamContent(outputMemoryStream);
+
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = edificio.Nombre + " Normas de Convivencia.pdf"
+                    };
+                    response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+
+                }
+                catch (Exception ex)
+                {
+                    response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+            return response;
+        }
         [Route("api/AfariService/GetAdmMenu")]
         [HttpGet]
         public ResponseGetAdmMenu GetAdmMenu(Int32 edificioId)
@@ -1676,6 +1722,8 @@ namespace VEH.Intranet.Controllers
 
                                 ResponseLogin.departamentoId = usuario.DepartamentoId;
                                 ResponseLogin.edificioId = usuario.Departamento.EdificioId;
+                                ResponseLogin.nombreEdificio = usuario.Departamento.Edificio.Nombre;
+                                ResponseLogin.nombreDepartamento = usuario.Departamento.TipoInmueble.Nombre + " " + usuario.Departamento.Numero;
 
                                 try
                                 {

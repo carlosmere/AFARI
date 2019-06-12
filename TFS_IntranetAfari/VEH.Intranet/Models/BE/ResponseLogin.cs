@@ -13,5 +13,7 @@ namespace VEH.Intranet.Models.BE
         public string correo { get; set; }
         public Int32? departamentoId { get; set; }
         public Int32? edificioId { get; set; }
+        public string nombreEdificio { get; set; }
+        public string nombreDepartamento { get; set; }
     }
 }
