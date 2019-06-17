@@ -401,6 +401,7 @@
     <Compile Include="Models\BE\DetalleGastoBE.cs" />
     <Compile Include="Models\BE\DetalleIngresoBE.cs" />
     <Compile Include="Models\BE\EdificioBE.cs" />
+    <Compile Include="Models\BE\EdificioDetalleBE.cs" />
     <Compile Include="Models\BE\EstadoCuentaBancarioBE.cs" />
     <Compile Include="Models\BE\GastoBE.cs" />
     <Compile Include="Models\BE\GetEstadosCuentaBancario.cs" />
@@ -414,6 +415,7 @@
     <Compile Include="Models\BE\ResponseGetCerrarCuotas.cs" />
     <Compile Include="Models\BE\ResponseGetCertificadosEquipos.cs" />
     <Compile Include="Models\BE\ResponseGetDepartamentos.cs" />
+    <Compile Include="Models\BE\ResponseGetDetalleEdificio.cs" />
     <Compile Include="Models\BE\ResponseGetDetalleGastos.cs" />
     <Compile Include="Models\BE\ResponseGetDetalleIngresos.cs" />
     <Compile Include="Models\BE\ResponseGetEdificios.cs" />

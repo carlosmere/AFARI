@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using VEH.Intranet.Logic;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
+using VEH.Intranet.ViewModel.Building;
 
 namespace VEH.Intranet.Controllers
 {
@@ -36,7 +37,7 @@ namespace VEH.Intranet.Controllers
                     var query = context.EstadoCuentaBancario.Where(x => x.EdificioId == edificioId && x.Estado == ConstantHelpers.EstadoActivo).OrderByDescending(x => x.UnidadTiempoId).AsQueryable();
                     if (anio.HasValue)
                     {
-                        query = query.Where( x => x.UnidadTiempo.Anio == anio);
+                        query = query.Where(x => x.UnidadTiempo.Anio == anio);
                     }
 
                     GetEstadosCuentaBancario.lstEstadoCuenta = query.Select(x => new EstadoCuentaBancarioBE
@@ -175,6 +176,204 @@ namespace VEH.Intranet.Controllers
             }
 
             return ResponseGetCertificadosEquipos;
+        }
+        [Route("api/AfariService/GetIngresosGastos")]
+        [HttpGet]
+        public HttpResponseMessage GetIngresosGastos(Int32 edificioId, Int32 unidadTiempoId)
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            try
+            {
+                try
+                {
+                    MemoryStream outputMemoryStream = null;
+                    string NombreArchivo = string.Empty;
+                    //<Chequear si se ha subido correcion
+                    var unidadTiempo = context.UnidadTiempo.FirstOrDefault(X => X.UnidadTiempoId == unidadTiempoId);
+                    if (unidadTiempo != null)
+                    {
+                        var correcion = context.ArchivoCorrecionEdificio.FirstOrDefault(X => X.Tipo.Contains(ConstantHelpers.TipoArchivo.BalanceGeneral) && X.EdificioId == edificioId && X.UnidadTiempoId == unidadTiempoId);
+                        if (correcion != null)
+                        {
+                            //byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine("http://afari.pe/intranet/Resources/Files/Corregidos", correcion.RutaArchivo));
+                            NombreArchivo = "Reporte Ingresos y Gastos - " + context.Edificio.FirstOrDefault(X => X.EdificioId == edificioId).Nombre + " - " + unidadTiempo.Descripcion + ".pdf";
+                            using (FileStream file = new FileStream(Path.Combine("http://afari.pe/intranet/Resources/Files/Corregidos", correcion.RutaArchivo), FileMode.Open, FileAccess.Read))
+                            {
+                                file.CopyTo(outputMemoryStream);
+                            }
+                        }
+                    }
+                    //Chequear>
+
+                    DateTime fechaRegistro = DateTime.Now;
+                    ReporteLogic reporteLogic = new ReporteLogic();
+                    //reporteLogic.Server = Server;
+                    reporteLogic.context = context;
+
+                    var edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == edificioId);
+                    //Lista de cuotas anterior
+                    //List<Cuota> ListCuotas = new List<Cuota>();
+                    //var departamentos = edificio.Departamento.ToList();
+
+                    //foreach (var depa in departamentos)
+                    //{
+                    //    Cuota cuota = context.Cuota.FirstOrDefault(x => x.DepartamentoId == depa.DepartamentoId && x.UnidadTiempoId == unidadTiempoId);// && x.Estado.Equals(ConstantHelpers.EstadoActivo));
+                    //    if (cuota == null) continue;
+                    //    ListCuotas.Add(cuota);
+                    //}
+
+                    //Listado de cuotas contando la fecha de pagado
+                    List<Cuota> ListCuotas = new List<Cuota>();
+                    List<Int32> LstDepartamentoAdelantado = new List<Int32>();
+                    var contextAux = new SIVEHEntities();
+                    //var departamentos = context.Departamento.Where(x => x.EdificioId == edificio.EdificioId && x.Estado == ConstantHelpers.EstadoActivo);
+                    var departamentos = context.Departamento.Where(x => x.EdificioId == edificio.EdificioId);
+                    foreach (var departamento in departamentos)
+                    {
+                        var cuotas = contextAux.Cuota.Where(X => X.DepartamentoId == departamento.DepartamentoId && X.Pagado).OrderBy(x => x.DepartamentoId).ThenBy(x => x.CuotaId).ToList();
+                        if (cuotas != null && cuotas.Count > 0)
+                        {
+                            if (cuotas.Count == 2 && cuotas.Count(x => x.EsExtraordinaria == true) >= 1)
+                            {
+                                var ext = cuotas.FirstOrDefault(x => x.EsExtraordinaria == true);
+                                var ord = cuotas.FirstOrDefault(x => x.EsExtraordinaria == false);
+
+                                cuotas[0] = ord;
+                                cuotas[1] = ext;
+                            }
+
+                            foreach (var cuota in cuotas)
+                            {
+                                if (cuota.EsAdelantado.HasValue && (cuota.EsAdelantado.Value == true))//adelantado
+                                {
+                                    //ListCuotas.Add(cuota);
+                                    LstDepartamentoAdelantado.Add(cuota.DepartamentoId);
+                                }
+                                //Si no existe la fecha de pagado, añadir si cumple con la unidad de tiempo
+                                if (!cuota.FechaPagado.HasValue && cuota.UnidadTiempoId == unidadTiempoId)
+                                    ListCuotas.Add(cuota);
+                                else
+                                { //Si existe la fecha de pagado, comprar el mes y el año , si encajan con esta unidad de tiempo, entonces son parte del reporte
+                                    Int32? diaMoraCuota = cuota.Departamento.Edificio.DiaMora;
+                                    if (cuota.UnidadTiempo.Mes == 2)
+                                    {
+                                        diaMoraCuota = 28;
+                                    }
+
+                                    diaMoraCuota = diaMoraCuota.HasValue ? diaMoraCuota.Value : cuota.UnidadTiempo.Mes == 2 ? 28 : 30;
+
+                                    var fechaVencimientoCuota = new DateTime();
+
+                                    try
+                                    {
+                                        fechaVencimientoCuota = new DateTime(cuota.UnidadTiempo.Anio, cuota.UnidadTiempo.Mes, diaMoraCuota.Value);
+                                    }
+                                    catch
+                                    {
+                                        fechaVencimientoCuota = new DateTime(cuota.UnidadTiempo.Anio, cuota.UnidadTiempo.Mes, diaMoraCuota.Value - 1);
+                                    }
+
+                                    if (cuota.FechaPagado.HasValue && (cuota.FechaPagado.Value.Month == unidadTiempo.Mes && cuota.FechaPagado.Value.Year == unidadTiempo.Anio))
+                                    {
+                                        if (cuota.EsExtraordinaria.HasValue && cuota.EsExtraordinaria.Value)
+                                        {
+                                            var validacionExtra = ListCuotas.FirstOrDefault(x => x.DepartamentoId == cuota.DepartamentoId);
+                                            if (validacionExtra != null && cuota.FechaPagado != null)
+                                            {
+
+                                                if (cuota.UnidadTiempo.Mes == validacionExtra.UnidadTiempo.Mes)
+                                                {
+                                                    ListCuotas.Remove(validacionExtra);
+                                                    validacionExtra.CuotaExtraordinaria += cuota.CuotaExtraordinaria;
+                                                    validacionExtra.Total += cuota.CuotaExtraordinaria ?? 0;
+                                                    ListCuotas.Add(validacionExtra);
+                                                }
+                                                else if (cuota.UnidadTiempo.Mes != validacionExtra.UnidadTiempo.Mes)
+                                                {
+                                                    //validacionExtra.Total += cuota.CuotaExtraordinaria ?? 0;
+                                                    ListCuotas.Add(cuota);
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                ListCuotas.Add(cuota);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ListCuotas.Add(cuota);
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+
+                    ListCuotas = ListCuotas.OrderBy(x => x.DepartamentoId).ToList();
+
+
+                    //var presupuestoMes = ListCuotas.Sum(x => x.Monto); //Total de 
+                    // var totalM2 = departamentos.Sum(x => x.DepartamentoM2 ?? 0) + departamentos.Sum(x => x.EstacionamientoM2 ?? 0) + departamentos.Sum(x => x.EstacionamientoM2 ?? 0);
+                    unidadTiempo = context.UnidadTiempo.FirstOrDefault(x => x.UnidadTiempoId == unidadTiempoId);
+                    var Gasto = context.Gasto.FirstOrDefault(x => x.EdificioId == edificioId && x.UnidadTiempoId == unidadTiempoId && x.Estado.Equals(ConstantHelpers.EstadoActivo));
+                    var IngresoComun = context.Ingreso.FirstOrDefault(x => x.EdificioId == edificioId && x.UnidadTiempoId == unidadTiempoId && x.Estado.Equals(ConstantHelpers.EstadoActivo));
+                    var cantOrden = context.DetalleGasto.Where(x => x.GastoId == Gasto.GastoId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).Count(x => x.Orden.HasValue == false);
+                    List<DetalleGasto> ListGastos = context.DetalleGasto.Where(x => x.GastoId == Gasto.GastoId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
+
+                    if (cantOrden == 0)
+                    {
+                        ListGastos = ListGastos.OrderBy(x => x.Orden).ToList();
+                    }
+                    //  Cuota c = listaCuota.Where(x => x.DepartamentoId == departamentoId).FirstOrDefault();
+                    // bool exportadoAntes = false;
+                    Decimal saldoAnterior = 0M;
+
+
+                    List<DetalleIngreso> ListIngresosComunes = new List<DetalleIngreso>();
+                    if (IngresoComun != null)
+                        ListIngresosComunes = context.DetalleIngreso.Where(X => X.IngresoId == IngresoComun.IngresoId && X.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
+
+                    UnidadTiempo objUnidadTiempoAnterior = context.UnidadTiempo.FirstOrDefault(x => x.Orden == unidadTiempo.Orden - 1 && x.Estado.Equals(ConstantHelpers.EstadoActivo));
+
+                    var SaldoAnterior = 0;//reporteLogic.GetSaldoHasta(CargarDatosContext(), context.UnidadTiempo.First(X => X.UnidadTiempoId == unidadTiempoId), edificioId);
+
+
+                    List<Leyenda> LstLeyendas = context.Leyenda.Where(X => X.BalanceUnidadTiempoEdificio.EdificioId == edificioId && X.BalanceUnidadTiempoEdificio.UnidadDeTiempoId == unidadTiempoId).ToList();
+                    outputMemoryStream = reporteLogic.GetReportIngresosGastosAPI("Ingresos y Gastos de " + unidadTiempo.Descripcion + " \n EDIFICIO " + edificio.Nombre, ListGastos, ListIngresosComunes, ListCuotas, SaldoAnterior, edificioId, unidadTiempoId, false, fechaRegistro, LstLeyendas, false, LstDepartamentoAdelantado);
+
+
+                    NombreArchivo = "Reporte Ingresos y Gastos - " + edificio.Nombre + " - " + unidadTiempo.Descripcion + ".pdf";
+
+
+                    if (outputMemoryStream == null)
+                    {
+                        response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                    }
+
+                    response.Content = new StreamContent(outputMemoryStream);
+
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = NombreArchivo
+                    };
+                    response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+
+                }
+                catch (Exception ex)
+                {
+                    response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+            return response;
         }
         [Route("api/AfariService/GetNormasConvivencia")]
         [HttpGet]
@@ -333,6 +532,71 @@ namespace VEH.Intranet.Controllers
 
             return ResponseGetNoticias;
         }
+
+        [Route("api/AfariService/GetDetalleEdificio")]
+        [HttpGet]
+        public ResponseGetDetalleEdificio GetDetalleEdificio(Int32 edificioId)
+        {
+            ResponseGetDetalleEdificio ResponseGetDetalleEdificio = new ResponseGetDetalleEdificio();
+
+            try
+            {
+                try
+                {
+                    AddEditEdificioViewModel model = new AddEditEdificioViewModel();
+                    model.EdificioId = edificioId;
+                    model.FillAPI(context);
+                    /*****/
+                    ResponseGetDetalleEdificio.detalleEdificio.Acronimo = model.Acronimo;
+                    ResponseGetDetalleEdificio.detalleEdificio.Nombre = model.Nombre;
+                    ResponseGetDetalleEdificio.detalleEdificio.Direccion = model.Direccion;
+                    ResponseGetDetalleEdificio.detalleEdificio.Referencia = model.Referencia;
+                    ResponseGetDetalleEdificio.detalleEdificio.Representante = model.Representante;
+                    ResponseGetDetalleEdificio.detalleEdificio.Desfase = model.Desfase;
+                    ResponseGetDetalleEdificio.detalleEdificio.Estado = model.Estado;
+                    ResponseGetDetalleEdificio.detalleEdificio.NroDepartamentos = model.NroDepartamentos;
+                    ResponseGetDetalleEdificio.detalleEdificio.MontoCuota = model.MontoCuota;
+                    ResponseGetDetalleEdificio.detalleEdificio.SaldoHistorico = model.SaldoHistorico;
+                    ResponseGetDetalleEdificio.detalleEdificio.NroCuenta = model.NroCuenta;
+                    ResponseGetDetalleEdificio.detalleEdificio.RutaFirma = model.RutaFirma;
+                    ResponseGetDetalleEdificio.detalleEdificio.Ruta = model.Ruta;
+                    ResponseGetDetalleEdificio.detalleEdificio.UbigeoId = model.UbigeoId;
+                    ResponseGetDetalleEdificio.detalleEdificio.UDepartamentoId = model.UDepartamentoId;
+                    ResponseGetDetalleEdificio.detalleEdificio.UProvinciaId = model.UProvinciaId;
+                    ResponseGetDetalleEdificio.detalleEdificio.UDistritoId = model.UDistritoId;
+                    ResponseGetDetalleEdificio.detalleEdificio.FactorAreaComun = model.FactorAreaComun;
+                    ResponseGetDetalleEdificio.detalleEdificio.FactorAlcantarillado = model.FactorAlcantarillado;
+                    ResponseGetDetalleEdificio.detalleEdificio.FactorCargoFijo = model.FactorCargoFijo;
+                    ResponseGetDetalleEdificio.detalleEdificio.Identificador = model.Identificador;
+                    ResponseGetDetalleEdificio.detalleEdificio.PMora = model.PMora;
+                    ResponseGetDetalleEdificio.detalleEdificio.TipoMora = model.TipoMora;
+                    ResponseGetDetalleEdificio.detalleEdificio.DiaEmisionCuota = model.DiaEmisionCuota;
+                    ResponseGetDetalleEdificio.detalleEdificio.Orden = model.Orden;
+                    ResponseGetDetalleEdificio.detalleEdificio.EmailEncargado = model.EmailEncargado;
+                    ResponseGetDetalleEdificio.detalleEdificio.NombreEncargado = model.NombreEncargado;
+                    ResponseGetDetalleEdificio.detalleEdificio.PresupuestoMensual = model.PresupuestoMensual;
+                    ResponseGetDetalleEdificio.detalleEdificio.NombrePago = model.NombrePago;
+                    ResponseGetDetalleEdificio.detalleEdificio.MensajeMora = model.MensajeMora;
+                    ResponseGetDetalleEdificio.detalleEdificio.TipoInmuebleId = model.TipoInmuebleId;
+                    ResponseGetDetalleEdificio.detalleEdificio.DiaMora = model.DiaMora;
+                    ResponseGetDetalleEdificio.detalleEdificio.SaldoAnteriorUnidadTiempo = model.SaldoAnteriorUnidadTiempo;
+
+                    /*****/
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetDetalleEdificio.error = true;
+                    ResponseGetDetalleEdificio.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetDetalleEdificio.error = true;
+                ResponseGetDetalleEdificio.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetDetalleEdificio;
+        }
         [Route("api/AfariService/GetTrabajadores")]
         [HttpGet]
         public ResponseGetTrabajadores GetTrabajadores(Int32 edificioId)
@@ -348,13 +612,18 @@ namespace VEH.Intranet.Controllers
                                 .Include(x => x.Edificio)
                                 .OrderBy(x => x.Nombres)
                                 .OrderBy(x => x.Apellidos)
-                                .Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.Edificio.Estado == ConstantHelpers.EstadoActivo)
+                                .Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.Edificio.Estado == ConstantHelpers.EstadoActivo
+                                && x.EdificioId == edificioId)
                                 .AsQueryable();
 
-                    ResponseGetTrabajadores.lstTrabajador = query.Select( x => new TrabajadorBE { trabajadorId = x.TrabajadorId,
-                    nombre = x.Nombres + " " + x.Apellidos , cargo = x.Cargo , dni = x.DNI ,
-                    foto = baseRuta + (!String.IsNullOrEmpty(x.Foto) ? x.Foto : ("default_worker.png"))
-                    }).OrderBy( x => x.nombre).ToList();
+                    ResponseGetTrabajadores.lstTrabajador = query.Select(x => new TrabajadorBE
+                    {
+                        trabajadorId = x.TrabajadorId,
+                        nombre = x.Nombres + " " + x.Apellidos,
+                        cargo = x.Cargo,
+                        dni = x.DNI,
+                        foto = baseRuta + (!String.IsNullOrEmpty(x.Foto) ? x.Foto : ("default_worker.png"))
+                    }).OrderBy(x => x.nombre).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -597,7 +866,7 @@ namespace VEH.Intranet.Controllers
             {
                 response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
-            
+
             return response;
         }
         [Route("api/AfariService/GetCuadroMorosidad")]
@@ -1160,7 +1429,7 @@ namespace VEH.Intranet.Controllers
             {
                 response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
                 return response;
-            }            
+            }
         }
         [Route("api/AfariService/GetReciboPorId")]
         public HttpResponseMessage GetReciboPorId(Int32 departamentoId, Int32 unidadTiempoId)
@@ -1268,12 +1537,14 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     ResponseGetPropietarios.lstPropietario = context.Propietario.Where(x => x.Estado == ConstantHelpers.EstadoActivo
-                    && x.Departamento.EdificioId == edificioId).OrderBy( x => x.DepartamentoId).Select(x => new PropietarioBE {
+                    && x.Departamento.EdificioId == edificioId).OrderBy(x => x.DepartamentoId).Select(x => new PropietarioBE
+                    {
                         propietarioId = x.PropietarioId,
-                        nombreDepartamento =  x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
+                        nombreDepartamento = x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
                         nombrePropietario = x.Nombres + " " + x.ApellidoPaterno + " " + x.ApellidoMaterno,
                         telefono = x.Telefono,
-                    email = x.Email}).ToList();
+                        email = x.Email
+                    }).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -1307,7 +1578,7 @@ namespace VEH.Intranet.Controllers
 
                     if (departamentoId.HasValue)
                     {
-                        lstCuotas = lstCuotas.Where( x => x.DepartamentoId == departamentoId);
+                        lstCuotas = lstCuotas.Where(x => x.DepartamentoId == departamentoId);
                     }
                     if (unidadTiempoId.HasValue)
                     {
@@ -1368,7 +1639,7 @@ namespace VEH.Intranet.Controllers
         }
         [Route("api/AfariService/GetCerrarCuotas")]
         [HttpGet]
-        public ResponseGetCerrarCuotas GetCerrarCuotas(Int32 edificioId,Int32? unidadTiempoIdInicio, Int32 unidadTiempoIdFin, Int32? departamentoId, String estado)
+        public ResponseGetCerrarCuotas GetCerrarCuotas(Int32 edificioId, Int32? unidadTiempoIdInicio, Int32 unidadTiempoIdFin, Int32? departamentoId, String estado)
         {
             ResponseGetCerrarCuotas ResponseGetCerrarCuotas = new ResponseGetCerrarCuotas();
 
@@ -1394,7 +1665,8 @@ namespace VEH.Intranet.Controllers
                             query = query.Where(x => x.Pagado == e);
                         }
                         ResponseGetCerrarCuotas.lstCuota = query.OrderBy(x => x.DepartamentoId).ThenByDescending(x => x.UnidadTiempo.Orden)
-                            .Select(x => new CuotaBE {
+                            .Select(x => new CuotaBE
+                            {
                                 cuotaId = x.CuotaId,
                                 estado = x.Estado,
                                 unidadTiempoId = x.UnidadTiempoId,
@@ -1461,7 +1733,7 @@ namespace VEH.Intranet.Controllers
             {
                 try
                 {
-                    var query  = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo).Select(x => new UnidadTiempoBE { unidadTiempoId = x.UnidadTiempoId, nombre = x.Descripcion, orden = x.Orden }).OrderBy(x => x.orden).AsQueryable();
+                    var query = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo).Select(x => new UnidadTiempoBE { unidadTiempoId = x.UnidadTiempoId, nombre = x.Descripcion, orden = x.Orden }).OrderBy(x => x.orden).AsQueryable();
                     if (FlagEsActivo)
                     {
                         var unidadTiempoActual = context.UnidadTiempo.FirstOrDefault(x => x.Estado == ConstantHelpers.EstadoActivo
@@ -1469,7 +1741,7 @@ namespace VEH.Intranet.Controllers
 
                         query = query.Where(x => x.unidadTiempoId <= unidadTiempoActual);
                     }
-                    ResponseGetEdificios.lstUnidadTiempo = query.OrderByDescending( x => x.unidadTiempoId).ToList();
+                    ResponseGetEdificios.lstUnidadTiempo = query.OrderByDescending(x => x.unidadTiempoId).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -1634,10 +1906,10 @@ namespace VEH.Intranet.Controllers
             {
                 try
                 {
-                    var usuario = context.Usuario.FirstOrDefault( x => x.UsuarioId == usuarioId);
+                    var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == usuarioId);
                     if (usuario != null)
                     {
-                        var query = context.Edificio.Where(x => x.Estado != ConstantHelpers.EstadoEliminado)
+                        var query = context.Edificio.Where(x => x.Estado == ConstantHelpers.EstadoActivo)
                        .OrderBy(x => x.Estado).ThenBy(x => x.Orden).AsQueryable();
 
                         if (usuario != null && usuario.EsAdmin == false)
@@ -1646,7 +1918,7 @@ namespace VEH.Intranet.Controllers
                             query = query.Where(x => lstPermiso.Contains(x.EdificioId));
                         }
 
-                        ResponseGetEdificios.lstEdificios = query.Select( x => new EdificioBE { edificioId = x.EdificioId, nombre = x.Nombre}).OrderByDescending( x => x.nombre).ToList();
+                        ResponseGetEdificios.lstEdificios = query.Select(x => new EdificioBE { edificioId = x.EdificioId, nombre = x.Nombre }).OrderByDescending(x => x.nombre).ToList();
                     }
                     else
                     {

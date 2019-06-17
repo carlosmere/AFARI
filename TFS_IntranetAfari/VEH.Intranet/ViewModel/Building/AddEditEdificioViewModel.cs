@@ -105,6 +105,8 @@ namespace VEH.Intranet.ViewModel.Building
         public List<TipoInmueble> LstTipoInmueble { get; set; }
         public Int32? SaldoAnteriorUnidadTiempo { get; set; }
         public List<UnidadTiempo> LstUnidadTiempo { get; set; } = new List<UnidadTiempo>();
+        public bool error { get; set; }
+        public string mensaje { get; set; }
         public AddEditEdificioViewModel()
         {
             LstComboDepartamento = new List<SelectListItem>();
@@ -140,6 +142,74 @@ namespace VEH.Intranet.ViewModel.Building
             if (EdificioId.HasValue)
             {
                 Edificio edificio = datacontext.context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId.Value);
+                if (edificio != null)
+                {
+                    this.SaldoHistorico = edificio.SaldoAnteriorHistorico;
+                    this.Acronimo = edificio.Acronimo;
+                    this.Nombre = edificio.Nombre;
+                    this.Direccion = edificio.Direccion;
+                    this.Referencia = edificio.Referencia;
+                    this.MensajeMora = edificio.MensajeMora;
+                    this.Estado = edificio.Estado;
+                    this.UDepartamentoId = edificio.UDepartamentoId;
+                    if (edificio.UProvinciaId.HasValue)
+                        LstComboProvincia = new Helpers.UbigeoHelper().ListarComboProvincias(this.UDepartamentoId.Value);
+                    this.UProvinciaId = edificio.UProvinciaId;
+                    if (edificio.UDistritoId.HasValue)
+                        LstComboDistrito = new Helpers.UbigeoHelper().ListarComboDistritos(this.UProvinciaId.Value);
+                    this.UDistritoId = edificio.UDistritoId;
+                    this.NroDepartamentos = edificio.NroDepartamentos;
+                    this.MontoCuota = edificio.MontoCuota;
+                    this.FactorAreaComun = edificio.FactorAreaComun;
+                    this.FactorAlcantarillado = edificio.FactorAlcantarillado;
+                    this.FactorCargoFijo = edificio.FactorCargoFijo;
+                    this.Identificador = edificio.Identificador;
+                    this.PMora = edificio.PMora ?? 0;
+                    this.NroCuenta = edificio.NroCuenta;
+                    this.Ruta = edificio.NormasConvivencia;
+                    this.RutaFirma = edificio.Firma;
+                    this.SaldoAnteriorUnidadTiempo = edificio.SaldoAnteriorUnidadTiempo;
+                    this.TipoMora = edificio.TipoMora;
+                    this.Desfase = edificio.DesfaseRecibos;
+                    this.Representante = edificio.Representante;
+                    this.EmailEncargado = edificio.EmailEncargado;
+                    this.NombreEncargado = edificio.NombreEncargado;
+                    this.TipoInmuebleId = edificio.TipoInmuebleId.Value;
+                    // if (edificio.FechaVencimientoCuota.HasValue)
+                    this.DiaEmisionCuota = edificio.DiaEmisionCuota;
+                    this.PresupuestoMensual = edificio.PresupuestoMensual;
+                    this.NombrePago = edificio.NombrePago;
+                    this.Orden = edificio.Orden;
+                    this.DiaMora = edificio.DiaMora;
+                    if (edificio.TipoMora == "POR")
+                        this.PMora = this.PMora * 100;
+                }
+            }
+        }
+        public void FillAPI(SIVEHEntities context)
+        {
+            LstTipoInmueble = new List<TipoInmueble>();
+            LstTipoInmueble = context.TipoInmueble.Where(x => x.Estado == ConstantHelpers.EstadoActivo).ToList();
+
+            var LstDepartamento = context.UDepartamento.OrderBy(x => x.Nombre).ToList();
+            foreach (var item in LstDepartamento)
+                LstComboDepartamento.Add(new SelectListItem { Value = item.UDepartamentoId.ToString(), Text = item.Nombre.ToUpper() });
+
+            var LstProvincia = context.UProvincia.OrderBy(x => x.Nombre).ToList();
+            foreach (var item in LstProvincia)
+                LstComboProvincia.Add(new SelectListItem { Value = item.UProvinciaId.ToString(), Text = item.Nombre.ToUpper() });
+
+            var LstDistrito = context.UDistrito.OrderBy(x => x.Nombre).ToList();
+            foreach (var item in LstDistrito)
+                LstComboDistrito.Add(new SelectListItem { Value = item.UDistritoId.ToString(), Text = item.Nombre.ToUpper() });
+
+            Orden = context.Edificio.Max(x => x.Orden) + 1;
+            LstUnidadTiempo = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo).OrderByDescending(x => x.UnidadTiempoId).ToList();
+            TipoMora = "POR";
+            DiaEmisionCuota = 1;
+            if (EdificioId.HasValue)
+            {
+                Edificio edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId.Value);
                 if (edificio != null)
                 {
                     this.SaldoHistorico = edificio.SaldoAnteriorHistorico;

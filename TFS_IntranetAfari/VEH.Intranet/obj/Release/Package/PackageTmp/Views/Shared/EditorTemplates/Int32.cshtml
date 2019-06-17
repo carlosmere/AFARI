@@ -1,9 +1,0 @@
-﻿@model Int32?
-
-<div class="form-group">
-    @Html.LabelForModel(new { @class="col-md-2 control-label"})
-    <div class="col-md-2">
-        @Html.TextBoxFor(x => x, new { @class="form-control"})
-        @Html.ValidationMessageFor(x => x)
-    </div>
-</div>

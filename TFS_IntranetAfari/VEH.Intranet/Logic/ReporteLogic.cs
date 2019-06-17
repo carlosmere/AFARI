@@ -275,7 +275,6 @@ namespace VEH.Intranet.Logic
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
-
         public MemoryStream GetReportIngresosGastos(String Titulo, List<DetalleGasto> lstGastos, List<DetalleIngreso> lstIngresosComunes, List<Cuota> lstIngresos, Decimal SaldoAnterior, Int32 EdificioId, Int32 UnidadTiempo, bool exportadoAntes, DateTime fechaRegistro, List<Leyenda> LstLeyendas, bool EsAdministrador, List<Int32> LstAdelantado)
         {
             // byte[] bytes = (byte)0;
@@ -927,6 +926,658 @@ namespace VEH.Intranet.Logic
             }
             //  return new MemoryStream(null);
         }
+        public MemoryStream GetReportIngresosGastosAPI(String Titulo, List<DetalleGasto> lstGastos, List<DetalleIngreso> lstIngresosComunes, List<Cuota> lstIngresos, Decimal SaldoAnterior, Int32 EdificioId, Int32 UnidadTiempo, bool exportadoAntes, DateTime fechaRegistro, List<Leyenda> LstLeyendas, bool EsAdministrador, List<Int32> LstAdelantado)
+        {
+            // byte[] bytes = (byte)0;
+            try
+            {
+                UnidadTiempo unidadTiempoActual = context.UnidadTiempo.FirstOrDefault(x => x.UnidadTiempoId == UnidadTiempo);
+                Decimal TotalIngresosTotal = 0M;
+                Decimal TotalIngresosMora = 0M;
+                Decimal TotalIngresosCuota = 0M;
+                Decimal TotalGastos = 0M;
+                Decimal TotalExtraordinarias = 0M;
+
+                rv.Clear();
+                rv.LocalReport.DataSources.Clear();
+                DSInfoIngresosGastos ds = new DSInfoIngresosGastos();
+
+
+                List<Departamento> LstDepartamentos = new List<Departamento>();
+                //LstDepartamentos = context.Departamento.Where(x => x.EdificioId == EdificioId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
+                LstDepartamentos = context.Departamento.Where(x => x.EdificioId == EdificioId).ToList();
+                List<DateTime> LstFechasEmision = new List<DateTime>();
+                Edificio edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId);
+
+
+
+                UnidadTiempo unidadTiempoAnterior = unidadTiempoActual;
+                List<Cuota> ListIngresosTemp = lstIngresos;
+                List<Decimal> LstMontoTotalDepa = new List<decimal>();
+                List<Boolean> LstEncontrado = new List<bool>();
+                lstIngresos.ForEach(x => LstMontoTotalDepa.Add(0M));
+                lstIngresos.ForEach(x => LstFechasEmision.Add(DateTime.MinValue));
+                lstIngresos.ForEach(x => LstEncontrado.Add(false));
+                for (int i = 0; i < lstIngresos.Count; i++)
+                    if (lstIngresos[i].Pagado)
+                    {
+                        DateTime fechaEmision = DateTime.Now;
+                        DateTime.TryParseExact(unidadTiempoActual.Anio.ToString() + unidadTiempoActual.Mes.ToString()
+                            + edificio.DiaEmisionCuota.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaEmision);
+
+                        //LstFechasEmision.Add(new DateTime(unidadTiempoActual.Anio, unidadTiempoActual.Mes, edificio.DiaEmisionCuota));
+                        LstFechasEmision.Add(fechaEmision);
+                        LstMontoTotalDepa[i] += ListIngresosTemp[i].Total;
+                        //ListIngresosTemp[i].Estado = ConstantHelpers.EstadoCerrado;
+                    }
+                //else
+                for (int i = 0; i < LstDepartamentos.Count; i++)
+                {
+                    // int DiasTranscurridosMora = LstFechasEmision[i].Equals(DateTime.MinValue) ? 0 : (DateTime.Now.Date - LstFechasEmision[i].Date).Days - 1; ;
+
+                    int DiasTranscurridosMora = 0;
+                    if (LstFechasEmision.Count > i)
+                        DiasTranscurridosMora = LstFechasEmision[i].Equals(DateTime.MinValue) ? 0 : (fechaRegistro.Date - LstFechasEmision[i].Date).Days - 1; ;
+                    Decimal moraUnitaria = edificio.TipoMora.Equals(ConstantHelpers.TipoMoraPorcentual) ? edificio.MontoCuota * edificio.PMora.Value / 100M : edificio.PMora.Value;
+                    LstDepartamentos[i].MontoMora = (DiasTranscurridosMora <= 0 || i >= LstMontoTotalDepa.Count || LstMontoTotalDepa[i] == 0M) ? 0M : moraUnitaria * DiasTranscurridosMora;
+                }
+                Int32 Numeracion = 1;
+                var lstGastosCorrientes = lstGastos.Where(X => X.Ordinario && X.Pagado).ToList();
+
+                DataRow rowDepartamentoTotal = ds.Tables["DSGastos"].NewRow();
+                rowDepartamentoTotal["Concepto"] = "TOTAL";
+                rowDepartamentoTotal["EsTitulo"] = "1";
+                rowDepartamentoTotal["Valor"] = lstGastos.Sum(X => X.Pagado ? X.Monto : 0).ToString("#,##0.00");
+                ds.Tables["DSGastos"].Rows.Add(rowDepartamentoTotal);
+
+                DataRow rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "       ";
+                rowTitulo["EsTitulo"] = "1";
+                rowTitulo["Valor"] = "========";
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "Gastos Corrientes";
+                rowTitulo["EsTitulo"] = "1";
+                rowTitulo["Valor"] = lstGastosCorrientes.Sum(X => X.Monto).ToString("#,##0.00");
+
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                //rowTitulo = ds.Tables["DSGastos"].NewRow();
+                //rowTitulo["Concepto"] = "       ";
+                //rowTitulo["EsTitulo"] = "1";
+                //rowTitulo["Valor"] = "_________";
+                //ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                foreach (var gasto in lstGastosCorrientes)
+                {
+
+                    DataRow rowGasto = ds.Tables["DSGastos"].NewRow();
+                    var desfase = String.Empty;
+                    var cantLinea = (Numeracion.ToString() + ". ").Length;
+                    desfase = "\n " + ("").PadLeft(cantLinea, ' ');
+                    var concepto = gasto.Concepto.Replace("\n", desfase);//String.Empty;
+
+                    rowGasto["Concepto"] = Numeracion.ToString() + ". " + concepto;
+                    rowGasto["Valor"] = gasto.Monto.ToString("#,##0.00");
+                    rowGasto["Detalle"] = "";
+                    ds.Tables["DSGastos"].Rows.Add(rowGasto);
+                    TotalGastos += gasto.Monto;
+                    Int32 Subnum = 1;
+                    if (!String.IsNullOrWhiteSpace(gasto.Detalle))
+                    {
+                        var subDetallesGastos = gasto.Detalle.Split('|').Where(X => !String.IsNullOrWhiteSpace(X)).Select(X => new Tuple<String, String>(X.Split(';').First(), X.Split(';').Last())).ToList();
+                        foreach (var subGasto in subDetallesGastos)
+                        {
+                            var desfaseSub = String.Empty;
+                            var cantLineaSub = ("    " + Numeracion.ToString() + "." + Subnum.ToString() + " ").Length;
+                            desfaseSub = "\n   " + ("").PadLeft(cantLineaSub, ' ');
+                            var conceptoSub = subGasto.Item1.Replace("\n", desfaseSub);//String.Empty;
+                            //for (int i = 0; i < subGasto.Item1.Length; i++)
+                            //{
+                            //    conceptoSub += subGasto.Item1[i] + ((i + 1) % cantLineaSub == 0 ? "\n".PadRight(desfaseSub, ' ') : String.Empty);
+                            //}
+
+                            DataRow rowDubGasto = ds.Tables["DSGastos"].NewRow();
+                            rowDubGasto["Concepto"] = "    " + Numeracion.ToString() + "." + Subnum.ToString() + " " + conceptoSub;
+                            Subnum++;
+                            rowDubGasto["Detalle"] = subGasto.Item2;
+                            rowDubGasto["Valor"] = "";
+                            ds.Tables["DSGastos"].Rows.Add(rowDubGasto);
+                        }
+                    }
+
+                    Numeracion++;
+
+                }
+
+                var lstGastosExtraordinarios = lstGastos.Where(X => !X.Ordinario && X.Pagado).ToList();
+                Numeracion = 1;
+
+
+                rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "Gastos No Corrientes";
+                rowTitulo["EsTitulo"] = "1";
+                rowTitulo["Valor"] = lstGastosExtraordinarios.Sum(X => X.Monto).ToString("#,##0.00");
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                //rowTitulo = ds.Tables["DSGastos"].NewRow();
+                //rowTitulo["Concepto"] = "       ";
+                //rowTitulo["Valor"] = "_________";
+                //rowTitulo["EsTitulo"] = "1";
+                //ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                foreach (var gasto in lstGastosExtraordinarios)
+                {
+
+                    DataRow rowGasto = ds.Tables["DSGastos"].NewRow();
+                    var desfase = String.Empty;
+                    var cantLinea = (Numeracion.ToString() + ". ").Length;
+                    desfase = "\n " + ("").PadLeft(cantLinea, ' ');
+                    var concepto = gasto.Concepto.Replace("\n", desfase);//String.Empty;
+                    //for (int i = 0; i < gasto.Concepto.Length; i++)
+                    //{
+                    //    concepto += gasto.Concepto[i] + ((i + 1) % cantLinea == 0 ? "\n".PadRight(desfase, ' ') : String.Empty);
+                    //}
+
+                    rowGasto["Concepto"] = Numeracion.ToString() + ". " + concepto;
+                    rowGasto["Valor"] = gasto.Monto.ToString("#,##0.00");
+                    ds.Tables["DSGastos"].Rows.Add(rowGasto);
+                    TotalGastos += gasto.Monto;
+                    Int32 Subnum = 1;
+                    if (!String.IsNullOrWhiteSpace(gasto.Detalle))
+                    {
+                        var subDetallesGastos = gasto.Detalle.Split('|').Where(X => !String.IsNullOrWhiteSpace(X)).Select(X => new Tuple<String, String>(X.Split(';').First(), X.Split(';').Last())).ToList();
+                        foreach (var subGasto in subDetallesGastos)
+                        {
+                            var desfaseSub = String.Empty;
+                            var cantLineaSub = ("    " + Numeracion.ToString() + "." + Subnum.ToString() + " ").Length;
+                            desfaseSub = "\n   " + ("").PadLeft(cantLineaSub, ' ');
+                            var conceptoSub = subGasto.Item1.Replace("\n", desfaseSub);//String.Empty;
+                            //for (int i = 0; i < subGasto.Item1.Length; i++)
+                            //{
+                            //    conceptoSub += subGasto.Item1[i] + ((i + 1) % cantLineaSub == 0 ? "\n".PadRight(desfaseSub, ' ') : String.Empty);
+                            //}
+
+                            DataRow rowDubGasto = ds.Tables["DSGastos"].NewRow();
+                            rowDubGasto["Concepto"] = "    " + Numeracion.ToString() + "." + Subnum.ToString() + " " + conceptoSub;
+                            Subnum++;
+                            rowDubGasto["Detalle"] = subGasto.Item2;
+                            rowDubGasto["Valor"] = "";
+                            ds.Tables["DSGastos"].Rows.Add(rowDubGasto);
+                        }
+                    }
+                    Numeracion++;
+                }
+
+                var CuentasPorCobrarO = lstGastos.FirstOrDefault().Gasto.CuentasPorCobrarO;
+                var CuentasPorCobrarE = lstGastos.FirstOrDefault().Gasto.CuentasPorCobrarE;
+
+                rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "       ";
+                rowTitulo["Valor"] = "        ";
+                rowTitulo["EsTitulo"] = "1";
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "CUENTAS POR COBRAR";
+                rowTitulo["EsTitulo"] = "1";
+                var MontoCuentasPorCobrar = ((CuentasPorCobrarO ?? 0) + (CuentasPorCobrarE ?? 0));
+                rowTitulo["Valor"] = MontoCuentasPorCobrar.ToString("#,##0.00");
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+
+                rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "1. Cuotas Ordinarias ";
+                rowTitulo["Valor"] = (CuentasPorCobrarO ?? 0).ToString("#,##0.00");
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                Decimal TotalCuentasPorCobrar = (lstIngresos.Sum(X => !X.Pagado ? X.Monto : 0));
+
+                if (CuentasPorCobrarE.HasValue)
+                {
+                    rowTitulo = ds.Tables["DSGastos"].NewRow();
+                    rowTitulo["Concepto"] = "2. Cuotas Extraordinarias ";
+                    rowTitulo["Valor"] = CuentasPorCobrarE.Value.ToString("#,##0.00");
+                    ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                    TotalCuentasPorCobrar += ((CuentasPorCobrarO ?? 0) + (CuentasPorCobrarE ?? 0));
+                }
+
+                var lstCuentasPorPagar = lstGastos.Where(X => !X.Pagado).ToList();
+
+                rowTitulo = ds.Tables["DSGastos"].NewRow();
+                rowTitulo["Concepto"] = "CUENTAS POR PAGAR";
+                rowTitulo["EsTitulo"] = "1";
+                rowTitulo["Valor"] = lstCuentasPorPagar.Sum(X => X.Monto).ToString("#,##0.00");
+                ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                //rowTitulo = ds.Tables["DSGastos"].NewRow();
+                //rowTitulo["Concepto"] = "       ";
+                //rowTitulo["Valor"] = "========";
+                //rowTitulo["EsTitulo"] = "1";
+                //ds.Tables["DSGastos"].Rows.Add(rowTitulo);
+
+                Numeracion = 1;
+                Decimal TotalCuentasPorPagar = lstCuentasPorPagar.Sum(X => X.Monto);
+                foreach (var gasto in lstCuentasPorPagar)
+                {
+
+                    DataRow rowGasto = ds.Tables["DSGastos"].NewRow();
+                    var desfase = String.Empty;
+                    var cantLinea = (Numeracion.ToString() + ". ").Length;
+                    desfase = "\n " + ("").PadLeft(cantLinea, ' ');
+                    var concepto = gasto.Concepto.Replace("\n", desfase);//String.Empty;
+                    //for(int i = 0; i < gasto.Concepto.Length; i++)
+                    //{
+                    //    concepto += gasto.Concepto[i] + ((i + 1) % cantLinea == 0 ? "\n".PadRight(desfase,' ') : String.Empty);
+                    //}
+                    rowGasto["Concepto"] = Numeracion.ToString() + ". " + concepto;
+                    rowGasto["Valor"] = gasto.Monto.ToString("#,##0.00");
+                    ds.Tables["DSGastos"].Rows.Add(rowGasto);
+                    TotalGastos += gasto.Monto;
+                    Int32 Subnum = 1;
+                    if (!String.IsNullOrWhiteSpace(gasto.Detalle))
+                    {
+                        var subDetallesGastos = gasto.Detalle.Split('|').Where(X => !String.IsNullOrWhiteSpace(X)).Select(X => new Tuple<String, String>(X.Split(';').First(), X.Split(';').Last())).ToList();
+                        foreach (var subGasto in subDetallesGastos)
+                        {
+                            var desfaseSub = String.Empty;
+                            var cantLineaSub = ("    " + Numeracion.ToString() + "." + Subnum.ToString() + " ").Length;
+                            desfaseSub = "\n   " + ("").PadLeft(cantLineaSub, ' ');
+                            var conceptoSub = subGasto.Item1.Replace("\n", desfaseSub);//String.Empty;
+                            //for (int i = 0; i < subGasto.Item1.Length; i++)
+                            //{
+                            //    conceptoSub += subGasto.Item1[i] + ((i + 1) % cantLineaSub == 0 ? "\n".PadRight(desfaseSub, ' ') : String.Empty);
+                            //}
+
+                            DataRow rowDubGasto = ds.Tables["DSGastos"].NewRow();
+                            rowDubGasto["Concepto"] = "    " + Numeracion.ToString() + "." + Subnum.ToString() + " " + conceptoSub;
+                            Subnum++;
+                            rowDubGasto["Detalle"] = subGasto.Item2;
+                            rowDubGasto["Valor"] = "";
+                            ds.Tables["DSGastos"].Rows.Add(rowDubGasto);
+                        }
+                    }
+                    Numeracion++;
+                }
+                var ListNumeroLeyenda = LstLeyendas.Select(x => x.Numero).ToList();
+                var TieneExtraOrdinaria = lstIngresos.Sum(X => X.CuotaExtraordinaria) ?? 0;
+                decimal sumExtraordinaria = 0;
+                bool mostrarExtraordinaria = false;
+                int cantCuotaExtraUnidad = 0;
+
+                for (int i = 0; i < LstDepartamentos.Count; i++)
+                {
+                    decimal cuotaExtraordinaria = 0;
+                    DataRow rowDepartamento = ds.Tables["DSIngresos"].NewRow();
+                    rowDepartamento["Departamento"] = LstDepartamentos[i].TipoInmueble.Acronimo + "-" + LstDepartamentos[i].Numero;
+                    var listaCuotasPagadas = lstIngresos.Where(X => X.DepartamentoId == LstDepartamentos[i].DepartamentoId).ToList();
+                    var cantCuotasPagadas = listaCuotasPagadas.Count();
+                    Decimal mora = listaCuotasPagadas.Sum(X => LstDepartamentos[i].OmitirMora ? 0 : X.Mora);
+                    Decimal totalCuota = listaCuotasPagadas.Sum(X => X.Total);
+                    Decimal Extraordinaria = listaCuotasPagadas.Sum(x => x.CuotaExtraordinaria) ?? 0;
+                    var cantExtraEmitida = listaCuotasPagadas.Count(x => x.UnidadTiempoId == UnidadTiempo && x.CuotaExtraordinaria > 0);
+                    cantExtraEmitida += listaCuotasPagadas.Count(x => x.EsExtraordinaria.HasValue && x.EsExtraordinaria == true);
+
+                    if (totalCuota == 0 && LstDepartamentos[i].Estado != ConstantHelpers.EstadoActivo)
+                        continue;
+                    //if (totalCuota == Extraordinaria)
+                    //{
+                    //    totalCuota = 0;
+                    if (cantExtraEmitida > 0)
+                    {
+                        mostrarExtraordinaria = true;
+                    }
+
+                    //}
+
+                    Decimal totalMonto = listaCuotasPagadas.Sum(X => X.Monto);
+                    Int32 cantCuotasPagas = listaCuotasPagadas.Count(x => x.FechaPagado != null);
+                    rowDepartamento["Mora"] = mora == 0 ? "" : mora.ToString("#,##0.00");
+
+                    var cantSeparada = lstIngresos.Count(X => X.DepartamentoId == LstDepartamentos[i].DepartamentoId && X.EsExtraordinaria == true);
+
+                    if (TieneExtraOrdinaria > 0 && (totalMonto > 0 || cantSeparada > 0))
+                    {
+                        rowDepartamento["CuotaExtraordinaria"] = (Extraordinaria).ToString("#,##0.00");
+                        cuotaExtraordinaria = Extraordinaria;
+                    }
+                    if (totalMonto == 0 && cantSeparada == 0 && sumExtraordinaria == 0)
+                    {
+                        TieneExtraOrdinaria = 0;
+                        Extraordinaria = 0;
+                        rowDepartamento["CuotaExtraordinaria"] = "0.00";
+                    }
+                    var calCuota = totalCuota - Extraordinaria;
+                    if (calCuota == 0)
+                    {
+                        totalCuota = 0;
+
+                        if (LstAdelantado.Contains(LstDepartamentos[i].DepartamentoId) == false)
+                        {
+                            rowDepartamento["Cuota"] = "0.00";
+
+
+                        }
+                        else
+                        {
+                            rowDepartamento["Cuota"] = "PAGO ADELANTADO";
+                            rowDepartamento["CuotaExtraordinaria"] = "PAGO ADELANTADO";
+                        }
+                    }
+                    else
+                    {
+                        decimal? preCalCuota = 0M;
+                        decimal? preCalCuotaExtraordinaria = 0M;
+                        if (listaCuotasPagadas.Count() == listaCuotasPagadas.Count(x => x.CuotaExtraordinaria > 0))
+                        {
+                            if (listaCuotasPagadas.FirstOrDefault().UnidadTiempoId == UnidadTiempo)
+                            {
+                                rowDepartamento["Cuota"] = (calCuota).ToString("#,##0.00");
+                                rowDepartamento["CuotaExtraordinaria"] = (Extraordinaria).ToString("#,##0.00");
+                            }
+                            else
+                            {
+                                rowDepartamento["Cuota"] = (calCuota + Extraordinaria).ToString("#,##0.00");
+                                calCuota = calCuota + Extraordinaria;
+                                Extraordinaria = 0;
+                            }
+
+                            TotalIngresosTotal += calCuota;
+                            TotalIngresosTotal += Extraordinaria;
+
+                            totalCuota = calCuota;
+                        }
+                        else
+                        {
+                            foreach (var item in listaCuotasPagadas)
+                            {
+                                if (item.UnidadTiempoId == UnidadTiempo)
+                                {
+                                    preCalCuota += item.Total - item.CuotaExtraordinaria;
+                                    preCalCuotaExtraordinaria += item.CuotaExtraordinaria;
+                                    cantCuotaExtraUnidad++;
+                                }
+                                else
+                                {
+                                    preCalCuota += item.Total; //+ item.CuotaExtraordinaria;// + item.CuotaExtraordinaria;
+                                }
+                            }
+
+                            totalCuota = preCalCuota.Value;
+
+                            if (preCalCuotaExtraordinaria == 0 && cuotaExtraordinaria != Extraordinaria)
+                            {
+                                cuotaExtraordinaria = 0;
+                                Extraordinaria = 0;
+                            }
+
+                            Extraordinaria = preCalCuotaExtraordinaria ?? 0;
+
+                            rowDepartamento["Cuota"] = (preCalCuota.Value).ToString("#,##0.00");
+                            rowDepartamento["CuotaExtraordinaria"] = (preCalCuotaExtraordinaria.Value).ToString("#,##0.00");
+
+                            TotalIngresosTotal += preCalCuota ?? 0 + preCalCuotaExtraordinaria ?? 0;
+                        }
+
+
+                        /*
+                        if (listaCuotasPagadas.Count(x => x.UnidadTiempoId == UnidadTiempo) == cantCuotasPagadas)
+                        {
+                            rowDepartamento["Cuota"] = (calCuota).ToString("#,##0.00");
+                        }
+                        else
+                        {
+                            rowDepartamento["Cuota"] = (calCuota + Extraordinaria).ToString("#,##0.00");
+                            rowDepartamento["CuotaExtraordinaria"] = "0.00";
+                            cuotaExtraordinaria = 0;
+                        }
+                        */
+                    }
+                    rowDepartamento["Total"] = (mora + totalCuota + Extraordinaria).ToString("#,##0.00");
+                    //var balance = context.BalanceUnidadTiempoEdificio.FirstOrDefault( x => x.UnidadDeTiempoId == UnidadTiempo && x.EdificioId == EdificioId);
+                    var leyenda = listaCuotasPagadas.Where(X => X.Leyenda != 0 && X.UnidadTiempoId <= UnidadTiempo).OrderByDescending(x => x.UnidadTiempoId).FirstOrDefault();
+                    //rowDepartamento["Leyenda"] = leyenda != null ? leyenda.Leyenda.ToString() : String.Empty;
+                    if (leyenda != null && leyenda.Leyenda != null)
+                    {
+                        if (ListNumeroLeyenda.Contains(leyenda.Leyenda.Value))
+                            rowDepartamento["Leyenda"] += leyenda.Leyenda.ToString();
+                    }
+                    else
+                    {
+                        rowDepartamento["Leyenda"] = String.Empty;
+                    }
+                    //if (TieneExtraOrdinaria > 0)
+                    //{
+                    //    rowDepartamento["CuotaExtraordinaria"] = (Extraordinaria).ToString("#,##0.00");
+                    //
+                    //    if (calCuota == 0)
+                    //    {
+                    //        if (cantCuotasPagas != 0)
+                    //            rowDepartamento["CuotaExtraordinaria"] = "PAGO ADELANTADO";
+                    //    }
+                    //}
+                    //if (mora > 0)
+                    //{
+                    // var a = 0;
+                    //}
+                    ds.Tables["DSIngresos"].Rows.Add(rowDepartamento);
+                    TotalIngresosMora += mora;
+                    TotalIngresosCuota += totalCuota;
+
+                    //if (totalCuota - Extraordinaria == 0)
+                    //{
+                    //    totalCuota = 0;
+                    //}
+
+
+                    TotalIngresosTotal += mora;//(mora + totalCuota);
+                    //if (Extraordinaria != cuotaExtraordinaria)
+                    //{
+                    //    var a = 0;
+                    //}
+                    TotalExtraordinarias += (Extraordinaria);
+
+                    sumExtraordinaria += cuotaExtraordinaria;
+                }
+
+                DataRow rowDepartamentoTotal2 = ds.Tables["DSIngresos"].NewRow();
+                rowDepartamentoTotal2["Departamento"] = "TOTAL";
+                rowDepartamentoTotal2["Mora"] = TotalIngresosMora.ToString("#,##0.00");
+                rowDepartamentoTotal2["Cuota"] = (TotalIngresosCuota).ToString("#,##0.00");//(TotalIngresosCuota - TotalExtraordinarias).ToString("#,##0.00");
+                rowDepartamentoTotal2["Total"] = (TotalIngresosCuota + TotalIngresosMora + TotalExtraordinarias).ToString("#,##0.00");
+                //if (TieneExtraOrdinaria > 0)
+                //{
+                //    if (sumExtraordinaria == TotalExtraordinarias || cantCuotaExtraUnidad > 0)
+                //    {
+                //        rowDepartamentoTotal2["CuotaExtraordinaria"] = TotalExtraordinarias.ToString("#,##0.00");
+                //        rowDepartamentoTotal2["Cuota"] = (TotalIngresosCuota).ToString("#,##0.00");
+                //    }
+                //    else
+                //    {
+                //        rowDepartamentoTotal2["CuotaExtraordinaria"] = "0.00";
+                //        //mostrarExtraordinaria = false;
+                //    }
+                //}
+                rowDepartamentoTotal2["CuotaExtraordinaria"] = TotalExtraordinarias.ToString("#,##0.00");
+                rowDepartamentoTotal2["Cuota"] = (TotalIngresosCuota).ToString("#,##0.00");
+
+                ds.Tables["DSIngresos"].Rows.Add(rowDepartamentoTotal2);
+
+                Decimal SaldoActual = TotalIngresosTotal - TotalGastos;
+                var Gasto = context.Gasto.FirstOrDefault(x => x.EdificioId == EdificioId && x.UnidadTiempoId == UnidadTiempo && x.Estado.Equals(ConstantHelpers.EstadoActivo));
+                // Gasto.SaldoMes = SaldoActual;
+
+
+                Decimal TotalIngresosComunes = 0;
+
+                //Seteamos la tabla de ingresos comunes
+                foreach (var ingresoComun in lstIngresosComunes)
+                {
+                    DataRow rowIngresosComunes = ds.Tables["DSIngresosComunes"].NewRow();
+                    rowIngresosComunes["Descripcion"] = ingresoComun.Concepto;
+                    rowIngresosComunes["Monto"] = (ingresoComun.Monto).ToString("#,##0.00");
+                    ds.Tables["DSIngresosComunes"].Rows.Add(rowIngresosComunes);
+                    TotalIngresosComunes += ingresoComun.Monto;
+                }
+
+                DataRow titulo = ds.Tables["DTInfo"].NewRow();
+                titulo["Titulo"] = Titulo.ToUpper();
+                titulo["TotalIngresos"] = ((Decimal)TotalIngresosComunes + TotalIngresosTotal).ToString("#,##0.00");
+                titulo["ExisteAdicionales"] = TotalIngresosComunes != 0 ? true : false;
+                ds.Tables["DTInfo"].Rows.Add(titulo);
+
+                //Seteamos la tabla de leyendas
+
+                foreach (var ley in LstLeyendas.OrderBy(x => x.Numero))
+                {
+                    DataRow rowLeyendas = ds.Tables["DSLeyendas"].NewRow();
+                    rowLeyendas["Descripcion"] = ley.Descripcion;
+                    rowLeyendas["Numero"] = ley.Numero;
+                    ds.Tables["DSLeyendas"].Rows.Add(rowLeyendas);
+                }
+
+                var cuotas = context.Cuota.Where(X => X.Departamento.EdificioId == edificio.EdificioId && X.Pagado);
+                var LstUnidadTiempo = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.Orden <= unidadTiempoActual.Orden).OrderBy(x => x.Orden).ToList();
+
+                SaldoAnterior = 0;
+                Decimal SaldoAcumulado = 0;
+                Decimal TotalPagosCuotasMes = 0;
+                foreach (var item in LstUnidadTiempo)
+                {
+                    var ListCuotas = new List<Cuota>();
+                    foreach (var cuota in cuotas)
+                    {
+                        //Si no existe la fecha de pagado, añadir si cumple con la unidad de tiempo
+                        if (!cuota.FechaPagado.HasValue && cuota.UnidadTiempoId == item.UnidadTiempoId)
+                            ListCuotas.Add(cuota);
+                        else
+                            //Si existe la fecha de pagado, comprar el mes y el año , si encajan con esta unidad de tiempo, entonces son parte del reporte
+                            if (cuota.FechaPagado.HasValue && (cuota.FechaPagado.Value.Month == item.Mes && cuota.FechaPagado.Value.Year == item.Anio))
+                        {
+                            ListCuotas.Add(cuota);
+                        }
+                    }
+                    TotalPagosCuotasMes = ListCuotas.Sum(X => X.Total + X.Mora);
+                    SaldoAnterior = SaldoAcumulado;
+                    if (item.UnidadTiempoId == edificio.SaldoAnteriorUnidadTiempo)
+                    {
+                        SaldoAnterior += edificio.SaldoAnteriorHistorico ?? 0;
+                    }
+                    var GastoTemp = context.Gasto.Where(X => X.UnidadTiempoId == item.UnidadTiempoId && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleGasto.Where(Y => Y.Pagado == true).ToList().Sum(Y => Y.Monto));
+                    var IngresoTemp = TotalPagosCuotasMes + context.Ingreso.Where(X => X.UnidadTiempoId == item.UnidadTiempoId && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleIngreso.ToList().Sum(Y => Y.Monto));
+                    var SaldoTemp = IngresoTemp - GastoTemp;
+                    SaldoAcumulado = SaldoAnterior + SaldoTemp;
+                }
+
+                //var SaldoAcumulado = SaldoAnterior + (TotalIngresosTotal + TotalIngresosComunes - TotalGastos);
+                //Seteamos la tabla de info
+                var ti = lstGastos.Sum(X => X.Pagado ? X.Monto : 0).ToString("#,##0.00");
+                DataRow rowInfoTotales = ds.Tables["DSTotales"].NewRow();
+                rowInfoTotales["TotalIngresos"] = "S/ " + (TotalIngresosTotal + TotalIngresosComunes).ToString("#,##0.00");
+                rowInfoTotales["TotalGastos"] = "S/ " + ti;//TotalGastos.ToString("#,##0.00");
+                rowInfoTotales["Saldo"] = "S/ " + (TotalIngresosTotal + TotalIngresosComunes - TotalGastos + TotalCuentasPorPagar).ToString("#,##0.00");
+                rowInfoTotales["SaldoAnterior"] = "S/ " + SaldoAnterior.ToString("#,##0.00");
+                rowInfoTotales["SaldoAcumulado"] = "S/ " + SaldoAcumulado.ToString("#,##0.00");
+                rowInfoTotales["CuentasPorCobrar"] = "S/ " + MontoCuentasPorCobrar.ToString("#,##0.00");//"S/ " + TotalCuentasPorCobrar.ToString("#,##0.00"); 
+                rowInfoTotales["CuentasPorPagar"] = "S/ " + TotalCuentasPorPagar.ToString("#,##0.00");
+                //rowInfoTotales["SaldoReal"] = "S/ " + (SaldoAcumulado + TotalCuentasPorCobrar - TotalCuentasPorPagar).ToString("#,##0.00");
+                rowInfoTotales["SaldoReal"] = "S/ " + (SaldoAcumulado + MontoCuentasPorCobrar - TotalCuentasPorPagar).ToString("#,##0.00");
+                ds.Tables["DSTotales"].Rows.Add(rowInfoTotales);
+                //guardamos en db el saldo del mes y el acumulado
+
+                // Edificio edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId);
+                edificio.SaldoAcumulado = SaldoAcumulado;
+                context.SaveChanges();
+
+                ReportDataSource rdsIngresos = new ReportDataSource("DSIngresosComunes", ds.Tables["DSIngresosComunes"].DefaultView);
+                ReportDataSource rdsLeyendas = new ReportDataSource("DSLeyendas", ds.Tables["DSLeyendas"].DefaultView);
+                ReportDataSource rdsInfo = new ReportDataSource("DSInfo", ds.Tables["DTInfo"].DefaultView);
+                ReportDataSource rdsDepartamento = new ReportDataSource("DSIngresos", ds.Tables["DSIngresos"].DefaultView);
+                ReportDataSource rdsGastos = new ReportDataSource("DSGastos", ds.Tables["DSGastos"].DefaultView);
+                ReportDataSource rdsTotales = new ReportDataSource("DSTotales", ds.Tables["DSTotales"].DefaultView);
+                rv.ProcessingMode = ProcessingMode.Local;
+                rv.LocalReport.EnableExternalImages = true;
+                if (TieneExtraOrdinaria > 0 && mostrarExtraordinaria == true)
+                    rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteIngresosGastos.rdlc";
+                else
+                    rv.LocalReport.ReportEmbeddedResource = "VEH.Intranet.Report.ReporteIngresosGastosSinExtraOrdinaria.rdlc";
+                rv.LocalReport.DataSources.Add(rdsInfo);
+                rv.LocalReport.DataSources.Add(rdsDepartamento);
+                rv.LocalReport.DataSources.Add(rdsGastos);
+                rv.LocalReport.DataSources.Add(rdsTotales);
+                rv.LocalReport.DataSources.Add(rdsLeyendas);
+                rv.LocalReport.DataSources.Add(rdsIngresos);
+
+                rv.LocalReport.SetParameters(new ReportParameter("OtrosIngresos", TotalIngresosComunes != 0 ? "1" : "0"));
+                rv.LocalReport.SetParameters(new ReportParameter("FlagLeyendas", LstLeyendas.Count > 0 ? "T" : "F"));
+
+                Warning[] warnings;
+                string[] streamids;
+                string mimeType;
+                string encoding;
+                string filenameExtension;
+
+                byte[] bytes = rv.LocalReport.Render(
+                    "PDF", null, out mimeType, out encoding, out filenameExtension,
+                    out streamids, out warnings);
+
+
+                //String fileName = Server.MapPath("~/Resources") + "\\ingresosYgastos.zip";
+                MemoryStream outputMemStream = null;
+
+
+                if (EsAdministrador)
+                {
+                    outputMemStream = new MemoryStream();
+
+                    ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+
+                    zipStream.SetLevel(3); //0-9, 9 being the highest level of compression
+
+                    ZipEntry entry_pdf = new ZipEntry("ingresosYgastos.pdf");
+                    entry_pdf.DateTime = DateTime.Now;
+                    zipStream.PutNextEntry(entry_pdf);
+                    StreamUtils.Copy(new MemoryStream(bytes), zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+
+                    Warning[] warnings_excel;
+                    string[] streamids_excel;
+                    string mimeType_excel;
+                    string encoding_excel;
+                    string filenameExtension_excel;
+
+                    byte[] bytes_excel = rv.LocalReport.Render(
+                        "Excel", null, out mimeType_excel, out encoding_excel, out filenameExtension_excel,
+                        out streamids_excel, out warnings_excel);
+
+                    ZipEntry entry_excel = new ZipEntry("ingresosYgastos.xls");
+                    entry_excel.DateTime = DateTime.Now;
+                    zipStream.PutNextEntry(entry_excel);
+                    StreamUtils.Copy(new MemoryStream(bytes_excel), zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+
+                    zipStream.IsStreamOwner = false;
+                    zipStream.Close();
+
+                }
+                else
+                {
+                    outputMemStream = new MemoryStream(bytes);
+                }
+
+                outputMemStream.Position = 0;
+
+                return outputMemStream;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            //  return new MemoryStream(null);
+        }
+
         public MemoryStream GetReportMensual(String Titulo, List<Planilla> lstplanillas)
         {
             rv.Clear();
