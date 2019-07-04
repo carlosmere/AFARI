@@ -40,5 +40,9 @@ namespace VEH.Intranet.Models.BE
         public Int32 TipoInmuebleId { get; set; }
         public Int32? DiaMora { get; set; }
         public Int32? SaldoAnteriorUnidadTiempo { get; set; }
+        public String NombreDepartamento { get; set; } = String.Empty;
+        public String NombreProvincia { get; set; } = String.Empty;
+        public String NombreDistrito { get; set; } = String.Empty;
+        public String NombreTipoInmueble { get; set; } = String.Empty;
     }
 }

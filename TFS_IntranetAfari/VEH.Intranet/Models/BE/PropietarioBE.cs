@@ -12,5 +12,11 @@ namespace VEH.Intranet.Models.BE
         public String nombrePropietario { get; set; }
         public String telefono { get; set; }
         public String email { get; set; }
+        public String celular { get; set; }
+        public String nombreInquilino { get; set; }
+        public String nroDocumento { get; set; }
+        public String parentesco { get; set; }
+        public String celularInquilino { get; set; }
+        public String emailInquilino { get; set; }
     }
 }

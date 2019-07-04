@@ -372,6 +372,39 @@
     <Compile Include="Logic\PermisoAccesoLogic.cs" />
     <Compile Include="Logic\ReporteLogic.cs" />
     <Compile Include="Logic\TemplateRender.cs" />
+    <Compile Include="Models\AfariDB_Categoria.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Cliente.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Departamento.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Desuscribirse.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Distrito.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Edificio.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_InmueblesServicios.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Lugar.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Provincia.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB_Tipo.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AfariDB___ContentCategory.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AFP.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
@@ -394,6 +427,7 @@
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BE\AdmMenuBE.cs" />
+    <Compile Include="Models\BE\ArchivoGastoBE.cs" />
     <Compile Include="Models\BE\BaseBE.cs" />
     <Compile Include="Models\BE\CronogramaBE.cs" />
     <Compile Include="Models\BE\CuotaBE.cs" />
@@ -411,9 +445,12 @@
     <Compile Include="Models\BE\PropietarioBE.cs" />
     <Compile Include="Models\BE\ReciboMantenimientoBE.cs" />
     <Compile Include="Models\BE\RequestLogin.cs" />
+    <Compile Include="Models\BE\ResponseGetAdministracionPropietario.cs" />
     <Compile Include="Models\BE\ResponseGetAdmMenu.cs" />
+    <Compile Include="Models\BE\ResponseGetCategoriaVentaAlquiler.cs" />
     <Compile Include="Models\BE\ResponseGetCerrarCuotas.cs" />
     <Compile Include="Models\BE\ResponseGetCertificadosEquipos.cs" />
+    <Compile Include="Models\BE\ResponseGetComprobantesPago.cs" />
     <Compile Include="Models\BE\ResponseGetDepartamentos.cs" />
     <Compile Include="Models\BE\ResponseGetDetalleEdificio.cs" />
     <Compile Include="Models\BE\ResponseGetDetalleGastos.cs" />
@@ -430,6 +467,10 @@
     <Compile Include="Models\BE\ResponseGetTrabajadores.cs" />
     <Compile Include="Models\BE\ResponseGetUnidadTiempo.cs" />
     <Compile Include="Models\BE\ResponseGetUnidadTiempoActual.cs" />
+    <Compile Include="Models\BE\ResponseGetVentaAlquiler.cs" />
+    <Compile Include="Models\BE\ResponseGetWebDepartamentos.cs" />
+    <Compile Include="Models\BE\ResponseGetWebDistritos.cs" />
+    <Compile Include="Models\BE\ResponseGetWebProvincias.cs" />
     <Compile Include="Models\BE\ResponseLogin.cs" />
     <Compile Include="Models\BE\TrabajadorBE.cs" />
     <Compile Include="Models\BE\UnidadTiempoBE.cs" />
@@ -508,6 +549,21 @@
     <Compile Include="Models\MenuPropietarioEdificio.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelWeb.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWeb.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWeb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\NivelEstado.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
@@ -585,6 +641,33 @@
     </Compile>
     <Compile Include="Models\Usuario.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Categoria.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Departamento.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Desuscribirse.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Distrito.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Edificio.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Lugar.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Provincia.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB_Tipo.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VehDB___ContentCategory.cs">
+      <DependentUpon>ModelWeb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Visita.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
@@ -900,6 +983,16 @@
     <Content Include="Content\plugins\font-awesome-4.1.0\fonts\fontawesome-webfont862f.ttf" />
     <Content Include="Content\plugins\font-awesome-4.1.0\fonts\fontawesome-webfont862f.woff" />
     <Content Include="Content\plugins\font-awesome-4.1.0\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Models\ModelWeb.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
+      <LastGenOutput>ModelWeb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ModelWeb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
+      <LastGenOutput>ModelWeb.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\SIVEH.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SIVEH.edmx</DependentUpon>
@@ -1006,6 +1099,13 @@
     </None>
     <Content Include="DataSets\DSInfoReporteMantenimiento.xss">
       <DependentUpon>DSInfoReporteMantenimiento.xsd</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ModelWeb.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelWeb.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModelWeb.edmx.diagram">
+      <DependentUpon>ModelWeb.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\File System.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />

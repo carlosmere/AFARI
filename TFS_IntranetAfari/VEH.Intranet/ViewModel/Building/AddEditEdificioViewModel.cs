@@ -107,6 +107,10 @@ namespace VEH.Intranet.ViewModel.Building
         public List<UnidadTiempo> LstUnidadTiempo { get; set; } = new List<UnidadTiempo>();
         public bool error { get; set; }
         public string mensaje { get; set; }
+        public string NombreDepartamento { get; set; } = string.Empty;
+        public string NombreProvincia { get; set; } = string.Empty;
+        public string NombreDistrito { get; set; } = string.Empty;
+        public string NombreTipoInmueble { get; set; } = string.Empty;
         public AddEditEdificioViewModel()
         {
             LstComboDepartamento = new List<SelectListItem>();
@@ -251,6 +255,11 @@ namespace VEH.Intranet.ViewModel.Building
                     this.DiaMora = edificio.DiaMora;
                     if (edificio.TipoMora == "POR")
                         this.PMora = this.PMora * 100;
+
+                    this.NombreDepartamento = context.UDepartamento.FirstOrDefault( x => x.UDepartamentoId == edificio.UDepartamentoId).Nombre;
+                    this.NombreProvincia = context.UProvincia.FirstOrDefault(x => x.UProvinciaId == edificio.UProvinciaId).Nombre;
+                    this.NombreDistrito = context.UDistrito.FirstOrDefault(x => x.UDistritoId == edificio.UDistritoId).Nombre;
+                    this.NombreTipoInmueble = edificio.TipoInmueble.Nombre;
                 }
             }
         }

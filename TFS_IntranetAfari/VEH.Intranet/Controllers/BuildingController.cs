@@ -1461,15 +1461,22 @@ namespace VEH.Intranet.Controllers
                     DataTable table = result.Tables[i];
                     for (int j = 1; j < table.Rows.Count; j++)
                     {
-                        var beneficiario = table.Rows[j][8].ToString();
-                        var referencia = table.Rows[j][9].ToString();
-                        var montoOperacion = table.Rows[j][11].ToDecimal().ToString("#,##0.00");
-                        mailModel.LstValidacion.Add(new ViewModel.Templates.tablaValidacion
+                        if(table.Rows[j][8] != null)
                         {
-                            Beneficiario = beneficiario,
-                            Referencia = referencia,
-                            MontoOperacion = montoOperacion
-                        });
+                            var beneficiario = table.Rows[j][8].ToString();
+                            var referencia = table.Rows[j][9].ToString();
+                            var montoOperacion = table.Rows[j][11].ToDecimal().ToString("#,##0.00");
+                            mailModel.LstValidacion.Add(new ViewModel.Templates.tablaValidacion
+                            {
+                                Beneficiario = beneficiario,
+                                Referencia = referencia,
+                                MontoOperacion = montoOperacion
+                            });
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
                 var LstListaA = new List<String>();
@@ -1478,20 +1485,24 @@ namespace VEH.Intranet.Controllers
                 {
                     foreach (var arc in model.LstAdjuntos)
                     {
-                        if (LstListaA.Contains(arc.FileName))
+                        if(arc != null)
                         {
-                            continue;
-                        }
-                        if (arc == null)
-                        {
-                            continue;
-                        }
-                        var Ruta = Server.MapPath("~") + "/Files/Adjunto/";
-                        var Nombre = arc.FileName;
-                        LstArchivosAdjuntos.Add(Ruta + Nombre);
-                        arc.SaveAs(Ruta + Nombre);
+                            if (LstListaA.Contains(arc.FileName))
+                            {
+                                continue;
+                            }
+                            if (arc == null)
+                            {
+                                continue;
+                            }
+                            var Ruta = Server.MapPath("~") + "/Files/Adjunto/";
+                            var Nombre = arc.FileName;
+                            LstArchivosAdjuntos.Add(Ruta + Nombre);
+                            arc.SaveAs(Ruta + Nombre);
 
-                        LstListaA.Add(arc.FileName);
+                            LstListaA.Add(arc.FileName);
+                        }
+                        
                     }
                 }
 

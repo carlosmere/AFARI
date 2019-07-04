@@ -14,6 +14,7 @@ using VEH.Intranet.Logic;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using VEH.Intranet.ViewModel.Building;
+using System.Web;
 
 namespace VEH.Intranet.Controllers
 {
@@ -375,9 +376,181 @@ namespace VEH.Intranet.Controllers
             }
             return response;
         }
+        [Route("api/AfariService/GetComprobantesPago")]
+        [HttpGet]
+        public ResponseGetComprobantesPago GetComprobantesPago(Int32 edificioId, Int32 unidadTiempoId)
+        {
+            ResponseGetComprobantesPago ResponseGetComprobantesPago = new ResponseGetComprobantesPago();
+            
+            var baseRuta = "http://afari.pe/intranet/Resources/Files/";
+            try
+            {
+                try
+                {
+                    var edificio  = context.Edificio.FirstOrDefault(x => x.EdificioId == edificioId);
+                    var unidad = context.UnidadTiempo.FirstOrDefault( x => x.UnidadTiempoId == unidadTiempoId);
+                    baseRuta += edificio.Acronimo + "/";
+
+                    var query = context.ArchivoGasto
+                .Include(x => x.Gasto)
+                .Include(x => x.Gasto.Edificio)
+                .OrderByDescending(x => x.FechaRegistro)
+                .Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.Gasto.Edificio.EdificioId == edificioId && x.FechaRegistro.Year == unidad.Anio
+                && x.FechaRegistro.Month == unidad.Mes)
+                .AsQueryable();
+
+                    ResponseGetComprobantesPago.LstArchivoGasto = query.Select(x => new ArchivoGastoBE
+                    {
+                        id = x.ArchivoGastoId,
+                        nombre = x.Nombre,
+                        url = baseRuta + x.Ruta.Replace("+", " ")
+                    }).OrderBy(x => x.nombre).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetComprobantesPago.error = true;
+                    ResponseGetComprobantesPago.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetComprobantesPago.error = true;
+                ResponseGetComprobantesPago.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetComprobantesPago;
+        }
+        [Route("api/AfariService/EnviarCorreoMasivo")]
+        [HttpGet]
+        public void EnviarCorreoMasivo(Int32 usuarioId, Int32 edificioId, List<Int32> userList, string asunto, string mensaje, string cc)
+        {
+            //BaseBE BaseBE = new BaseBE();
+            //
+            //try
+            //{
+            //    try
+            //    {
+            //        var lstDestinatario = new List<EnviarEmailInformativoViewModel.Destinatario>();
+            //        EmailLogic mailLogic = new EmailLogic();
+            //        ViewModel.Templates.infoViewModel mailModel = new ViewModel.Templates.infoViewModel();
+            //
+            //        var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == usuarioId);
+            //        var firma = usuario.Firma;
+            //        var edificio = context.Edificio.First(X => X.EdificioId == edificioId);
+            //        mailModel.Mensaje = mensaje;
+            //        mailModel.Titulo = asunto;
+            //        mailModel.administrador = edificio.EmailEncargado;
+            //        mailModel.Firma = firma ?? "";
+            //        mailModel.Acro = edificio.Acronimo;
+            //
+            //        if (!String.IsNullOrEmpty(cc) && cc.Length > 5)
+            //        {
+            //            var ccAddress = cc.Split(',');
+            //            foreach (var ccA in ccAddress)
+            //            {
+            //                if (!String.IsNullOrEmpty(ccA))
+            //                {
+            //                    lstDestinatario.Add(new EnviarEmailInformativoViewModel.Destinatario
+            //                    {
+            //                        dpto = "0",
+            //                        email = ccA,
+            //                        nombre = ccA,
+            //                        id = "0"
+            //                    });
+            //                }
+            //
+            //            }
+            //        }
+            //        foreach (var user in userList)
+            //        {
+            //            lstDestinatario.Add(new EnviarEmailInformativoViewModel.Destinatario
+            //            {
+            //                dpto = user.,
+            //                email = ccA,
+            //                nombre = ccA,
+            //                id = "0"
+            //            });
+            //        }
+            //        var LstDestinario = new List<Destinatario>();
+            //        var LstEmailDiferentes = new List<String>();
+            //        for (int i = 0; i < model.lstDestinatario.Count; i++)
+            //        {
+            //            var arrMail = model.lstDestinatario[i].email.Split(',');
+            //            foreach (var item in arrMail)
+            //            {
+            //                if (LstEmailDiferentes.Contains(item) == false && model.check[i])
+            //                {
+            //                    LstDestinario.Add(new EnviarEmailInformativoViewModel.Destinatario
+            //                    {
+            //                        dpto = model.lstDestinatario[i].dpto,
+            //                        email = item,
+            //                        nombre = model.lstDestinatario[i].nombre,
+            //                        id = model.lstDestinatario[i].id
+            //                    });
+            //                    LstEmailDiferentes.Add(item);
+            //                }
+            //            }
+            //        }
+            //
+            //        for (int i = 0; i < LstDestinario.Count(); i++)
+            //        {
+            //
+            //            var destinatario = LstDestinario[i];
+            //
+            //            mailModel.destinatario = destinatario;
+            //            try
+            //            {
+            //                //List<String> Archivos = new List<string>();
+            //                //foreach (var nuevoAdjunto in model.Archivos)
+            //                //{
+            //                //    if (nuevoAdjunto != null)
+            //                //    {
+            //                //        var fileName = Path.GetFileName(nuevoAdjunto.FileName);
+            //                //        var path = Path.Combine(Server.MapPath("~/Resources"), fileName);
+            //                //        nuevoAdjunto.SaveAs(path);
+            //                //
+            //                //        Archivos.Add(path);
+            //                //
+            //                //    }
+            //                //}
+            //
+            //                var emailUsuario = Session.GetCorreo();
+            //                var nombreUsuario = Session.GetNombreCompleto();
+            //                var nombreRemitente = Session.GetNombreRemitente();
+            //
+            //
+            //                if (!String.IsNullOrEmpty(nombreRemitente) && nombreRemitente.Length > 1)
+            //                {
+            //                    nombreUsuario = nombreRemitente;
+            //                }
+            //
+            //                mailLogic.SendEmail(asunto, "info", emailUsuario, nombreUsuario, destinatario.email, mailModel, null, cc);
+            //
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                BaseBE.error = true;
+            //                BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        BaseBE.error = true;
+            //        BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    BaseBE.error = true;
+            //    BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            //}
+            //
+            //return BaseBE;
+        }
         [Route("api/AfariService/GetNormasConvivencia")]
         [HttpGet]
-        public HttpResponseMessage GetNormasConvivencia(Int32 edificioId)
+        public string   GetNormasConvivencia(Int32 edificioId)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             try
@@ -385,41 +558,24 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     var edificio = context.Edificio.FirstOrDefault(X => X.EdificioId == edificioId);
-                    var baseRuta = "http://afari.pe/intranet/Resources/Files/" + edificio.Acronimo + "/" + edificio.NormasConvivencia;
-
-                    MemoryStream outputMemoryStream = null;
-
-                    using (FileStream file = new FileStream(baseRuta, FileMode.Open, FileAccess.Read))
+                    var baseRuta = "http://afari.pe//intranet//Resources//Files//" + edificio.Acronimo + "//" + edificio.NormasConvivencia;
+                    if (String.IsNullOrEmpty((edificio.NormasConvivencia)))
                     {
-                        file.CopyTo(outputMemoryStream);
+                        return null;
                     }
-
-                    if (outputMemoryStream == null)
-                    {
-                        response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                    }
-
-                    response.Content = new StreamContent(outputMemoryStream);
-
-                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = edificio.Nombre + " Normas de Convivencia.pdf"
-                    };
-                    response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
-
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                    return baseRuta;
 
                 }
                 catch (Exception ex)
                 {
-                    response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                    return String.Empty;
                 }
             }
             catch (Exception ex)
             {
-                response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return String.Empty;
             }
-            return response;
+            return String.Empty;
         }
         [Route("api/AfariService/GetAdmMenu")]
         [HttpGet]
@@ -580,7 +736,10 @@ namespace VEH.Intranet.Controllers
                     ResponseGetDetalleEdificio.detalleEdificio.TipoInmuebleId = model.TipoInmuebleId;
                     ResponseGetDetalleEdificio.detalleEdificio.DiaMora = model.DiaMora;
                     ResponseGetDetalleEdificio.detalleEdificio.SaldoAnteriorUnidadTiempo = model.SaldoAnteriorUnidadTiempo;
-
+                    ResponseGetDetalleEdificio.detalleEdificio.NombreDepartamento = model.NombreDepartamento;
+                    ResponseGetDetalleEdificio.detalleEdificio.NombreProvincia = model.NombreProvincia;
+                    ResponseGetDetalleEdificio.detalleEdificio.NombreDistrito = model.NombreDistrito;
+                    ResponseGetDetalleEdificio.detalleEdificio.NombreTipoInmueble = model.NombreTipoInmueble;
                     /*****/
                 }
                 catch (Exception ex)
@@ -1526,6 +1685,153 @@ namespace VEH.Intranet.Controllers
 
             return response;
         }
+        [Route("api/AfariService/GetWebDepartamentos")]
+        [HttpGet]
+        public ResponseGetWebDepartamentos GetWebDepartamentos()
+        {
+            ResponseGetWebDepartamentos ResponseGetDepartamentos = new ResponseGetWebDepartamentos();
+
+            try
+            {
+                try
+                {
+                    DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
+                    var query = webcontext.AfariDB_Departamento.AsQueryable();
+
+                    ResponseGetDepartamentos.lstDepartamento = query.ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetDepartamentos.error = true;
+                    ResponseGetDepartamentos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetDepartamentos.error = true;
+                ResponseGetDepartamentos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetDepartamentos;
+        }
+        [Route("api/AfariService/GetWebProvincias")]
+        [HttpGet]
+        public ResponseGetWebProvincias GetWebProvincias()
+        {
+            ResponseGetWebProvincias ResponseGetWebProvincias = new ResponseGetWebProvincias();
+
+            try
+            {
+                try
+                {
+                    DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
+                    var query = webcontext.AfariDB_Provincia.AsQueryable();
+
+                    ResponseGetWebProvincias.lstProvincia = query.ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetWebProvincias.error = true;
+                    ResponseGetWebProvincias.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetWebProvincias.error = true;
+                ResponseGetWebProvincias.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetWebProvincias;
+        }
+        [Route("api/AfariService/GetWebDistritos")]
+        [HttpGet]
+        public ResponseGetWebDistritos GetWebDistritos(string codDepartamento, string codProvincia)
+        {
+            ResponseGetWebDistritos ResponseGetWebDistritos = new ResponseGetWebDistritos();
+
+            try
+            {
+                try
+                {
+                    DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
+                    var query = webcontext.AfariDB_Distrito.AsQueryable();
+
+                    ResponseGetWebDistritos.lstDistrito = query.Where( x => x.CodDepartamento == codDepartamento &&
+                    x.CodProvincia == codProvincia).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetWebDistritos.error = true;
+                    ResponseGetWebDistritos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetWebDistritos.error = true;
+                ResponseGetWebDistritos.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetWebDistritos;
+        }
+        [Route("api/AfariService/GetVentaAlquiler")]
+        [HttpGet]
+        public ResponseGetVentaAlquiler GetVentaAlquiler(string uuidDepartamento, string uuidProvincia, string uuidDistrito, string uuiCategoria)
+        {
+            ResponseGetVentaAlquiler ResponseGetVentaAlquiler = new ResponseGetVentaAlquiler();
+
+            try
+            {
+                try
+                {
+                    DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
+                    var query = webcontext.AfariDB_Edificio.AsQueryable();
+
+                    ResponseGetVentaAlquiler.lstEdificio = query.Where(x => x.Departamento == uuidDepartamento &&
+                   x.Provincia == uuidProvincia && x.Distrito == uuidDistrito && x.Categoria == uuiCategoria).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetVentaAlquiler.error = true;
+                    ResponseGetVentaAlquiler.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetVentaAlquiler.error = true;
+                ResponseGetVentaAlquiler.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetVentaAlquiler;
+        }
+        [Route("api/AfariService/GetCategoriaVentaAlquiler")]
+        [HttpGet]
+        public ResponseGetCategoriaVentaAlquiler GetCategoriaVentaAlquiler()
+        {
+            ResponseGetCategoriaVentaAlquiler ResponseGetCategoriaVentaAlquiler = new ResponseGetCategoriaVentaAlquiler();
+
+            try
+            {
+                try
+                {
+                    DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
+                    var query = webcontext.AfariDB_Categoria.AsQueryable();
+
+                    ResponseGetCategoriaVentaAlquiler.lstCategoria = query.ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetCategoriaVentaAlquiler.error = true;
+                    ResponseGetCategoriaVentaAlquiler.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetCategoriaVentaAlquiler.error = true;
+                ResponseGetCategoriaVentaAlquiler.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetCategoriaVentaAlquiler;
+        }
         [Route("api/AfariService/GetPropietariosPorEdificio")]
         [HttpGet]
         public ResponseGetPropietarios GetPropietariosPorEdificio(Int32 edificioId)
@@ -1543,7 +1849,10 @@ namespace VEH.Intranet.Controllers
                         nombreDepartamento = x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
                         nombrePropietario = x.Nombres + " " + x.ApellidoPaterno + " " + x.ApellidoMaterno,
                         telefono = x.Telefono,
-                        email = x.Email
+                        email = x.Email,
+                        celular = x.Celular,
+                        nroDocumento = x.NroDocumento,
+                        nombreInquilino = (x.Inquilino.FirstOrDefault().Nombres ?? String.Empty)
                     }).ToList();
                 }
                 catch (Exception ex)
