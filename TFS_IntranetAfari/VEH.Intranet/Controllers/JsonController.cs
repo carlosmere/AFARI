@@ -19,14 +19,21 @@ namespace VEH.Intranet.Controllers
     public class JsonController : BaseController
     {
         // GET: Json
-        public JsonResult GetVisitasPorEdificio(String Edificio)
+        public JsonResult GetVisitasPorEdificio(String Edificio, Int32? Anio)
         {
             var LstVisitas = new List<VisitaxEdificio>();
             var edificioId = Edificio.Split('-')[0].ToInteger();
             var edificio = context.Edificio.FirstOrDefault( x => x.EdificioId == edificioId);
             if (edificio != null)
             {
-                var auxVisitas = context.Visita.Where(x => x.EdificioId == edificio.EdificioId).ToList();
+                var queryAuxVisitas = context.Visita.Where(x => x.EdificioId == edificio.EdificioId).AsQueryable();
+
+                if (Anio.HasValue)
+                {
+                    queryAuxVisitas = queryAuxVisitas.Where( x => x.Fecha.Year == Anio);
+                }
+
+                var auxVisitas = queryAuxVisitas.ToList();
                 var auxUsuario = auxVisitas.Select( x => x.UsuarioId).ToList();
                 var lstUsuario = context.Usuario.Where(x => x.Departamento.EdificioId == edificio.EdificioId && x.Estado == ConstantHelpers.EstadoActivo && auxUsuario.Contains(x.UsuarioId)).ToList();
                 foreach (var usuario in lstUsuario)

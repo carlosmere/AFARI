@@ -576,6 +576,12 @@ namespace VEH.Intranet.Controllers
                             _nuevo.PMora = model.PMora;
                         else
                             _nuevo.PMora = model.PMora / 100;
+
+                        if (model.UsarInquilinoCCPD == "SI")
+                            _nuevo.UsarInquilinoCCPD = true;
+                        else
+                            _nuevo.UsarInquilinoCCPD = false;
+
                         _nuevo.MensajeMora = model.MensajeMora;
                         _nuevo.CantidadReporte = 1;
                         _nuevo.NroCuenta = model.NroCuenta;
@@ -668,6 +674,11 @@ namespace VEH.Intranet.Controllers
                                 _editado.PMora = model.PMora;
                             else
                                 _editado.PMora = model.PMora / 100;
+
+                            if (model.UsarInquilinoCCPD == "SI")
+                                _editado.UsarInquilinoCCPD = true;
+                            else
+                                _editado.UsarInquilinoCCPD = false;
 
                             _editado.Identificador = model.Identificador;
                             _editado.NroCuenta = model.NroCuenta;
@@ -1171,13 +1182,6 @@ namespace VEH.Intranet.Controllers
         {
             try
             {
-                Int32 OrdenCalculo = context.Cuota.Where(X => X.Departamento.EdificioId == EdificioId && X.Pagado).Select(X => X.UnidadTiempo).ToList().Max(X => X.Orden) ?? -1;
-
-                if (OrdenCalculo == -1)
-                {
-                    OrdenCalculo = context.UnidadTiempo.First(X => X.Estado == ConstantHelpers.EstadoActivo).Orden.Value;
-                }
-
                 if (!UnidadTiempoId.HasValue)
                     UnidadTiempoId = context.UnidadTiempo.FirstOrDefault(x => x.EsActivo).UnidadTiempoId;
 
@@ -1186,26 +1190,6 @@ namespace VEH.Intranet.Controllers
                 List<Cuota> ListCuotas = new List<Cuota>();
                 var edificio = context.Edificio.First(X => X.EdificioId == EdificioId);
                 var cuotas = context.Cuota.Where(X => X.Departamento.EdificioId == edificio.EdificioId && X.Pagado);
-                //foreach (var cuota in cuotas)
-                //{
-                //    //Si no existe la fecha de pagado, añadir si cumple con la unidad de tiempo
-                //    if (!cuota.FechaPagado.HasValue && cuota.UnidadTiempoId == UnidadTiempoId)
-                //        ListCuotas.Add(cuota);
-                //    else
-                //        //Si existe la fecha de pagado, comprar el mes y el año , si encajan con esta unidad de tiempo, entonces son parte del reporte
-                //        if (cuota.FechaPagado.HasValue && (cuota.FechaPagado.Value.Month == UnidadTiempo.Mes && cuota.FechaPagado.Value.Year == UnidadTiempo.Anio))
-                //    {
-                //        ListCuotas.Add(cuota);
-                //    }
-                //}
-
-                Decimal TotalSaldoAnterior = 0;
-                Int32 Orden = UnidadTiempo.Orden ?? 0;
-                TotalSaldoAnterior += context.DetalleGasto.Where(X => X.Gasto.EdificioId == EdificioId && X.Gasto.UnidadTiempo.Orden < Orden && X.Pagado && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.Monto);
-                TotalSaldoAnterior += context.DetalleIngreso.Where(X => X.Ingreso.EdificioId == EdificioId && X.Ingreso.UnidadTiempo.Orden < Orden && X.Pagado && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.Monto);
-                TotalSaldoAnterior += context.Cuota.Where(X => X.Departamento.EdificioId == EdificioId && X.UnidadTiempo.Orden < Orden && X.Pagado && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.Total);
-
-
 
                 Decimal TotalPagosCuotasMes = 0;//ListCuotas.Sum(X => X.Total + X.Mora);
                 Decimal TotalPagosCuotasAnterior = context.Cuota.Where(X => X.Pagado && X.Departamento.EdificioId == EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.Total + X.Mora) - TotalPagosCuotasMes;
@@ -1252,7 +1236,7 @@ namespace VEH.Intranet.Controllers
                 IngresosActual += TotalPagosCuotasMes;
 
                 var SaldoActual = IngresosActual - GastosActual;
-                var AcumuladoActual = Acumulado - SaldoActual;
+                //var AcumuladoActual = Acumulado - SaldoActual;
                 decimal anteriorAbsoluto = 0;
                 if (edificio != null)
                     anteriorAbsoluto = (edificio.SaldoAnteriorHistorico ?? 0);
@@ -1272,150 +1256,6 @@ namespace VEH.Intranet.Controllers
             {
                 PostMessage(MessageType.Error, "Los parametros del edificio aun no califican para un balance. Revisar y reintentar o contactar al adminsitrador.\n Razón técnica: " + ex.Message);
                 return RedirectToAction("LstEdificio", "Building");
-
-                /*
-                DateTime fechaRegistro = DateTime.Now;
-                ReporteLogic reporteLogic = new ReporteLogic();
-                reporteLogic.Server = Server;
-                reporteLogic.context = context;
-
-                var edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId);
-
-                List<Cuota> ListCuotas = new List<Cuota>();
-                var departamentos = edificio.Departamento.ToList();
-
-                foreach (var depa in departamentos)
-                {
-                    Cuota cuota = context.Cuota.FirstOrDefault(x => x.DepartamentoId == depa.DepartamentoId && x.UnidadTiempoId == unidadTiempoId);// && x.Estado.Equals(ConstantHelpers.EstadoActivo));
-                    if (cuota == null) continue;
-                    ListCuotas.Add(cuota);
-                }
-                //var presupuestoMes = ListCuotas.Sum(x => x.Monto); //Total de 
-                // var totalM2 = departamentos.Sum(x => x.DepartamentoM2 ?? 0) + departamentos.Sum(x => x.EstacionamientoM2 ?? 0) + departamentos.Sum(x => x.EstacionamientoM2 ?? 0);
-                var unidadTiempo = context.UnidadTiempo.FirstOrDefault(x => x.UnidadTiempoId == unidadTiempoId);
-                var Gasto = context.Gasto.FirstOrDefault(x => x.EdificioId == EdificioId && x.UnidadTiempoId == unidadTiempoId && x.Estado.Equals(ConstantHelpers.EstadoActivo));
-                List<DetalleGasto> ListGastos = context.DetalleGasto.Where(x => x.GastoId == Gasto.GastoId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
-                //  Cuota c = listaCuota.Where(x => x.DepartamentoId == departamentoId).FirstOrDefault();
-                // bool exportadoAntes = false;
-                Decimal saldoAnterior = 0M;
-
-
-                UnidadTiempo objUnidadTiempoAnterior = context.UnidadTiempo.FirstOrDefault(x => x.Orden == unidadTiempo.Orden - 1 && x.Estado.Equals(ConstantHelpers.EstadoActivo));
-                if (objUnidadTiempoAnterior == null)
-                {
-                    saldoAnterior = 0M;
-                }
-                else
-                {
-                    var GastoMesAnterior = context.Gasto.FirstOrDefault(x => x.EdificioId == EdificioId && x.UnidadTiempoId == objUnidadTiempoAnterior.UnidadTiempoId && x.Estado.Equals(ConstantHelpers.EstadoActivo));
-                    saldoAnterior = GastoMesAnterior == null ? 0 : GastoMesAnterior.SaldoMes.HasValue ? GastoMesAnterior.SaldoMes.Value : 0;
-                }
-
-
-                UnidadTiempo unidadTiempoActual = context.UnidadTiempo.FirstOrDefault(x => x.UnidadTiempoId == unidadTiempoId);
-                Decimal TotalIngresosTotal = 0M;
-                Decimal TotalIngresosMora = 0M;
-                Decimal TotalIngresosCuota = 0M;
-                Decimal TotalGastos = 0M;
-
-
-                List<Departamento> LstDepartamentos = new List<Departamento>();
-                LstDepartamentos = context.Departamento.Where(x => x.EdificioId == EdificioId && x.Estado.Equals(ConstantHelpers.EstadoActivo)).ToList();
-                List<DateTime> LstFechasEmision = new List<DateTime>();
-                edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == EdificioId);
-
-
-
-                UnidadTiempo unidadTiempoAnterior = unidadTiempoActual;
-                List<Cuota> lstIngresos = context.Cuota.Where(X => X.Departamento.EdificioId == EdificioId && X.Estado == ConstantHelpers.EstadoCerrado).ToList();
-                List<DetalleIngreso> lstIngresosComunes = context.DetalleIngreso.Where(X => X.Ingreso.UnidadTiempoId == unidadTiempoId && X.Estado == ConstantHelpers.EstadoActivo && X.Ingreso.EdificioId == EdificioId).ToList();
-                List<Cuota> ListIngresosTemp = lstIngresos;
-                List<Decimal> LstMontoTotalDepa = new List<decimal>();
-                List<Boolean> LstEncontrado = new List<bool>();
-                lstIngresos.ForEach(x => LstMontoTotalDepa.Add(0M));
-                lstIngresos.ForEach(x => LstFechasEmision.Add(DateTime.MinValue));
-                lstIngresos.ForEach(x => LstEncontrado.Add(false));
-                for (int i = 0; i < lstIngresos.Count; i++)
-                    if (lstIngresos[i].Pagado)
-                    {
-                        LstFechasEmision.Add(new DateTime(unidadTiempoActual.Anio, unidadTiempoActual.Mes, edificio.DiaEmisionCuota));
-                        LstMontoTotalDepa[i] += ListIngresosTemp[i].Total;
-                        ListIngresosTemp[i].Estado = ConstantHelpers.EstadoCerrado;
-                    }
-                //else
-                //LstFechasEmision[i] = DateTime.MinValue;
-                while (true)
-                {
-
-                    if (unidadTiempoAnterior.Orden == 1) break;
-
-                    UnidadTiempo unidadTiempoAnteriorAnterior = unidadTiempoAnterior;
-                    unidadTiempoAnterior = context.UnidadTiempo.FirstOrDefault(x => x.Orden == unidadTiempoAnterior.Orden - 1 && x.Estado.Equals(ConstantHelpers.EstadoActivo));
-                    if (unidadTiempoAnterior == null) break;
-                    //   CuotaComun cuotaComun = context.CuotaComun.FirstOrDefault(x => x.EdificioId == EdificioId && x.UnidadTiempoId == unidadTiempoAnterior.UnidadTiempoId);
-                    // if (cuotaComun == null || cuotaComun.Pagado) break;
-                    ListIngresosTemp = context.Cuota.Where(x => x.UnidadTiempo.Estado.Equals(ConstantHelpers.EstadoActivo) && x.UnidadTiempo.Mes == unidadTiempoAnterior.Mes && x.UnidadTiempo.Anio == unidadTiempoAnterior.Anio && x.Departamento.EdificioId == EdificioId && x.Estado==ConstantHelpers.EstadoCerrado).ToList();
-                    for (int i = 0; i < ListIngresosTemp.Count; i++)
-                        if (ListIngresosTemp[i].Estado.Equals(ConstantHelpers.EstadoCerrado))
-                        {
-                            if (!LstEncontrado[i]) //ACA PONER = LstDepartamentos[i].MontoMora; que se genera al guardar para no estar exportando y copiando
-                            {
-                                LstFechasEmision[i] = new DateTime(unidadTiempoAnteriorAnterior.Anio, unidadTiempoAnteriorAnterior.Mes, edificio.DiaEmisionCuota);
-                               // LstFechasEmision[i] = DateTime.Now;
-                            }
-                            LstEncontrado[i] = true;
-                        }
-                        else if (ListIngresosTemp[i].Pagado)
-                        {
-                            LstMontoTotalDepa[i] += ListIngresosTemp[i].Total;
-                            ListIngresosTemp[i].Estado = ConstantHelpers.EstadoCerrado;
-                        }
-
-
-                }
-               
-
-                foreach (var gasto in ListGastos)
-                {
-                  
-                    TotalGastos += gasto.Monto;
-                }
-            
-                for (int i = 0; i < lstIngresos.Count; i++)
-                {
-              
-                    lstIngresos[i].Mora = lstIngresos[i].Departamento.OmitirMora ? 0M : lstIngresos[i].Departamento.MontoMora;
-
-                    TotalIngresosMora += lstIngresos[i].Mora;
-                    //TotalIngresosMora += cuota.Mora;
-                    TotalIngresosCuota += LstMontoTotalDepa[i];
-                    TotalIngresosTotal += LstMontoTotalDepa[i] + lstIngresos[i].Mora;
-                }
-                //foreach (var cuota in lstIngresos)
-                //{
-                //    DataRow rowDepartamento = ds.Tables["DSIngresos"].NewRow();
-                //    rowDepartamento["Departamento"] = cuota.Departamento.Numero;
-                //    //rowDepartamento["Mora"] = cuota.Mora;
-                //    cuota.Mora = cuota.Departamento.OmitirMora ? 0M : cuota.Departamento.MontoMora;
-                //    rowDepartamento["Mora"] = cuota.Mora;
-                //    rowDepartamento["Cuota"] = cuota.Total;
-                //    rowDepartamento["Total"] = cuota.Total + cuota.Mora;
-
-                //    ds.Tables["DSIngresos"].Rows.Add(rowDepartamento);
-                //    TotalIngresosMora += cuota.Mora;
-                //    //TotalIngresosMora += cuota.Mora;
-                //    TotalIngresosCuota += cuota.Total;
-                //    TotalIngresosTotal += cuota.Total + cuota.Mora;
-                //}
-            
-
-                Decimal SaldoActual = TotalIngresosTotal - TotalGastos;
-               //saldoAnterior
-               // Decimal SaldoAcumulado = 0;
-           
-
-
-                */
             }
         }
         public ActionResult EnviarEmailValidaciones(Int32 EdificioId)

@@ -1306,6 +1306,7 @@
     <Content Include="Views\Fee\LstConsumoIndividual.cshtml" />
     <Content Include="Views\Fee\_AddEditConsumoIndividual.cshtml" />
     <Content Include="Views\Fee\_AddEditMConsumoIndividual.cshtml" />
+    <Content Include="Views\Brokerage\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

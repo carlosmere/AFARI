@@ -24,10 +24,10 @@ namespace VEH.Intranet.Logic
     {
         public HttpServerUtilityBase Server { get; set; }
         public SIVEHEntities context { get; set; }
-        private List<MemoryStream> lstMemoryStream;
-        private List<byte[]> lstMemoryStreamPDF;
+        public List<MemoryStream> lstMemoryStream;
+        public List<byte[]> lstMemoryStreamPDF;
         private byte[] ExcelArchivo;
-        private List<String> lstNombreDOC;
+        public List<String> lstNombreDOC;
         private List<String> lstNombrePDF;
         private PdfReader pdfFile;
         private Document doc;
@@ -35,7 +35,7 @@ namespace VEH.Intranet.Logic
         private ReportViewer rv;
         public Int32 CantidadReporte { get; set; } = 0;
         private String[] Meses = { "", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
-
+        public Int32 UnidadTiempoActualId { get; set; } = 1;
         public ReporteLogic()
         {
             lstMemoryStream = new List<MemoryStream>();
@@ -795,7 +795,51 @@ namespace VEH.Intranet.Logic
                 Decimal TotalPagosCuotasMes = 0;
                 foreach (var item in LstUnidadTiempo)
                 {
-                    var ListCuotas = new List<Cuota>();
+                    var ListCuotasT = new List<Cuota>();
+                    foreach (var cuota in cuotas)
+                    {
+                        //Si no existe la fecha de pagado, añadir si cumple con la unidad de tiempo
+                        if (!cuota.FechaPagado.HasValue && cuota.UnidadTiempoId == item.UnidadTiempoId)
+                            ListCuotasT.Add(cuota);
+                        else
+                            //Si existe la fecha de pagado, comprar el mes y el año , si encajan con esta unidad de tiempo, entonces son parte del reporte
+                            if (cuota.FechaPagado.HasValue && (cuota.FechaPagado.Value.Month == item.Mes && cuota.FechaPagado.Value.Year == item.Anio))
+                        {
+                            ListCuotasT.Add(cuota);
+                        }
+                    }
+                    TotalPagosCuotasMes = ListCuotasT.Sum(X => X.Total + X.Mora);
+                    SaldoAnterior = SaldoAcumulado;
+                    if (item.UnidadTiempoId == edificio.SaldoAnteriorUnidadTiempo)
+                    {
+                        SaldoAnterior += edificio.SaldoAnteriorHistorico ?? 0;
+                    }
+                    var GastoTemp = context.Gasto.Where(X => X.UnidadTiempoId == item.UnidadTiempoId && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleGasto.Where(Y => Y.Pagado == true).ToList().Sum(Y => Y.Monto));
+                    var IngresoTemp = TotalPagosCuotasMes + context.Ingreso.Where(X => X.UnidadTiempoId == item.UnidadTiempoId && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleIngreso.ToList().Sum(Y => Y.Monto));
+                    var SaldoTemp = IngresoTemp - GastoTemp;
+                    SaldoAcumulado = SaldoAnterior + SaldoTemp;
+                }
+
+                //var SaldoAcumulado = SaldoAnterior + (TotalIngresosTotal + TotalIngresosComunes - TotalGastos);
+                //Seteamos la tabla de info
+
+
+                var ListCuotas = new List<Cuota>();
+                edificio = context.Edificio.First(X => X.EdificioId == EdificioId);
+                cuotas = context.Cuota.Where(X => X.Departamento.EdificioId == edificio.EdificioId && X.Pagado);
+
+                TotalPagosCuotasMes = 0;//ListCuotas.Sum(X => X.Total + X.Mora);
+                Decimal TotalPagosCuotasAnterior = context.Cuota.Where(X => X.Pagado && X.Departamento.EdificioId == EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.Total + X.Mora) - TotalPagosCuotasMes;
+                Decimal TotalIngresosAdicionales = context.Ingreso.Where(X => X.EdificioId == EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleIngreso.ToList().Sum(Y => Y.Monto));
+                Decimal TotalGasto = context.Gasto.Where(X => X.EdificioId == EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleGasto.ToList().Sum(Y => Y.Monto));
+
+                LstUnidadTiempo = context.UnidadTiempo.Where(x => x.Estado == ConstantHelpers.EstadoActivo && x.Orden <= unidadTiempoActual.Orden).OrderBy(x => x.Orden).ToList();
+
+                SaldoAnterior = 0;
+                SaldoAcumulado = 0;
+                foreach (var item in LstUnidadTiempo)
+                {
+                    ListCuotas = new List<Cuota>();
                     foreach (var cuota in cuotas)
                     {
                         //Si no existe la fecha de pagado, añadir si cumple con la unidad de tiempo
@@ -810,25 +854,34 @@ namespace VEH.Intranet.Logic
                     }
                     TotalPagosCuotasMes = ListCuotas.Sum(X => X.Total + X.Mora);
                     SaldoAnterior = SaldoAcumulado;
+
                     if (item.UnidadTiempoId == edificio.SaldoAnteriorUnidadTiempo)
                     {
                         SaldoAnterior += edificio.SaldoAnteriorHistorico ?? 0;
                     }
+
+
                     var GastoTemp = context.Gasto.Where(X => X.UnidadTiempoId == item.UnidadTiempoId && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleGasto.Where(Y => Y.Pagado == true).ToList().Sum(Y => Y.Monto));
                     var IngresoTemp = TotalPagosCuotasMes + context.Ingreso.Where(X => X.UnidadTiempoId == item.UnidadTiempoId && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleIngreso.ToList().Sum(Y => Y.Monto));
                     var SaldoTemp = IngresoTemp - GastoTemp;
                     SaldoAcumulado = SaldoAnterior + SaldoTemp;
                 }
 
-                //var SaldoAcumulado = SaldoAnterior + (TotalIngresosTotal + TotalIngresosComunes - TotalGastos);
-                //Seteamos la tabla de info
-                var ti = lstGastos.Sum(X => X.Pagado ? X.Monto : 0).ToString("#,##0.00");
                 DataRow rowInfoTotales = ds.Tables["DSTotales"].NewRow();
-                rowInfoTotales["TotalIngresos"] = "S/ " + (TotalIngresosTotal + TotalIngresosComunes).ToString("#,##0.00");
-                rowInfoTotales["TotalGastos"] = "S/ " + ti;//TotalGastos.ToString("#,##0.00");
-                rowInfoTotales["Saldo"] = "S/ " + (TotalIngresosTotal + TotalIngresosComunes - TotalGastos + TotalCuentasPorPagar).ToString("#,##0.00");
+
+                var GastosActual = context.Gasto.Where(X => X.UnidadTiempoId == UnidadTiempo && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleGasto.Where(Y => Y.Pagado == true).ToList().Sum(Y => Y.Monto));
+                var IngresosActual = context.Ingreso.Where(X => X.UnidadTiempoId == UnidadTiempo && EdificioId == X.EdificioId && X.Estado == ConstantHelpers.EstadoActivo).ToList().Sum(X => X.DetalleIngreso.ToList().Sum(Y => Y.Monto));
+                var Acumulado = TotalPagosCuotasMes + TotalPagosCuotasAnterior + TotalIngresosAdicionales - TotalGasto;
+                IngresosActual += TotalPagosCuotasMes;
+
+                SaldoActual = IngresosActual - GastosActual;
+
+                rowInfoTotales["Saldo"] = "S/ " + (SaldoActual).ToString("#,##0.00");
                 rowInfoTotales["SaldoAnterior"] = "S/ " + SaldoAnterior.ToString("#,##0.00");
                 rowInfoTotales["SaldoAcumulado"] = "S/ " + SaldoAcumulado.ToString("#,##0.00");
+                rowInfoTotales["TotalGastos"] = "S/ " + GastosActual.ToString("#,##0.00");
+                rowInfoTotales["TotalIngresos"] = "S/ " + (IngresosActual).ToString("#,##0.00");
+
                 rowInfoTotales["CuentasPorCobrar"] = "S/ " + MontoCuentasPorCobrar.ToString("#,##0.00");//"S/ " + TotalCuentasPorCobrar.ToString("#,##0.00"); 
                 rowInfoTotales["CuentasPorPagar"] = "S/ " + TotalCuentasPorPagar.ToString("#,##0.00");
                 //rowInfoTotales["SaldoReal"] = "S/ " + (SaldoAcumulado + TotalCuentasPorCobrar - TotalCuentasPorPagar).ToString("#,##0.00");
@@ -2013,6 +2066,15 @@ namespace VEH.Intranet.Logic
                     {
                         Propietario p = ConstantHelpers.getTitularDepartamento(cuota.Departamento);
                         nombrePropietario = p.Nombres + " " + p.ApellidoPaterno + " " + p.ApellidoMaterno;
+
+                        if (listaCuota.FirstOrDefault().Departamento.Edificio.UsarInquilinoCCPD == true)
+                        {
+                            var i = p.Inquilino.FirstOrDefault(x => x.Estado == ConstantHelpers.EstadoActivo);
+                            if (i != null)
+                            {
+                                nombrePropietario = i.Nombres;
+                            }
+                        }                            
                     }
                     rowDepartamento["NroDepartamento"] = cuota.Departamento.Numero;
                     rowDepartamento["Propietario"] = nombrePropietario;
@@ -2445,8 +2507,10 @@ namespace VEH.Intranet.Logic
                 rowDeuda["Mes"] = " ";
                 rowDeuda["Anio"] = " ";
                 rowDeuda["Monto"] = " ";
-                var act = context.UnidadTiempo.FirstOrDefault(x => x.EsActivo);
+                //var act = context.UnidadTiempo.FirstOrDefault(x => x.EsActivo);
                 LstDeuda = LstDeuda.Where(X => X.UnidadTiempoId < cuota.UnidadTiempo.UnidadTiempoId && X.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo).OrderBy(X => X.UnidadTiempo.Orden).ToList();
+
+                if (EsSeparado == false)
                 foreach (Cuota c in LstDeuda)
                 {
                     if (first && c.Total != 0)
@@ -2706,7 +2770,8 @@ namespace VEH.Intranet.Logic
                     }
                     else
                     {
-                        var inquilino = context.Inquilino.FirstOrDefault(x => x.PropietarioId == objPropietario.PropietarioId && x.Estado == ConstantHelpers.EstadoActivo);
+                        
+                        var inquilino = objPropietario.Inquilino.FirstOrDefault(x => x.Estado == ConstantHelpers.EstadoActivo);//context.Inquilino.FirstOrDefault(x => x.PropietarioId == objPropietario.PropietarioId && x.Estado == ConstantHelpers.EstadoActivo);
                         if (inquilino != null)
                         {
                             NombrePropietario = inquilino.Nombres;
@@ -2750,11 +2815,16 @@ namespace VEH.Intranet.Logic
                     lecturaAnterior = (Math.Truncate(cuota.LecturaAgua * 100) / 100).ToString();
 
                 }
-                var UnidadTiempoActual = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo);
-                var LstDeuda = context.Cuota.Where(x => x.DepartamentoId == cuota.DepartamentoId && !x.Pagado
-                && x.CuotaId != cuota.CuotaId && x.UnidadTiempoId != UnidadTiempoActual.UnidadTiempoId
+                //var UnidadTiempoActual = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo == true);
+                //var LstDeuda = context.Cuota.Where(x => x.DepartamentoId == cuota.DepartamentoId && !x.Pagado
+                //&& x.CuotaId != cuota.CuotaId && x.UnidadTiempoId != UnidadTiempoActualId
+                //&& x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo
+                //&& x.UnidadTiempoId <= UnidadTiempoActualId && x.UnidadTiempoId != cuota.UnidadTiempoId).ToList();
+
+                var LstDeuda = cuotasDelEdificio.Where(x => x.DepartamentoId == cuota.DepartamentoId && !x.Pagado
+                && x.CuotaId != cuota.CuotaId && x.UnidadTiempoId != UnidadTiempoActualId
                 && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo
-                && x.UnidadTiempoId <= UnidadTiempoActual.UnidadTiempoId && x.UnidadTiempoId != cuota.UnidadTiempoId).ToList();
+                && x.UnidadTiempoId <= UnidadTiempoActualId && x.UnidadTiempoId != cuota.UnidadTiempoId).ToList();
 
                 TotalDeuda = DeudaAnterior = LstDeuda.Sum(X => X.Total).ToString("#,##0.00");
                 if (TotalDeuda == "0.00")
@@ -2807,19 +2877,19 @@ namespace VEH.Intranet.Logic
                 rowInfo["TotalLetraDetalle"] = EsSeparado ? TextNumber((double)cuota.CuotaExtraordinaria) : TextNumber((double)cuota.Total);
 
                 var conceptoString = EsSeparado ? "" : "AGUA";
-                var lecturaAnteriorString = EsSeparado ? "" : (cuota.LecturaAgua - cuota.ConsumoAgua).ToString();
-                var lecturaActualString = EsSeparado ? "" : (cuota.LecturaAgua).ToString();
-                var consumoMesString = EsSeparado ? "" : (cuota.ConsumoAgua).ToString();
+                var lecturaAnteriorString = EsSeparado ? "0" : (cuota.LecturaAgua - cuota.ConsumoAgua).ToString();
+                var lecturaActualString = EsSeparado ? "0" : (cuota.LecturaAgua).ToString();
+                var consumoMesString = EsSeparado ? "0" : (cuota.ConsumoAgua).ToString();
                 var consumosIndividualesString = ((EsSeparado ? 0 : cuota.ConsumoAguaTotal)).ToString("#,###.00");
-
-                foreach (var item in lstconsumos)
-                {
-                    conceptoString += "\n" + item.Detalle.ToUpper();
-                    lecturaAnteriorString += "\n";
-                    lecturaActualString += "\n";
-                    consumoMesString += "\n";
-                    consumosIndividualesString += "\nS/" + item.Monto.ToString("#,###.00");
-                }
+                if(EsSeparado == false)
+                    foreach (var item in lstconsumos)
+                    {
+                        conceptoString += "\n" + item.Detalle.ToUpper();
+                        lecturaAnteriorString += "\n";
+                        lecturaActualString += "\n";
+                        consumoMesString += "\n";
+                        consumosIndividualesString += "\nS/" + item.Monto.ToString("#,###.00");
+                    }
                 rowInfo["ConsumosIndividuales"] = consumosIndividualesString;
                 rowInfo["Concepto"] = conceptoString;//EsSeparado ? "" : "AGUA";
                 rowInfo["LecturaAnterior"] = lecturaAnteriorString;//EsSeparado ? "" : (cuota.LecturaAgua - cuota.ConsumoAgua).ToString();
@@ -2829,15 +2899,17 @@ namespace VEH.Intranet.Logic
                 rowInfo["Total"] = EsSeparado ? 0 : cuota.Total;
 
                 rowInfo["NroUnidad"] = EsSeparado ? "" : ((cuota.Departamento.Numero.ToString()) + (!(String.IsNullOrEmpty(cuota.Departamento.Estacionamiento)) ? "\n" + cuota.Departamento.Estacionamiento : "") + (!(String.IsNullOrEmpty(cuota.Departamento.Deposito)) ? "\n" + cuota.Departamento.Deposito.ToString() : ""));
+
+                var tipoInmueble = cuota.Departamento.TipoInmueble;// context.TipoInmueble.FirstOrDefault(x => x.TipoInmuebleId == cuota.Departamento.TipoInmuebleId);
                 rowInfo["Propietario"] = (TieneRazonSocial ? "RAZON SOCIAL: " : "NOMBRE: ") + NombrePropietario + "\n"
-                    + cuota.Departamento.TipoInmueble.Nombre + ": " + cuota.Departamento.Numero + "\n" + (MostrarRUC ? "RUC: " + RUC : String.Empty);
+                    + tipoInmueble.Nombre + ": " + cuota.Departamento.Numero + "\n" + (MostrarRUC ? "RUC: " + RUC : String.Empty);
                 rowInfo["PagoVentanilla"] = "INDICAR AL CAJERO QUE PAGARA SU CUOTA DE " + cuota.Departamento.Edificio.NombrePago + "\r\nINDIQUE SU CODIGO DE DEPOSITO";
                 rowInfo["PagoInternet"] = "INGRESE A BCP - PAGO DE SERVICIOS - EMPRESAS DIVERSAS - " + cuota.Departamento.Edificio.NombrePago + "-" + cuota.Departamento.Edificio.Representante + " - CODIGO DE DEPOSITO - PAGAR. CONSULTAS: A nuestro correo informes@afari.pe o a nuestro teléfono 2246251 .";
                 rowInfo["M2Unidad"] = EsSeparado ? "" : noZero(cuota.Departamento.DepartamentoM2) +
                     (!(String.IsNullOrEmpty(cuota.Departamento.Estacionamiento)) ? "\n" + cuota.Departamento.EstacionamientoM2.ToString() : "") +
                     (!(String.IsNullOrEmpty(cuota.Departamento.Deposito)) ? "\n" + cuota.Departamento.DepositoM2.ToString() : "") +
                     "\n" + rowInfo["TotalM2"];
-                rowInfo["TipoUnidad"] = EsSeparado ? "" : cuota.Departamento.TipoInmueble.Acronimo +
+                rowInfo["TipoUnidad"] = EsSeparado ? "" : tipoInmueble.Acronimo +
                   (!(String.IsNullOrEmpty(cuota.Departamento.Estacionamiento)) ? "\nESTAC." : "") +
                   (!(String.IsNullOrEmpty(cuota.Departamento.Deposito)) ? "\nDEPO." : "") +
                 "\nTOTAL.";

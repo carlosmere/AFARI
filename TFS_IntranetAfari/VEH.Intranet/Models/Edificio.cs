@@ -76,6 +76,7 @@ namespace VEH.Intranet.Models
         public Nullable<int> DiaMora { get; set; }
         public Nullable<int> Orden { get; set; }
         public Nullable<int> SaldoAnteriorUnidadTiempo { get; set; }
+        public Nullable<bool> UsarInquilinoCCPD { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArchivoCorrecionEdificio> ArchivoCorrecionEdificio { get; set; }

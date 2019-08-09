@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +16,10 @@ namespace VEH.Intranet.ViewModel.Fee
         public Decimal? Mora { get; set; }
         public Int32? Leyenda { get; set; }
         public String Estado { get; set; }
+        [Display(Name = "¿Es Adelantado?")]
         public String EsAdelantado { get; set; }
+        [Display(Name ="Mostrar en Cuadro de Morosidad")]
+        public String NoEsVisibleMorosidad { get; set; }
         public List<SelectListItem> LstEstado { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> LstAdelantado { get; set; } = new List<SelectListItem>();
         public void Fill(CargarDatosContext c, Int32 cuotaId)
@@ -34,6 +38,7 @@ namespace VEH.Intranet.ViewModel.Fee
             Leyenda = cuota.Leyenda;
             Estado = (cuota.Pagado == false ? "0" : "1").ToString();
             EsAdelantado = cuota.EsAdelantado.HasValue ? (cuota.EsAdelantado.Value == true ? "1" : "0") : "0";
+            NoEsVisibleMorosidad = cuota.NoEsVisibleMorosidad.HasValue ? (cuota.NoEsVisibleMorosidad.Value == true ? "0" : "1") : "1";
         }   
     }
 }

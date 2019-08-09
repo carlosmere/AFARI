@@ -19,6 +19,8 @@ using System.Data.Entity;
 using OfficeOpenXml.Style;
 using System.Data.Entity.Validation;
 using System.Transactions;
+using System.Threading.Tasks;
+using System.Threading;
 //using System.Drawing;
 
 namespace VEH.Intranet.Controllers
@@ -71,6 +73,7 @@ namespace VEH.Intranet.Controllers
                 Cuota.Leyenda = model.Leyenda;
                 Cuota.Pagado = model.Estado == "0" ? false : true;
                 Cuota.EsAdelantado = model.EsAdelantado == "0" ? false : true;
+                Cuota.NoEsVisibleMorosidad = model.NoEsVisibleMorosidad == "0" ? true : false;
 
                 context.SaveChanges();
                 PostMessage(MessageType.Success);
@@ -298,6 +301,8 @@ namespace VEH.Intranet.Controllers
             ViewBag.SyncOrAsync = "Asynchronous";
             try
             {
+                var seImprimeCE = formCollection["seImprimeCE"].ToString();
+
                 ReporteLogic reporteLogic = new ReporteLogic();
                 reporteLogic.Server = Server;
                 reporteLogic.context = context;
@@ -313,7 +318,13 @@ namespace VEH.Intranet.Controllers
                 Edificio objEdificio = context.Edificio.Find(viewModel.EdificioId);
                 UnidadTiempo objUnidad = context.UnidadTiempo.Find(viewModel.UnidadTiempoId);
                 var DicNumeroRecibo = new Dictionary<Int32, long?>();
-                List<Cuota> CuotasDelEdifico = context.Cuota.Where(X => X.Departamento.EdificioId == objEdificio.EdificioId
+                List<Cuota> CuotasDelEdifico = context.Cuota.Include(x => x.UnidadTiempo)
+                    .Include(x => x.Departamento)
+                    .Include(x => x.Departamento.Propietario)
+                    .Include(x => x.Departamento.Propietario.Select(y => y.Inquilino))
+                    .Include(x => x.Departamento.TipoInmueble)
+                    .Include(x => x.ConsumoIndividual)
+                    .Where(X => X.Departamento.EdificioId == objEdificio.EdificioId
                 && X.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo
                 && X.UnidadTiempoId <= objUnidad.UnidadTiempoId).ToList();
 
@@ -454,7 +465,9 @@ namespace VEH.Intranet.Controllers
                 var totalM2 = departamentos.Sum(x => x.DepartamentoM2 ?? 0) + departamentos.Sum(x => x.EstacionamientoM2 ?? 0) + departamentos.Sum(x => x.EstacionamientoM2 ?? 0);
 
                 UnidadTiempo lastUnidad = context.UnidadTiempo.FirstOrDefault(x => x.Orden == objUnidad.Orden - 1 && x.Estado == ConstantHelpers.EstadoActivo);
+                var unidadTiempoActualId = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo == true).UnidadTiempoId;
 
+                reporteLogic.UnidadTiempoActualId = unidadTiempoActualId;
 
                 if (!viewModel.AplicaSeparacion)
                 {
@@ -465,30 +478,106 @@ namespace VEH.Intranet.Controllers
                     }
                 }
                 else
-                {
+                {                    
+                    //var t = new Task(() =>
+                    //{
+                    //    ReporteLogic rl = new ReporteLogic();
+                    //    rl.Server = Server;
+                    //    rl.context = context;
+                    //    rl.UnidadTiempoActualId = unidadTiempoActualId;
+                    //
+                    //    foreach (Cuota c in listaCuota)
+                    //    {
+                    //        var valorExtraordinaria = c.CuotaExtraordinaria ?? 0;
+                    //        c.CuotaExtraordinaria = 0;
+                    //
+                    //        c.Total -= valorExtraordinaria;
+                    //
+                    //        rl.GetReport(c, fechaEmision, fechaVencimiento,
+                    //            presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
+                    //
+                    //        //c.Total += valorExtraordinaria;
+                    //        //c.CuotaExtraordinaria = valorExtraordinaria;
+                    //        //
+                    //        //rl.GetReport(c, fechaEmision, fechaVencimiento,
+                    //        //presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
+                    //    }
+                    //    lstMemoryStream.AddRange(rl.lstMemoryStream);
+                    //    lstMemoryStreamPDF.AddRange(rl.lstMemoryStreamPDF);
+                    //    lstNombreDOC.AddRange(rl.lstNombreDOC);
+                    //});
+                    //lstTareas.Add(t);
+                    //t.Start();
+                    //
+                    //
+                    //var t2 = new Task(() =>
+                    //{
+                    //    ReporteLogic rl = new ReporteLogic();
+                    //    rl.Server = Server;
+                    //    rl.context = context;
+                    //    rl.UnidadTiempoActualId = unidadTiempoActualId;
+                    //
+                    //    foreach (Cuota c in listaCuota)
+                    //    {
+                    //        var valorExtraordinaria = c.CuotaExtraordinaria ?? 0;
+                    //        c.CuotaExtraordinaria = 0;
+                    //
+                    //        //c.Total -= valorExtraordinaria;
+                    //        //
+                    //        //rl.GetReport(c, fechaEmision, fechaVencimiento,
+                    //        //    presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
+                    //        //
+                    //        //c.Total += valorExtraordinaria;
+                    //        c.CuotaExtraordinaria = valorExtraordinaria;
+                    //
+                    //        rl.GetReport(c, fechaEmision, fechaVencimiento,
+                    //        presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
+                    //    }
+                    //    lstMemoryStream.AddRange(rl.lstMemoryStream);
+                    //    lstMemoryStreamPDF.AddRange(rl.lstMemoryStreamPDF);
+                    //    lstNombreDOC.AddRange(rl.lstNombreDOC);
+                    //});
+                    //lstTareas.Add(t2);
+                    //t2.Start();
                     foreach (Cuota c in listaCuota)
                     {
                         var valorExtraordinaria = c.CuotaExtraordinaria ?? 0;
                         c.CuotaExtraordinaria = 0;
+                    
+                        //c.Total -= valorExtraordinaria;
+                        //
+                        //String fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
+                        //    presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
+                        //
+                        //c.Total += valorExtraordinaria;
+                        //c.CuotaExtraordinaria = valorExtraordinaria;
+                        //fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
+                        //    presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
 
-                        c.Total -= valorExtraordinaria;
-                        String fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
-                            presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
+                        if (seImprimeCE == "0")
+                        {
+                            c.Total -= valorExtraordinaria;
 
-                        c.Total += valorExtraordinaria;
-                        c.CuotaExtraordinaria = valorExtraordinaria;
-                        fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
-                            presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
+                            String fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
+                                presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
+                        }
+                        else
+                        {
+                            c.CuotaExtraordinaria = valorExtraordinaria;
+                            String fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
+                                presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
+                        }
+
                     }
                 }
 
                 reporteLogic.GetReportTable(listaCuota, objUnidad.Descripcion);
-
+                
                 var contextaux = new SIVEHEntities();
                 using (var ts = new TransactionScope())
                 {
                     MemoryStream outputMemoryStream = reporteLogic.ZipFiles();
-                    String fileName2 = Server.MapPath("~/Resources") + "\\" + "Boletas - " + objEdificio.Nombre + " - " + objUnidad.Descripcion + ".zip";
+                    String fileName2 = Server.MapPath("~/Resources") + "\\" + (seImprimeCE == "1" ? "CE-" : "") + "Boletas - " + objEdificio.Nombre + " - " + objUnidad.Descripcion + ".zip";
                     using (FileStream file = new FileStream(fileName2, FileMode.Create, System.IO.FileAccess.Write))
                     {
                         byte[] bytes = new byte[outputMemoryStream.Length];
@@ -497,7 +586,7 @@ namespace VEH.Intranet.Controllers
 
                         PostMessage(MessageType.Success);
 
-                        String FileDownloadName = "Boletas - " + objEdificio.Nombre + " - " + objUnidad.Descripcion + ".zip";
+                        String FileDownloadName = (seImprimeCE == "1" ? "CE-":"") + "Boletas - " + objEdificio.Nombre + " - " + objUnidad.Descripcion + ".zip";
                         String Lugar = Path.Combine(Server.MapPath("~/Resources"), FileDownloadName);
 
                         ReciboMes bk = contextaux.ReciboMes.FirstOrDefault(x => x.UnidadTiempoId == viewModel.UnidadTiempoId.Value && x.EdificioId == viewModel.EdificioId);
@@ -738,7 +827,11 @@ namespace VEH.Intranet.Controllers
                         var LstCuotasT = context.Cuota.Include(x => x.Departamento)
                             .Include(x => x.UnidadTiempo)
                             .Include(x => x.Departamento.Propietario)
-                            .Where(x => x.Departamento.EdificioId == EdificioId && x.Pagado == false && x.UnidadTiempoId < unidadTiempoActivo.UnidadTiempoId && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo).OrderBy(x => x.UnidadTiempo.Orden).ThenBy(x => x.CuotaId).ToList();
+                            .Where(x => x.Departamento.EdificioId == EdificioId 
+                            && x.Pagado == false 
+                            && x.UnidadTiempoId < unidadTiempoActivo.UnidadTiempoId 
+                            && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo
+                            && (x.NoEsVisibleMorosidad == null || x.NoEsVisibleMorosidad == false)).OrderBy(x => x.UnidadTiempo.Orden).ThenBy(x => x.CuotaId).ToList();
 
                         List<Cuota> LstCuotas = new List<Cuota>();
 
@@ -750,14 +843,14 @@ namespace VEH.Intranet.Controllers
                                 if (validacionExtra != null)
                                 {
 
-                                    if (validacionExtra.UnidadTiempo.Mes == validacionExtra.UnidadTiempo.Mes)
+                                    if (cuota.UnidadTiempo.Mes == validacionExtra.UnidadTiempo.Mes)
                                     {
                                         LstCuotas.Remove(validacionExtra);
                                         validacionExtra.CuotaExtraordinaria += cuota.CuotaExtraordinaria;
                                         validacionExtra.Total += cuota.CuotaExtraordinaria ?? 0;
                                         LstCuotas.Add(validacionExtra);
                                     }
-                                    else if (validacionExtra.UnidadTiempo.Mes != validacionExtra.UnidadTiempo.Mes)
+                                    else if (cuota.UnidadTiempo.Mes != validacionExtra.UnidadTiempo.Mes)
                                     {
                                         //validacionExtra.Total += cuota.CuotaExtraordinaria ?? 0;
                                         LstCuotas.Add(cuota);
@@ -821,7 +914,7 @@ namespace VEH.Intranet.Controllers
 
                         Int32 i = 8;
                         List<Int32> LstDepartamentoId = new List<Int32>();
-                        LstCuotas = LstCuotas.OrderBy(x => x.DepartamentoId).ToList();
+                        LstCuotas = LstCuotas.OrderBy(x => x.UnidadTiempoId).ToList();
                         decimal? TotalGeneral = 0;
                         foreach (var item in LstCuotas)
                         {
@@ -935,7 +1028,8 @@ namespace VEH.Intranet.Controllers
                                 Total = 0;
                                 //LstDepartamentoId.Add(item.DepartamentoId);
 
-                                var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                                //var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                                var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Propietario.FechaCreacion < objTitular.FechaCreacion).ToList();
                                 if (lstHistoria.Count > 0)
                                 {
                                     var objTitular2 = item.Departamento.Propietario.FirstOrDefault(x => x.ParentescoTitular.Contains("Titular") && x.Estado == ConstantHelpers.EstadoActivo);
@@ -1163,7 +1257,8 @@ namespace VEH.Intranet.Controllers
                                         try
                                         {
                                             //var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == cuota.DepartamentoId && x.Propietario.ParentescoTitular == "Titular" && x.Fecha < objTitular.FechaCreacion).ToList();
-                                            var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == cuota.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                                            //var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == cuota.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                                            var lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == cuota.DepartamentoId && x.Propietario.FechaCreacion < objTitular.FechaCreacion).ToList();
                                             if (lstHistoria.Count == 0)
                                             {
                                                 lstHistoria = context.DepartamentoHistorico.Where(x => x.DepartamentoId == cuota.DepartamentoId).ToList();

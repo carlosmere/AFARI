@@ -86,6 +86,8 @@ namespace VEH.Intranet.ViewModel.Building
         public Decimal PMora { get; set; }
         [Display(Name = "Tipo de Mora")]
         public string TipoMora { get; set; }
+        [Display(Name = "Usar Inquilino")]
+        public string UsarInquilinoCCPD { get; set; } = "NO";
         [Display(Name = "Fecha de Vencimiento de Cuotas")]
         public Int32 DiaEmisionCuota { get; set; }
         [Display(Name = "Orden")]
@@ -185,6 +187,8 @@ namespace VEH.Intranet.ViewModel.Building
                     this.NombrePago = edificio.NombrePago;
                     this.Orden = edificio.Orden;
                     this.DiaMora = edificio.DiaMora;
+                    this.UsarInquilinoCCPD = edificio.UsarInquilinoCCPD.HasValue ?  (edificio.UsarInquilinoCCPD.Value ? "SI" : "NO") : "NO";
+
                     if (edificio.TipoMora == "POR")
                         this.PMora = this.PMora * 100;
                 }
@@ -260,6 +264,8 @@ namespace VEH.Intranet.ViewModel.Building
                     this.NombreProvincia = context.UProvincia.FirstOrDefault(x => x.UProvinciaId == edificio.UProvinciaId).Nombre;
                     this.NombreDistrito = context.UDistrito.FirstOrDefault(x => x.UDistritoId == edificio.UDistritoId).Nombre;
                     this.NombreTipoInmueble = edificio.TipoInmueble.Nombre;
+                    this.UsarInquilinoCCPD = edificio.UsarInquilinoCCPD.HasValue ? (edificio.UsarInquilinoCCPD.Value ? "SI" : "NO") : "NO";
+
                 }
             }
         }

@@ -30,7 +30,11 @@
     @Html.DropDownListFor(x => x.EsAdelantado, Model.LstAdelantado, new { @class = "form-control select2" })
     @Html.ValidationMessageFor(x => x.EsAdelantado)
 </div>
-
+<div class="form-group">
+    @Html.LabelFor(x => x.NoEsVisibleMorosidad)
+    @Html.DropDownListFor(x => x.NoEsVisibleMorosidad, Model.LstAdelantado, new { @class = "form-control select2" })
+    @Html.ValidationMessageFor(x => x.NoEsVisibleMorosidad)
+</div>
 @section Footer{
     <button type="submit" class="btn btn-sm btn-primary" id="btn-modal-aceptar"><i class="fa fa-check"></i>&nbsp;&nbsp;Confirmar</button>
 }

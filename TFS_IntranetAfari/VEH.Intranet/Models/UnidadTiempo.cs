@@ -20,7 +20,6 @@ namespace VEH.Intranet.Models
             this.ArchivoCorrecionEdificio = new HashSet<ArchivoCorrecionEdificio>();
             this.ArchivoTrabajador = new HashSet<ArchivoTrabajador>();
             this.BalanceUnidadTiempoEdificio = new HashSet<BalanceUnidadTiempoEdificio>();
-            this.Cuota = new HashSet<Cuota>();
             this.CuotaComun = new HashSet<CuotaComun>();
             this.DatoEdificio = new HashSet<DatoEdificio>();
             this.Edificio = new HashSet<Edificio>();
@@ -34,6 +33,7 @@ namespace VEH.Intranet.Models
             this.ReciboMes = new HashSet<ReciboMes>();
             this.ReporteEdificioUnidadTiempo = new HashSet<ReporteEdificioUnidadTiempo>();
             this.UnidadTiempoReciboDepartamento = new HashSet<UnidadTiempoReciboDepartamento>();
+            this.Cuota = new HashSet<Cuota>();
         }
     
         public int UnidadTiempoId { get; set; }
@@ -50,8 +50,6 @@ namespace VEH.Intranet.Models
         public virtual ICollection<ArchivoTrabajador> ArchivoTrabajador { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BalanceUnidadTiempoEdificio> BalanceUnidadTiempoEdificio { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cuota> Cuota { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuotaComun> CuotaComun { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -78,5 +76,7 @@ namespace VEH.Intranet.Models
         public virtual ICollection<ReporteEdificioUnidadTiempo> ReporteEdificioUnidadTiempo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadTiempoReciboDepartamento> UnidadTiempoReciboDepartamento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cuota> Cuota { get; set; }
     }
 }

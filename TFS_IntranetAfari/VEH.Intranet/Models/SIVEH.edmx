@@ -146,6 +146,7 @@
           <Property Name="EsExtraordinaria" Type="bit" />
           <Property Name="EsAdelantado" Type="bit" />
           <Property Name="Otros" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NoEsVisibleMorosidad" Type="bit" />
         </EntityType>
         <EntityType Name="CuotaComun">
           <Key>
@@ -319,6 +320,7 @@
           <Property Name="DiaMora" Type="int" />
           <Property Name="Orden" Type="int" />
           <Property Name="SaldoAnteriorUnidadTiempo" Type="int" />
+          <Property Name="UsarInquilinoCCPD" Type="bit" />
         </EntityType>
         <EntityType Name="EmailValidacion">
           <Key>
@@ -2094,42 +2096,6 @@
           <NavigationProperty Name="Edificio" Relationship="Self.FK_Cronograma_Edificio" FromRole="Cronograma" ToRole="Edificio" />
           <NavigationProperty Name="DetalleCronograma" Relationship="Self.FK_DetalleCronograma_Cronograma" FromRole="Cronograma" ToRole="DetalleCronograma" />
         </EntityType>
-        <EntityType Name="Cuota">
-          <Key>
-            <PropertyRef Name="CuotaId" />
-          </Key>
-          <Property Name="CuotaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
-          <Property Name="LecturaAgua" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ConsumoMes" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ConsumoAgua" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Leyenda" Type="Int32" />
-          <Property Name="Mora" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ConsumoSoles" Type="Decimal" Precision="18" Scale="7" Nullable="false" />
-          <Property Name="AreaComun" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Alcantarillado" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CargoFijo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="IGV" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ConsumoAguaTotal" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CuotaExtraordinaria" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="FechaEmision" Type="DateTime" Precision="3" />
-          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
-          <Property Name="Pagado" Type="Boolean" Nullable="false" />
-          <Property Name="FechaPagado" Type="DateTime" Precision="3" />
-          <Property Name="LecturaAnterior" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="FechaLeyenda" Type="DateTime" Precision="3" />
-          <Property Name="EsExtraordinaria" Type="Boolean" />
-          <NavigationProperty Name="Departamento" Relationship="Self.FK_Cuota_Departamento" FromRole="Cuota" ToRole="Departamento" />
-          <NavigationProperty Name="UnidadTiempo" Relationship="Self.FK_Cuota_UnidadTiempo" FromRole="Cuota" ToRole="UnidadTiempo" />
-          <Property Name="EsAdelantado" Type="Boolean" />
-          <NavigationProperty Name="ConsumoIndividual" Relationship="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" FromRole="Cuota" ToRole="ConsumoIndividual" />
-          <Property Name="Otros" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
         <EntityType Name="CuotaComun">
           <Key>
             <PropertyRef Name="CuotaComunId" />
@@ -2192,7 +2158,6 @@
           <Property Name="NombreRecibo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AlertaMora" Type="Boolean" Nullable="false" />
           <Property Name="NombrePropietario" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Cuota" Relationship="Self.FK_Cuota_Departamento" FromRole="Departamento" ToRole="Cuota" />
           <NavigationProperty Name="Edificio" Relationship="Self.FK_Departamento_Edificio" FromRole="Departamento" ToRole="Edificio" />
           <NavigationProperty Name="TipoInmueble" Relationship="Self.FK_Departamento_TipoInmueble" FromRole="Departamento" ToRole="TipoInmueble" />
           <NavigationProperty Name="DepartamentoHistorico" Relationship="Self.FK_DepartamentoHistorico_Departamento" FromRole="Departamento" ToRole="DepartamentoHistorico" />
@@ -2201,6 +2166,7 @@
           <NavigationProperty Name="UnidadTiempoReciboDepartamento" Relationship="Self.FK_UnidadTiempoReciboDepartamento_Departamento" FromRole="Departamento" ToRole="UnidadTiempoReciboDepartamento" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Departamento" FromRole="Departamento" ToRole="Usuario" />
           <NavigationProperty Name="Visita" Relationship="Self.FK_Visita_Departamento" FromRole="Departamento" ToRole="Visita" />
+          <NavigationProperty Name="Cuota" Relationship="DB_92747_intranetModel.FK_Cuota_Departamento" FromRole="Departamento" ToRole="Cuota" />
         </EntityType>
         <EntityType Name="DepartamentoHistorico">
           <Key>
@@ -2348,6 +2314,7 @@
           <NavigationProperty Name="ReporteEdificioUnidadTiempo" Relationship="Self.FK_ReporteEdificioUnidadTiempo_Edificio" FromRole="Edificio" ToRole="ReporteEdificioUnidadTiempo" />
           <NavigationProperty Name="Trabajador" Relationship="Self.FK_Trabajador_Edificio" FromRole="Edificio" ToRole="Trabajador" />
           <NavigationProperty Name="Visita" Relationship="Self.FK_Visita_Edificio" FromRole="Edificio" ToRole="Visita" />
+          <Property Name="UsarInquilinoCCPD" Type="Boolean" />
         </EntityType>
         <EntityType Name="EmailValidacion">
           <Key>
@@ -2788,7 +2755,6 @@
           <NavigationProperty Name="ArchivoCorrecionEdificio" Relationship="Self.FK_ArchivoCorrecionEdificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ArchivoCorrecionEdificio" />
           <NavigationProperty Name="ArchivoTrabajador" Relationship="Self.FK_ArchivoTrabajador_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ArchivoTrabajador" />
           <NavigationProperty Name="BalanceUnidadTiempoEdificio" Relationship="Self.FK_BalanceUnidadTiempoEdificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="BalanceUnidadTiempoEdificio" />
-          <NavigationProperty Name="Cuota" Relationship="Self.FK_Cuota_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Cuota" />
           <NavigationProperty Name="CuotaComun" Relationship="Self.FK_CuotaComun_UnidadTiempo" FromRole="UnidadTiempo" ToRole="CuotaComun" />
           <NavigationProperty Name="DatoEdificio" Relationship="Self.FK_DatoEdificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="DatoEdificio" />
           <NavigationProperty Name="Edificio" Relationship="Self.FK_Edificio_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Edificio" />
@@ -2802,6 +2768,7 @@
           <NavigationProperty Name="ReciboMes" Relationship="Self.FK_ReciboMes_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ReciboMes" />
           <NavigationProperty Name="ReporteEdificioUnidadTiempo" Relationship="Self.FK_ReporteEdificioUnidadTiempo_UnidadTiempo" FromRole="UnidadTiempo" ToRole="ReporteEdificioUnidadTiempo" />
           <NavigationProperty Name="UnidadTiempoReciboDepartamento" Relationship="Self.FK_UnidadTiempoReciboDepartamento_UnidadTiempo" FromRole="UnidadTiempo" ToRole="UnidadTiempoReciboDepartamento" />
+          <NavigationProperty Name="Cuota" Relationship="DB_92747_intranetModel.FK_Cuota_UnidadTiempo" FromRole="UnidadTiempo" ToRole="Cuota" />
         </EntityType>
         <EntityType Name="UnidadTiempoReciboDepartamento">
           <Key>
@@ -3037,30 +3004,6 @@
             </Principal>
             <Dependent Role="DetalleCronograma">
               <PropertyRef Name="CronogramaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cuota_Departamento">
-          <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
-          <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Departamento">
-              <PropertyRef Name="DepartamentoId" />
-            </Principal>
-            <Dependent Role="Cuota">
-              <PropertyRef Name="DepartamentoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cuota_UnidadTiempo">
-          <End Role="UnidadTiempo" Type="Self.UnidadTiempo" Multiplicity="1" />
-          <End Role="Cuota" Type="Self.Cuota" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UnidadTiempo">
-              <PropertyRef Name="UnidadTiempoId" />
-            </Principal>
-            <Dependent Role="Cuota">
-              <PropertyRef Name="UnidadTiempoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3734,7 +3677,6 @@
           <EntitySet Name="BalanceUnidadTiempoEdificio" EntityType="Self.BalanceUnidadTiempoEdificio" />
           <EntitySet Name="ComisionAFP" EntityType="Self.ComisionAFP" />
           <EntitySet Name="Cronograma" EntityType="Self.Cronograma" />
-          <EntitySet Name="Cuota" EntityType="Self.Cuota" />
           <EntitySet Name="CuotaComun" EntityType="Self.CuotaComun" />
           <EntitySet Name="DatoEdificio" EntityType="Self.DatoEdificio" />
           <EntitySet Name="Departamento" EntityType="Self.Departamento" />
@@ -3837,14 +3779,6 @@
           <AssociationSet Name="FK_DetalleCronograma_Cronograma" Association="Self.FK_DetalleCronograma_Cronograma">
             <End Role="Cronograma" EntitySet="Cronograma" />
             <End Role="DetalleCronograma" EntitySet="DetalleCronograma" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cuota_Departamento" Association="Self.FK_Cuota_Departamento">
-            <End Role="Departamento" EntitySet="Departamento" />
-            <End Role="Cuota" EntitySet="Cuota" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cuota_UnidadTiempo" Association="Self.FK_Cuota_UnidadTiempo">
-            <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
-            <End Role="Cuota" EntitySet="Cuota" />
           </AssociationSet>
           <AssociationSet Name="FK_CuotaComun_Edificio" Association="Self.FK_CuotaComun_Edificio">
             <End Role="Edificio" EntitySet="Edificio" />
@@ -4067,9 +4001,18 @@
             <End Role="Visita" EntitySet="Visita" />
           </AssociationSet>
           <EntitySet Name="ConsumoIndividual" EntityType="DB_92747_intranetModel.ConsumoIndividual" />
+          <EntitySet Name="Cuota" EntityType="DB_92747_intranetModel.Cuota" />
           <AssociationSet Name="FK_ConsumoIndividual_Cuota" Association="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota">
             <End Role="Cuota" EntitySet="Cuota" />
             <End Role="ConsumoIndividual" EntitySet="ConsumoIndividual" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuota_Departamento" Association="DB_92747_intranetModel.FK_Cuota_Departamento">
+            <End Role="Departamento" EntitySet="Departamento" />
+            <End Role="Cuota" EntitySet="Cuota" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cuota_UnidadTiempo" Association="DB_92747_intranetModel.FK_Cuota_UnidadTiempo">
+            <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
+            <End Role="Cuota" EntitySet="Cuota" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ConsumoIndividual">
@@ -4083,6 +4026,43 @@
           <Property Name="CuotaId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cuota" Relationship="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" FromRole="ConsumoIndividual" ToRole="Cuota" />
         </EntityType>
+        <EntityType Name="Cuota">
+          <Key>
+            <PropertyRef Name="CuotaId" />
+          </Key>
+          <Property Name="CuotaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartamentoId" Type="Int32" Nullable="false" />
+          <Property Name="LecturaAgua" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ConsumoMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ConsumoAgua" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Leyenda" Type="Int32" />
+          <Property Name="Mora" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="UnidadTiempoId" Type="Int32" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ConsumoSoles" Type="Decimal" Nullable="false" Precision="18" Scale="7" />
+          <Property Name="AreaComun" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Alcantarillado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CargoFijo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IGV" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ConsumoAguaTotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CuotaExtraordinaria" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FechaEmision" Type="DateTime" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="3" />
+          <Property Name="Pagado" Type="Boolean" Nullable="false" />
+          <Property Name="FechaPagado" Type="DateTime" Precision="3" />
+          <Property Name="LecturaAnterior" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FechaLeyenda" Type="DateTime" Precision="3" />
+          <Property Name="EsExtraordinaria" Type="Boolean" />
+          <Property Name="EsAdelantado" Type="Boolean" />
+          <Property Name="Otros" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NoEsVisibleMorosidad" Type="Boolean" />
+          <NavigationProperty Name="ConsumoIndividual" Relationship="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" FromRole="Cuota" ToRole="ConsumoIndividual" />
+          <NavigationProperty Name="Departamento" Relationship="DB_92747_intranetModel.FK_Cuota_Departamento" FromRole="Cuota" ToRole="Departamento" />
+          <NavigationProperty Name="UnidadTiempo" Relationship="DB_92747_intranetModel.FK_Cuota_UnidadTiempo" FromRole="Cuota" ToRole="UnidadTiempo" />
+        </EntityType>
         <Association Name="FK_ConsumoIndividual_Cuota">
           <End Type="DB_92747_intranetModel.Cuota" Role="Cuota" Multiplicity="1" />
           <End Type="DB_92747_intranetModel.ConsumoIndividual" Role="ConsumoIndividual" Multiplicity="*" />
@@ -4092,6 +4072,30 @@
             </Principal>
             <Dependent Role="ConsumoIndividual">
               <PropertyRef Name="CuotaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuota_Departamento">
+          <End Type="DB_92747_intranetModel.Departamento" Role="Departamento" Multiplicity="1" />
+          <End Type="DB_92747_intranetModel.Cuota" Role="Cuota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departamento">
+              <PropertyRef Name="DepartamentoId" />
+            </Principal>
+            <Dependent Role="Cuota">
+              <PropertyRef Name="DepartamentoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cuota_UnidadTiempo">
+          <End Type="DB_92747_intranetModel.UnidadTiempo" Role="UnidadTiempo" Multiplicity="1" />
+          <End Type="DB_92747_intranetModel.Cuota" Role="Cuota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadTiempo">
+              <PropertyRef Name="UnidadTiempoId" />
+            </Principal>
+            <Dependent Role="Cuota">
+              <PropertyRef Name="UnidadTiempoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4206,40 +4210,6 @@
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="EdificioId" ColumnName="EdificioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Cuota">
-            <EntityTypeMapping TypeName="DB_92747_intranetModel.Cuota">
-              <MappingFragment StoreEntitySet="Cuota">
-                <ScalarProperty Name="Otros" ColumnName="Otros" />
-                <ScalarProperty Name="EsAdelantado" ColumnName="EsAdelantado" />
-                <ScalarProperty Name="CuotaId" ColumnName="CuotaId" />
-                <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
-                <ScalarProperty Name="LecturaAgua" ColumnName="LecturaAgua" />
-                <ScalarProperty Name="ConsumoMes" ColumnName="ConsumoMes" />
-                <ScalarProperty Name="ConsumoAgua" ColumnName="ConsumoAgua" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="Leyenda" ColumnName="Leyenda" />
-                <ScalarProperty Name="Mora" ColumnName="Mora" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="UnidadTiempoId" ColumnName="UnidadTiempoId" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="ConsumoSoles" ColumnName="ConsumoSoles" />
-                <ScalarProperty Name="AreaComun" ColumnName="AreaComun" />
-                <ScalarProperty Name="Alcantarillado" ColumnName="Alcantarillado" />
-                <ScalarProperty Name="CargoFijo" ColumnName="CargoFijo" />
-                <ScalarProperty Name="IGV" ColumnName="IGV" />
-                <ScalarProperty Name="ConsumoAguaTotal" ColumnName="ConsumoAguaTotal" />
-                <ScalarProperty Name="CuotaExtraordinaria" ColumnName="CuotaExtraordinaria" />
-                <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
-                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
-                <ScalarProperty Name="Pagado" ColumnName="Pagado" />
-                <ScalarProperty Name="FechaPagado" ColumnName="FechaPagado" />
-                <ScalarProperty Name="LecturaAnterior" ColumnName="LecturaAnterior" />
-                <ScalarProperty Name="FechaLeyenda" ColumnName="FechaLeyenda" />
-                <ScalarProperty Name="EsExtraordinaria" ColumnName="EsExtraordinaria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4388,6 +4358,7 @@
           <EntitySetMapping Name="Edificio">
             <EntityTypeMapping TypeName="DB_92747_intranetModel.Edificio">
               <MappingFragment StoreEntitySet="Edificio">
+                <ScalarProperty Name="UsarInquilinoCCPD" ColumnName="UsarInquilinoCCPD" />
                 <ScalarProperty Name="EdificioId" ColumnName="EdificioId" />
                 <ScalarProperty Name="Acronimo" ColumnName="Acronimo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -4898,6 +4869,41 @@
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Detalle" ColumnName="Detalle" />
                 <ScalarProperty Name="ConsumoIndividualId" ColumnName="ConsumoIndividualId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuota">
+            <EntityTypeMapping TypeName="DB_92747_intranetModel.Cuota">
+              <MappingFragment StoreEntitySet="Cuota">
+                <ScalarProperty Name="NoEsVisibleMorosidad" ColumnName="NoEsVisibleMorosidad" />
+                <ScalarProperty Name="Otros" ColumnName="Otros" />
+                <ScalarProperty Name="EsAdelantado" ColumnName="EsAdelantado" />
+                <ScalarProperty Name="EsExtraordinaria" ColumnName="EsExtraordinaria" />
+                <ScalarProperty Name="FechaLeyenda" ColumnName="FechaLeyenda" />
+                <ScalarProperty Name="LecturaAnterior" ColumnName="LecturaAnterior" />
+                <ScalarProperty Name="FechaPagado" ColumnName="FechaPagado" />
+                <ScalarProperty Name="Pagado" ColumnName="Pagado" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
+                <ScalarProperty Name="CuotaExtraordinaria" ColumnName="CuotaExtraordinaria" />
+                <ScalarProperty Name="ConsumoAguaTotal" ColumnName="ConsumoAguaTotal" />
+                <ScalarProperty Name="IGV" ColumnName="IGV" />
+                <ScalarProperty Name="CargoFijo" ColumnName="CargoFijo" />
+                <ScalarProperty Name="Alcantarillado" ColumnName="Alcantarillado" />
+                <ScalarProperty Name="AreaComun" ColumnName="AreaComun" />
+                <ScalarProperty Name="ConsumoSoles" ColumnName="ConsumoSoles" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="UnidadTiempoId" ColumnName="UnidadTiempoId" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Mora" ColumnName="Mora" />
+                <ScalarProperty Name="Leyenda" ColumnName="Leyenda" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="ConsumoAgua" ColumnName="ConsumoAgua" />
+                <ScalarProperty Name="ConsumoMes" ColumnName="ConsumoMes" />
+                <ScalarProperty Name="LecturaAgua" ColumnName="LecturaAgua" />
+                <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
+                <ScalarProperty Name="CuotaId" ColumnName="CuotaId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

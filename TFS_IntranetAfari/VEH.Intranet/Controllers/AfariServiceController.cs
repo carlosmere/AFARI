@@ -1664,6 +1664,9 @@ namespace VEH.Intranet.Controllers
                 }
             }
 
+            var unidadTiempoActualId = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo == true).UnidadTiempoId;
+            reporteLogic.UnidadTiempoActualId = unidadTiempoActualId;
+
             var nombreArchivo = reporteLogic.GetReportAPI(cuotaDepa, cuotaDepa.FechaEmision ?? DateTime.Now, cuotaDepa.FechaVencimiento ?? DateTime.Now, presupuestoMes, cuotaDepa.Departamento.DepartamentoM2 ?? (decimal)0, context.UnidadTiempo.FirstOrDefault(X => X.UnidadTiempoId == unidadTiempoId), null, null, NumeroRecibo);
 
 

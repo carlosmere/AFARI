@@ -115,7 +115,7 @@ namespace VEH.Intranet.ViewModel.Departament
                     this.Propietario = propietario.Nombres;
                     this.DniPropietario = propietario.NroDocumento;
 
-                    var inquilino = propietario.Inquilino.FirstOrDefault();
+                    var inquilino = propietario.Inquilino.FirstOrDefault(x => x.Estado == ConstantHelpers.EstadoActivo);
                     if (inquilino != null)
                     {
                         this.ContactoInquilino = inquilino.Contacto;

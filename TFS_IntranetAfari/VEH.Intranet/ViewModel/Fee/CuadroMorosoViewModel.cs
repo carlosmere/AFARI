@@ -34,7 +34,10 @@ namespace VEH.Intranet.ViewModel.Fee
                 var LstCuotasT = datacontext.context.Cuota.Include(x => x.Departamento)
                                 .Include(x => x.UnidadTiempo)
                                 .Include(x => x.Departamento.Propietario)
-                                .Where(x => x.Departamento.EdificioId == EdificioId && x.Pagado == false && x.UnidadTiempoId < unidadTiempoActivo.UnidadTiempoId && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo).OrderBy(x => x.UnidadTiempo.Orden).ThenBy(x => x.CuotaId).ToList();
+                                .Where(x => x.Departamento.EdificioId == EdificioId && x.Pagado == false 
+                                && x.UnidadTiempoId < unidadTiempoActivo.UnidadTiempoId 
+                                && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo
+                                && (x.NoEsVisibleMorosidad == null || x.NoEsVisibleMorosidad == false)).OrderBy(x => x.UnidadTiempo.Orden).ThenBy(x => x.CuotaId).ToList();
 
                 List<Cuota> LstCuotas = new List<Cuota>();
 
@@ -95,7 +98,7 @@ namespace VEH.Intranet.ViewModel.Fee
 
                 LstTotalCuadro.Add(-1, 0);
 
-                LstCuotas = LstCuotas.OrderBy(x => x.DepartamentoId).ToList();
+                //LstCuotas = LstCuotas.OrderBy(x => x.DepartamentoId).ToList();
                 List<Int32> LstDepartamentoId = new List<Int32>();
                 LstCuotas = LstCuotas.OrderBy(x => x.DepartamentoId).ToList();
                 Decimal TotalGeneral = 0;
@@ -243,7 +246,8 @@ namespace VEH.Intranet.ViewModel.Fee
                         LstDepartamentoId.Add(item.DepartamentoId);
 
 
-                        var lstHistoria = datacontext.context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                        //var lstHistoria = datacontext.context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                        var lstHistoria = datacontext.context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Propietario.FechaCreacion < objTitular.FechaCreacion).ToList();
                         if (lstHistoria.Count > 0)
                         {
                             var objTitular2 = item.Departamento.Propietario.FirstOrDefault(x => x.ParentescoTitular.Contains("Titular") && x.Estado == ConstantHelpers.EstadoActivo);
@@ -487,7 +491,8 @@ namespace VEH.Intranet.ViewModel.Fee
 
                         LstDepartamentoId.Add(item.DepartamentoId);
 
-                        var lstHistoria = datacontext.context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                        //var lstHistoria = datacontext.context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Fecha < objTitular.FechaCreacion).ToList();
+                        var lstHistoria = datacontext.context.DepartamentoHistorico.Where(x => x.DepartamentoId == item.DepartamentoId && x.Propietario.FechaCreacion < objTitular.FechaCreacion).ToList();
                         if (lstHistoria.Count > 0)
                         {
                             var objTitular2 = item.Departamento.Propietario.FirstOrDefault(x => x.ParentescoTitular.Contains("Titular") && x.Estado == ConstantHelpers.EstadoActivo);

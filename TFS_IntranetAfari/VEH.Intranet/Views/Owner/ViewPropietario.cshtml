@@ -152,6 +152,18 @@
                     <input type="text" class="form-control" value="@Model.ContactoInquilino" disabled="">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label ui-sortable">RUC</label>
+                <div class="col-md-5 ui-sortable">
+                    <input type="text" class="form-control" value="@Model.RUCInq" disabled="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label ui-sortable">Razón Social</label>
+                <div class="col-md-5 ui-sortable">
+                    <input type="text" class="form-control" value="@Model.RazonSocialInq" disabled="">
+                </div>
+            </div>
         </form>
         <div class="pull-left">
             <a href="@Url.Action("LstPropietario", "Owner", new { DepartamentoId = Model.DepartamentoId, EdificioId = Model.EdificioId })" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Regresar</a>

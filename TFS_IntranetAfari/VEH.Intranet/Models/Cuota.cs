@@ -48,10 +48,11 @@ namespace VEH.Intranet.Models
         public Nullable<bool> EsExtraordinaria { get; set; }
         public Nullable<bool> EsAdelantado { get; set; }
         public Nullable<decimal> Otros { get; set; }
+        public Nullable<bool> NoEsVisibleMorosidad { get; set; }
     
-        public virtual Departamento Departamento { get; set; }
-        public virtual UnidadTiempo UnidadTiempo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConsumoIndividual> ConsumoIndividual { get; set; }
+        public virtual Departamento Departamento { get; set; }
+        public virtual UnidadTiempo UnidadTiempo { get; set; }
     }
 }

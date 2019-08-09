@@ -1,0 +1,1534 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_92747_bitportalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AfariDB___ContentCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="CategoryFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="CategoryUUID" Type="nvarchar" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="AfariDB_Categoria">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Cliente">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Departamento">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Desuscribirse">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Correo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Distrito">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="NombreCompleto" Type="nvarchar(max)" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="CodDepartamento" Type="nvarchar(max)" />
+          <Property Name="CodProvincia" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Edificio">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+          <Property Name="Tipo" Type="nvarchar(max)" />
+          <Property Name="Categoria" Type="nvarchar(max)" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Departamento" Type="nvarchar(max)" />
+          <Property Name="Provincia" Type="nvarchar(max)" />
+          <Property Name="Distrito" Type="nvarchar(max)" />
+          <Property Name="DescripcionInterna" Type="nvarchar(max)" />
+          <Property Name="Imagenes" Type="nvarchar(max)" />
+          <Property Name="Dormitorio" Type="nvarchar(max)" />
+          <Property Name="Banio" Type="nvarchar(max)" />
+          <Property Name="Estacionamiento" Type="nvarchar(max)" />
+          <Property Name="Area" Type="nvarchar(max)" />
+          <Property Name="Precio" Type="nvarchar(max)" />
+          <Property Name="Antiguedad" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_InmueblesServicios">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Lugar">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Provincia">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AfariDB_Tipo">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB___ContentCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="CategoryFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="CategoryUUID" Type="nvarchar" MaxLength="36" />
+        </EntityType>
+        <EntityType Name="VehDB_Categoria">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Departamento">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Desuscribirse">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Correo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Distrito">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="NombreCompleto" Type="nvarchar(max)" />
+          <Property Name="CodDepartamento" Type="nvarchar(max)" />
+          <Property Name="CodProvincia" Type="nvarchar(max)" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Edificio">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Categoria" Type="nvarchar(max)" />
+          <Property Name="Departamento" Type="nvarchar(max)" />
+          <Property Name="Provincia" Type="nvarchar(max)" />
+          <Property Name="Distrito" Type="nvarchar(max)" />
+          <Property Name="DescripcionInterna" Type="nvarchar(max)" />
+          <Property Name="Imagenes" Type="nvarchar(max)" />
+          <Property Name="Tipo" Type="nvarchar(max)" />
+          <Property Name="Dormitorio" Type="nvarchar(max)" />
+          <Property Name="Banio" Type="nvarchar(max)" />
+          <Property Name="Estacionamiento" Type="nvarchar(max)" />
+          <Property Name="Area" Type="nvarchar(max)" />
+          <Property Name="Precio" Type="nvarchar(max)" />
+          <Property Name="Antiguedad" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Lugar">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Provincia">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VehDB_Tipo">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUID" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="Repository" Type="nvarchar" MaxLength="256" />
+          <Property Name="FolderName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserKey" Type="nvarchar" MaxLength="256" />
+          <Property Name="UtcCreationDate" Type="datetime" />
+          <Property Name="UtcLastModificationDate" Type="datetime" />
+          <Property Name="Published" Type="bit" />
+          <Property Name="OriginalUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="SchemaName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ParentFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="ParentUUID" Type="nvarchar" MaxLength="36" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalRepository" Type="nvarchar" MaxLength="256" />
+          <Property Name="OriginalFolder" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsLocalized" Type="bit" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityContainer Name="DB_92747_bitportalModelStoreContainer">
+          <EntitySet Name="AfariDB___ContentCategory" EntityType="Self.AfariDB___ContentCategory" Schema="dbo" Table="AfariDB.__ContentCategory" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Categoria" EntityType="Self.AfariDB_Categoria" Schema="dbo" Table="AfariDB.Categoria" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Cliente" EntityType="Self.AfariDB_Cliente" Schema="dbo" Table="AfariDB.Cliente" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Departamento" EntityType="Self.AfariDB_Departamento" Schema="dbo" Table="AfariDB.Departamento" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Desuscribirse" EntityType="Self.AfariDB_Desuscribirse" Schema="dbo" Table="AfariDB.Desuscribirse" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Distrito" EntityType="Self.AfariDB_Distrito" Schema="dbo" Table="AfariDB.Distrito" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Edificio" EntityType="Self.AfariDB_Edificio" Schema="dbo" Table="AfariDB.Edificio" store:Type="Tables" />
+          <EntitySet Name="AfariDB_InmueblesServicios" EntityType="Self.AfariDB_InmueblesServicios" Schema="dbo" Table="AfariDB.InmueblesServicios" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Lugar" EntityType="Self.AfariDB_Lugar" Schema="dbo" Table="AfariDB.Lugar" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Provincia" EntityType="Self.AfariDB_Provincia" Schema="dbo" Table="AfariDB.Provincia" store:Type="Tables" />
+          <EntitySet Name="AfariDB_Tipo" EntityType="Self.AfariDB_Tipo" Schema="dbo" Table="AfariDB.Tipo" store:Type="Tables" />
+          <EntitySet Name="VehDB___ContentCategory" EntityType="Self.VehDB___ContentCategory" Schema="dbo" Table="VehDB.__ContentCategory" store:Type="Tables" />
+          <EntitySet Name="VehDB_Categoria" EntityType="Self.VehDB_Categoria" Schema="dbo" Table="VehDB.Categoria" store:Type="Tables" />
+          <EntitySet Name="VehDB_Departamento" EntityType="Self.VehDB_Departamento" Schema="dbo" Table="VehDB.Departamento" store:Type="Tables" />
+          <EntitySet Name="VehDB_Desuscribirse" EntityType="Self.VehDB_Desuscribirse" Schema="dbo" Table="VehDB.Desuscribirse" store:Type="Tables" />
+          <EntitySet Name="VehDB_Distrito" EntityType="Self.VehDB_Distrito" Schema="dbo" Table="VehDB.Distrito" store:Type="Tables" />
+          <EntitySet Name="VehDB_Edificio" EntityType="Self.VehDB_Edificio" Schema="dbo" Table="VehDB.Edificio" store:Type="Tables" />
+          <EntitySet Name="VehDB_Lugar" EntityType="Self.VehDB_Lugar" Schema="dbo" Table="VehDB.Lugar" store:Type="Tables" />
+          <EntitySet Name="VehDB_Provincia" EntityType="Self.VehDB_Provincia" Schema="dbo" Table="VehDB.Provincia" store:Type="Tables" />
+          <EntitySet Name="VehDB_Tipo" EntityType="Self.VehDB_Tipo" Schema="dbo" Table="VehDB.Tipo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_92747_bitportalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AfariDB___ContentCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Categoria">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Cliente">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Departamento">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Desuscribirse">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Correo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Distrito">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodDepartamento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodProvincia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Edificio">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Departamento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Provincia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Distrito" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionInterna" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagenes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dormitorio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Banio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Estacionamiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Antiguedad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_InmueblesServicios">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Lugar">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Provincia">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AfariDB_Tipo">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB___ContentCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Categoria">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Departamento">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Desuscribirse">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Correo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Distrito">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodDepartamento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodProvincia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Edificio">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Departamento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Provincia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Distrito" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionInterna" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagenes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dormitorio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Banio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Estacionamiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Antiguedad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Lugar">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Provincia">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VehDB_Tipo">
+          <Key>
+            <PropertyRef Name="UUID" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Repository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FolderName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserKey" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UtcCreationDate" Type="DateTime" Precision="3" />
+          <Property Name="UtcLastModificationDate" Type="DateTime" Precision="3" />
+          <Property Name="Published" Type="Boolean" />
+          <Property Name="OriginalUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="SchemaName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParentFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ParentUUID" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalRepository" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFolder" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocalized" Type="Boolean" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="DB_92747_bitportalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AfariDB___ContentCategory" EntityType="Self.AfariDB___ContentCategory" />
+          <EntitySet Name="AfariDB_Categoria" EntityType="Self.AfariDB_Categoria" />
+          <EntitySet Name="AfariDB_Cliente" EntityType="Self.AfariDB_Cliente" />
+          <EntitySet Name="AfariDB_Departamento" EntityType="Self.AfariDB_Departamento" />
+          <EntitySet Name="AfariDB_Desuscribirse" EntityType="Self.AfariDB_Desuscribirse" />
+          <EntitySet Name="AfariDB_Distrito" EntityType="Self.AfariDB_Distrito" />
+          <EntitySet Name="AfariDB_Edificio" EntityType="Self.AfariDB_Edificio" />
+          <EntitySet Name="AfariDB_InmueblesServicios" EntityType="Self.AfariDB_InmueblesServicios" />
+          <EntitySet Name="AfariDB_Lugar" EntityType="Self.AfariDB_Lugar" />
+          <EntitySet Name="AfariDB_Provincia" EntityType="Self.AfariDB_Provincia" />
+          <EntitySet Name="AfariDB_Tipo" EntityType="Self.AfariDB_Tipo" />
+          <EntitySet Name="VehDB___ContentCategory" EntityType="Self.VehDB___ContentCategory" />
+          <EntitySet Name="VehDB_Categoria" EntityType="Self.VehDB_Categoria" />
+          <EntitySet Name="VehDB_Departamento" EntityType="Self.VehDB_Departamento" />
+          <EntitySet Name="VehDB_Desuscribirse" EntityType="Self.VehDB_Desuscribirse" />
+          <EntitySet Name="VehDB_Distrito" EntityType="Self.VehDB_Distrito" />
+          <EntitySet Name="VehDB_Edificio" EntityType="Self.VehDB_Edificio" />
+          <EntitySet Name="VehDB_Lugar" EntityType="Self.VehDB_Lugar" />
+          <EntitySet Name="VehDB_Provincia" EntityType="Self.VehDB_Provincia" />
+          <EntitySet Name="VehDB_Tipo" EntityType="Self.VehDB_Tipo" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_92747_bitportalModelStoreContainer" CdmEntityContainer="DB_92747_bitportalEntities">
+          <EntitySetMapping Name="AfariDB___ContentCategory">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB___ContentCategory">
+              <MappingFragment StoreEntitySet="AfariDB___ContentCategory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="CategoryFolder" ColumnName="CategoryFolder" />
+                <ScalarProperty Name="CategoryUUID" ColumnName="CategoryUUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Categoria">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Categoria">
+              <MappingFragment StoreEntitySet="AfariDB_Categoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Cliente">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Cliente">
+              <MappingFragment StoreEntitySet="AfariDB_Cliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Departamento">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Departamento">
+              <MappingFragment StoreEntitySet="AfariDB_Departamento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Desuscribirse">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Desuscribirse">
+              <MappingFragment StoreEntitySet="AfariDB_Desuscribirse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Distrito">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Distrito">
+              <MappingFragment StoreEntitySet="AfariDB_Distrito">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CodDepartamento" ColumnName="CodDepartamento" />
+                <ScalarProperty Name="CodProvincia" ColumnName="CodProvincia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Edificio">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Edificio">
+              <MappingFragment StoreEntitySet="AfariDB_Edificio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="DescripcionInterna" ColumnName="DescripcionInterna" />
+                <ScalarProperty Name="Imagenes" ColumnName="Imagenes" />
+                <ScalarProperty Name="Dormitorio" ColumnName="Dormitorio" />
+                <ScalarProperty Name="Banio" ColumnName="Banio" />
+                <ScalarProperty Name="Estacionamiento" ColumnName="Estacionamiento" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Antiguedad" ColumnName="Antiguedad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_InmueblesServicios">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_InmueblesServicios">
+              <MappingFragment StoreEntitySet="AfariDB_InmueblesServicios">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Lugar">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Lugar">
+              <MappingFragment StoreEntitySet="AfariDB_Lugar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Provincia">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Provincia">
+              <MappingFragment StoreEntitySet="AfariDB_Provincia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AfariDB_Tipo">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.AfariDB_Tipo">
+              <MappingFragment StoreEntitySet="AfariDB_Tipo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB___ContentCategory">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB___ContentCategory">
+              <MappingFragment StoreEntitySet="VehDB___ContentCategory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="CategoryFolder" ColumnName="CategoryFolder" />
+                <ScalarProperty Name="CategoryUUID" ColumnName="CategoryUUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Categoria">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Categoria">
+              <MappingFragment StoreEntitySet="VehDB_Categoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Departamento">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Departamento">
+              <MappingFragment StoreEntitySet="VehDB_Departamento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Desuscribirse">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Desuscribirse">
+              <MappingFragment StoreEntitySet="VehDB_Desuscribirse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Distrito">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Distrito">
+              <MappingFragment StoreEntitySet="VehDB_Distrito">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="CodDepartamento" ColumnName="CodDepartamento" />
+                <ScalarProperty Name="CodProvincia" ColumnName="CodProvincia" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Edificio">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Edificio">
+              <MappingFragment StoreEntitySet="VehDB_Edificio">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="DescripcionInterna" ColumnName="DescripcionInterna" />
+                <ScalarProperty Name="Imagenes" ColumnName="Imagenes" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Dormitorio" ColumnName="Dormitorio" />
+                <ScalarProperty Name="Banio" ColumnName="Banio" />
+                <ScalarProperty Name="Estacionamiento" ColumnName="Estacionamiento" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Antiguedad" ColumnName="Antiguedad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Lugar">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Lugar">
+              <MappingFragment StoreEntitySet="VehDB_Lugar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Provincia">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Provincia">
+              <MappingFragment StoreEntitySet="VehDB_Provincia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehDB_Tipo">
+            <EntityTypeMapping TypeName="DB_92747_bitportalModel.VehDB_Tipo">
+              <MappingFragment StoreEntitySet="VehDB_Tipo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="Repository" ColumnName="Repository" />
+                <ScalarProperty Name="FolderName" ColumnName="FolderName" />
+                <ScalarProperty Name="UserKey" ColumnName="UserKey" />
+                <ScalarProperty Name="UtcCreationDate" ColumnName="UtcCreationDate" />
+                <ScalarProperty Name="UtcLastModificationDate" ColumnName="UtcLastModificationDate" />
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="OriginalUUID" ColumnName="OriginalUUID" />
+                <ScalarProperty Name="SchemaName" ColumnName="SchemaName" />
+                <ScalarProperty Name="ParentFolder" ColumnName="ParentFolder" />
+                <ScalarProperty Name="ParentUUID" ColumnName="ParentUUID" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OriginalRepository" ColumnName="OriginalRepository" />
+                <ScalarProperty Name="OriginalFolder" ColumnName="OriginalFolder" />
+                <ScalarProperty Name="IsLocalized" ColumnName="IsLocalized" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

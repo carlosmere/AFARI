@@ -71,7 +71,7 @@
                                     else
                                     {
 
-                                        var Inquilino = Propietario.Inquilino.FirstOrDefault();
+                                        var Inquilino = Propietario.Inquilino.FirstOrDefault(x => x.Estado == ConstantHelpers.EstadoActivo);
 
                                         <td class="text-center">
                                             @Propietario.Nombres

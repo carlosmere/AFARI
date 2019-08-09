@@ -17,13 +17,13 @@ namespace VEH.Intranet.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Departamento()
         {
-            this.Cuota = new HashSet<Cuota>();
             this.DepartamentoHistorico = new HashSet<DepartamentoHistorico>();
             this.DepartamentoPropietario = new HashSet<DepartamentoPropietario>();
             this.Propietario = new HashSet<Propietario>();
             this.UnidadTiempoReciboDepartamento = new HashSet<UnidadTiempoReciboDepartamento>();
             this.Usuario = new HashSet<Usuario>();
             this.Visita = new HashSet<Visita>();
+            this.Cuota = new HashSet<Cuota>();
         }
     
         public int DepartamentoId { get; set; }
@@ -49,8 +49,6 @@ namespace VEH.Intranet.Models
         public bool AlertaMora { get; set; }
         public bool NombrePropietario { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cuota> Cuota { get; set; }
         public virtual Edificio Edificio { get; set; }
         public virtual TipoInmueble TipoInmueble { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -65,5 +63,7 @@ namespace VEH.Intranet.Models
         public virtual ICollection<Usuario> Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Visita> Visita { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cuota> Cuota { get; set; }
     }
 }

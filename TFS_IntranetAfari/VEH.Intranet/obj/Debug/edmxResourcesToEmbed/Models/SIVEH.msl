@@ -109,40 +109,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Cuota">
-      <EntityTypeMapping TypeName="DB_92747_intranetModel.Cuota">
-        <MappingFragment StoreEntitySet="Cuota">
-          <ScalarProperty Name="Otros" ColumnName="Otros" />
-          <ScalarProperty Name="EsAdelantado" ColumnName="EsAdelantado" />
-          <ScalarProperty Name="CuotaId" ColumnName="CuotaId" />
-          <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
-          <ScalarProperty Name="LecturaAgua" ColumnName="LecturaAgua" />
-          <ScalarProperty Name="ConsumoMes" ColumnName="ConsumoMes" />
-          <ScalarProperty Name="ConsumoAgua" ColumnName="ConsumoAgua" />
-          <ScalarProperty Name="Monto" ColumnName="Monto" />
-          <ScalarProperty Name="Leyenda" ColumnName="Leyenda" />
-          <ScalarProperty Name="Mora" ColumnName="Mora" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="UnidadTiempoId" ColumnName="UnidadTiempoId" />
-          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-          <ScalarProperty Name="ConsumoSoles" ColumnName="ConsumoSoles" />
-          <ScalarProperty Name="AreaComun" ColumnName="AreaComun" />
-          <ScalarProperty Name="Alcantarillado" ColumnName="Alcantarillado" />
-          <ScalarProperty Name="CargoFijo" ColumnName="CargoFijo" />
-          <ScalarProperty Name="IGV" ColumnName="IGV" />
-          <ScalarProperty Name="ConsumoAguaTotal" ColumnName="ConsumoAguaTotal" />
-          <ScalarProperty Name="CuotaExtraordinaria" ColumnName="CuotaExtraordinaria" />
-          <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
-          <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
-          <ScalarProperty Name="Pagado" ColumnName="Pagado" />
-          <ScalarProperty Name="FechaPagado" ColumnName="FechaPagado" />
-          <ScalarProperty Name="LecturaAnterior" ColumnName="LecturaAnterior" />
-          <ScalarProperty Name="FechaLeyenda" ColumnName="FechaLeyenda" />
-          <ScalarProperty Name="EsExtraordinaria" ColumnName="EsExtraordinaria" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CuotaComun">
       <EntityTypeMapping TypeName="DB_92747_intranetModel.CuotaComun">
         <MappingFragment StoreEntitySet="CuotaComun">
@@ -288,6 +254,7 @@
     <EntitySetMapping Name="Edificio">
       <EntityTypeMapping TypeName="DB_92747_intranetModel.Edificio">
         <MappingFragment StoreEntitySet="Edificio">
+          <ScalarProperty Name="UsarInquilinoCCPD" ColumnName="UsarInquilinoCCPD" />
           <ScalarProperty Name="EdificioId" ColumnName="EdificioId" />
           <ScalarProperty Name="Acronimo" ColumnName="Acronimo" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -798,6 +765,41 @@
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Detalle" ColumnName="Detalle" />
           <ScalarProperty Name="ConsumoIndividualId" ColumnName="ConsumoIndividualId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cuota">
+      <EntityTypeMapping TypeName="DB_92747_intranetModel.Cuota">
+        <MappingFragment StoreEntitySet="Cuota">
+          <ScalarProperty Name="NoEsVisibleMorosidad" ColumnName="NoEsVisibleMorosidad" />
+          <ScalarProperty Name="Otros" ColumnName="Otros" />
+          <ScalarProperty Name="EsAdelantado" ColumnName="EsAdelantado" />
+          <ScalarProperty Name="EsExtraordinaria" ColumnName="EsExtraordinaria" />
+          <ScalarProperty Name="FechaLeyenda" ColumnName="FechaLeyenda" />
+          <ScalarProperty Name="LecturaAnterior" ColumnName="LecturaAnterior" />
+          <ScalarProperty Name="FechaPagado" ColumnName="FechaPagado" />
+          <ScalarProperty Name="Pagado" ColumnName="Pagado" />
+          <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+          <ScalarProperty Name="FechaEmision" ColumnName="FechaEmision" />
+          <ScalarProperty Name="CuotaExtraordinaria" ColumnName="CuotaExtraordinaria" />
+          <ScalarProperty Name="ConsumoAguaTotal" ColumnName="ConsumoAguaTotal" />
+          <ScalarProperty Name="IGV" ColumnName="IGV" />
+          <ScalarProperty Name="CargoFijo" ColumnName="CargoFijo" />
+          <ScalarProperty Name="Alcantarillado" ColumnName="Alcantarillado" />
+          <ScalarProperty Name="AreaComun" ColumnName="AreaComun" />
+          <ScalarProperty Name="ConsumoSoles" ColumnName="ConsumoSoles" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="UnidadTiempoId" ColumnName="UnidadTiempoId" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Mora" ColumnName="Mora" />
+          <ScalarProperty Name="Leyenda" ColumnName="Leyenda" />
+          <ScalarProperty Name="Monto" ColumnName="Monto" />
+          <ScalarProperty Name="ConsumoAgua" ColumnName="ConsumoAgua" />
+          <ScalarProperty Name="ConsumoMes" ColumnName="ConsumoMes" />
+          <ScalarProperty Name="LecturaAgua" ColumnName="LecturaAgua" />
+          <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
+          <ScalarProperty Name="CuotaId" ColumnName="CuotaId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

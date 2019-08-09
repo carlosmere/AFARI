@@ -40,7 +40,7 @@ namespace VEH.Intranet.ViewModel.Building
             //}
             lstDestinatario = new List<Destinatario>();
             lstDestinatario.AddRange(query.Select(X => new Destinatario { dptoId = X.DepartamentoId, dpto = X.Departamento.Numero, nombre = X.Nombres + X.ApellidoPaterno, email = X.Email ,id=X.PropietarioId.ToString()}).ToList());
-            lstDestinatario.AddRange(query.SelectMany(X=>X.Inquilino.Select(Y=> new Destinatario{ dptoId = Y.Propietario.DepartamentoId , dpto=Y.Propietario.Departamento.Numero,nombre = Y.Nombres ,email=Y.Email , id="i"+Y.InquilinoId.ToString() , EsInquilino = true}).ToList()));
+            lstDestinatario.AddRange(query.SelectMany(X=>X.Inquilino.Where(Y => Y.Estado == ConstantHelpers.EstadoActivo).Select(Y=> new Destinatario{ dptoId = Y.Propietario.DepartamentoId , dpto=Y.Propietario.Departamento.Numero,nombre = Y.Nombres ,email=Y.Email , id="i"+Y.InquilinoId.ToString() , EsInquilino = true}).ToList()));
             lstDestinatario = lstDestinatario.OrderBy(x => x.dptoId).ToList();
 
             check = new List<bool>();

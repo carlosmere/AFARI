@@ -138,7 +138,7 @@
                                 <td>
                                     <input type="checkbox" class="chk" data-val="@item.CuotaId" />
                                 </td>
-                                <td class="numero">@item.Departamento.Numero</td>
+                                <td class="numero"><i class="fa fa-eye@(item.NoEsVisibleMorosidad == true ? "-slash" : "")"></i> @item.Departamento.Numero</td>
                                 <td>
                                     @item.UnidadTiempo.Descripcion
                                 </td>

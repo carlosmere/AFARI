@@ -181,6 +181,7 @@
             $('#detalle-modal').html('');
             var modelo = {};
             modelo['Edificio'] = edificio;
+            modelo['Anio'] = $('#Anio').val();
             $.ajax({
                 url: '@Url.Action("GetVisitasPorEdificio", "Json")',
                 type: 'POST',

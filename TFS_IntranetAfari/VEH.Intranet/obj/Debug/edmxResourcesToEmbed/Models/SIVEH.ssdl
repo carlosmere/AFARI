@@ -141,6 +141,7 @@
     <Property Name="EsExtraordinaria" Type="bit" />
     <Property Name="EsAdelantado" Type="bit" />
     <Property Name="Otros" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="NoEsVisibleMorosidad" Type="bit" />
   </EntityType>
   <EntityType Name="CuotaComun">
     <Key>
@@ -314,6 +315,7 @@
     <Property Name="DiaMora" Type="int" />
     <Property Name="Orden" Type="int" />
     <Property Name="SaldoAnteriorUnidadTiempo" Type="int" />
+    <Property Name="UsarInquilinoCCPD" Type="bit" />
   </EntityType>
   <EntityType Name="EmailValidacion">
     <Key>

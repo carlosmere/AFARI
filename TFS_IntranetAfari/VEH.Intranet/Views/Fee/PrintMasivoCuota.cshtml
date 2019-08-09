@@ -195,6 +195,13 @@
                                 }
                                 <a href="@Url.Action("LstEdificio", "Building")" class="btn btn-sm btn-default"><i class="fa fa-arrow-left"></i>&nbsp;Cancelar</a>
                             </div>
+                            <div class="col-md-4 col-md-offset-10 ui-sortable pull-right">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-4 col-md-offset-10 ui-sortable pull-right">
+                                <input style="display:none" name="seImprimeCE" id="seImprimeCE" value="0"/>
+                                <button id="btnece" style="display:none" type="submit" class="cancel btn btn-sm btn-primary m-r-5"><i class="fa fa-print"></i>&nbsp;&nbsp;Exportar Extraordinaria</button>
+                            </div>
                             <center>
                                 <label style="font-size:14px;color:red"><span>Recordatorio: Al exportar un recibo, la información del mismo será recalculada.</span></label>
                             </center>
@@ -208,3 +215,19 @@
 
 }
 
+@section Scripts{
+    <script>
+        $('#AplicaSeparacion').on('change',function(){
+            if ($(this).prop('checked')) {
+                $('#btnece').show();
+            }
+            else {
+                $('#btnece').hide();
+            }
+        });
+
+        $('#btnece').on("click",function(e) {
+            $('#seImprimeCE').val('1');
+         });
+    </script>>    
+}

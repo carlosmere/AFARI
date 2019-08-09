@@ -399,7 +399,7 @@ namespace VEH.Intranet.Controllers
                             var nuevoNombre = ViewModel.Nombre + "." + extension[cantPuntos - 1];
                             System.IO.File.Move(_rutaarchivodir, Path.Combine(auxDir, nuevoNombre));
                             _Archivo.Nombre = nuevoNombre;//ViewModel.Nombre;
-                            _Archivo.Ruta = nuevoNombre;//ViewModel.Nombre; //ViewModel.Nombre;
+                            //_Archivo.Ruta = nuevoNombre;//ViewModel.Nombre; //ViewModel.Nombre;
                         }
                         else
                         {
@@ -418,7 +418,7 @@ namespace VEH.Intranet.Controllers
                             if (!System.IO.Directory.Exists(_rutaarchivodir))
                                 Directory.CreateDirectory(_rutaarchivodir);
 
-                            string _nombrearc = ViewModel.DescripcionUnidadMedida + "_" +  file.FileName;// + Path.GetExtension(file.FileName);
+                            string _nombrearc = ViewModel.DescripcionUnidadMedida + "_" + Guid.NewGuid().ToString().Substring(0,4) + DateTime.Now.ToString("ddMMyyyyHHmmssfff") + Path.GetExtension(file.FileName);// file.FileName;// + Path.GetExtension(file.FileName);
 
                             _rutaarchivodir = Path.Combine(_rutaarchivodir, _nombrearc);
                             _Archivo.Ruta = _nombrearc;

@@ -14,7 +14,6 @@
         <EntityTypeShape EntityType="DB_92747_intranetModel.BalanceUnidadTiempoEdificio" Width="1.5" PointX="3" PointY="58.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.ComisionAFP" Width="1.5" PointX="20.25" PointY="45.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.Cronograma" Width="1.5" PointX="11.25" PointY="54.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_92747_intranetModel.Cuota" Width="1.5" PointX="3" PointY="67.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.CuotaComun" Width="1.5" PointX="6" PointY="57.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.DatoEdificio" Width="1.5" PointX="6" PointY="66.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.Departamento" Width="1.5" PointX="11.25" PointY="61" IsExpanded="true" />
@@ -73,8 +72,6 @@
         <AssociationConnector Association="DB_92747_intranetModel.FK_ComisionAFP_TipoDescuento" ManuallyRouted="false" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_Cronograma_Edificio" ManuallyRouted="false" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_DetalleCronograma_Cronograma" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_Departamento" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_UnidadTiempo" ManuallyRouted="false" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_CuotaComun_Edificio" ManuallyRouted="false" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_CuotaComun_UnidadTiempo" ManuallyRouted="false" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_GastoCuotaComun_CuotaComun" ManuallyRouted="false" />
@@ -131,7 +128,10 @@
         <AssociationConnector Association="DB_92747_intranetModel.FK_UnidadTiempoReciboDepartamento_UnidadTiempo" ManuallyRouted="false" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_Visita_Usuario" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.ConsumoIndividual" Width="1.5" PointX="5.25" PointY="74.5" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.Cuota" Width="1.5" PointX="22.5" PointY="52.875" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_Departamento" />
+        <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_UnidadTiempo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -34,7 +34,6 @@ namespace VEH.Intranet.Models
         public virtual DbSet<BalanceUnidadTiempoEdificio> BalanceUnidadTiempoEdificio { get; set; }
         public virtual DbSet<ComisionAFP> ComisionAFP { get; set; }
         public virtual DbSet<Cronograma> Cronograma { get; set; }
-        public virtual DbSet<Cuota> Cuota { get; set; }
         public virtual DbSet<CuotaComun> CuotaComun { get; set; }
         public virtual DbSet<DatoEdificio> DatoEdificio { get; set; }
         public virtual DbSet<Departamento> Departamento { get; set; }
@@ -79,5 +78,6 @@ namespace VEH.Intranet.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Visita> Visita { get; set; }
         public virtual DbSet<ConsumoIndividual> ConsumoIndividual { get; set; }
+        public virtual DbSet<Cuota> Cuota { get; set; }
     }
 }

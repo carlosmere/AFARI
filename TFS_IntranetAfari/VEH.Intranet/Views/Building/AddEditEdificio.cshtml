@@ -220,12 +220,12 @@
                 </div>
             </div>
             @*<div class="form-group">
-                    <label class="col-md-2 control-label">Fecha de Vencimiento de Cuotas</label>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(x => x.DiaEmisionCuota, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.DiaEmisionCuota)
-                    </div>
-                </div>*@
+            <label class="col-md-2 control-label">Fecha de Vencimiento de Cuotas</label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(x => x.DiaEmisionCuota, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.DiaEmisionCuota)
+            </div>
+        </div>*@
             <div class="form-group">
                 <label class="col-md-2 control-label">Nro. de Cuenta</label>
                 <div class="col-md-6">
@@ -241,7 +241,7 @@
                 </div>
                 <label class="col-md-2 control-label">Unidad Tiempo Asociado</label>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(x => x.SaldoAnteriorUnidadTiempo, new SelectList(Model.LstUnidadTiempo,"UnidadTiempoId","Descripcion"), "[-Seleccione-]", new { @class = "form-control select2" })
+                    @Html.DropDownListFor(x => x.SaldoAnteriorUnidadTiempo, new SelectList(Model.LstUnidadTiempo, "UnidadTiempoId", "Descripcion"), "[-Seleccione-]", new { @class = "form-control select2" })
                 </div>
             </div>
             <div class="form-group">
@@ -259,20 +259,20 @@
                 </div>
             </div>
             @*<div class="form-group">
-                    <label class="col-md-2 control-label">Email Encargado (Correos Masivos)</label>
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.EmailEncargado, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.EmailEncargado)
-                    </div>
-                </div>
+            <label class="col-md-2 control-label">Email Encargado (Correos Masivos)</label>
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.EmailEncargado, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.EmailEncargado)
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Nombre Encargado (Correos Masivos)</label>
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.NombreEncargado, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.NombreEncargado)
-                    </div>
-                </div>*@
+        <div class="form-group">
+            <label class="col-md-2 control-label">Nombre Encargado (Correos Masivos)</label>
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.NombreEncargado, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.NombreEncargado)
+            </div>
+        </div>*@
             <div class="form-group">
                 <label class="col-md-2 control-label">Nombre Pago (Recibos)</label>
                 <div class="col-md-6">
@@ -320,18 +320,18 @@
                 </div>
             </div>
             @*<div class="form-group">
-                    <label class="col-md-2 control-label">Firma</label>
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(x => x.Firma, new { @class = "form-control", type = "file" })
-                        @Html.ValidationMessageFor(x => x.Firma)
-                        @if (!string.IsNullOrEmpty(Model.RutaFirma))
-                        {   @Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.RutaFirma, nombre = "Firma "+Model.Nombre, acronimo = Model.Acronimo })}
-                        else
-                        {
-                            <div> <em> No Subido </em> </div>
-                        }
-                    </div>
-                </div>*@
+            <label class="col-md-2 control-label">Firma</label>
+            <div class="col-md-6">
+                @Html.TextBoxFor(x => x.Firma, new { @class = "form-control", type = "file" })
+                @Html.ValidationMessageFor(x => x.Firma)
+                @if (!string.IsNullOrEmpty(Model.RutaFirma))
+                {   @Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.RutaFirma, nombre = "Firma "+Model.Nombre, acronimo = Model.Acronimo })}
+                else
+                {
+                    <div> <em> No Subido </em> </div>
+                }
+            </div>
+        </div>*@
             <div class="form-group">
 
 
@@ -341,11 +341,11 @@
                     @Html.ValidationMessageFor(x => x.Archivo)
 
                     @if (!string.IsNullOrEmpty(Model.Ruta))
-                    {   @Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.Ruta, nombre = Model.Nombre, acronimo = Model.Acronimo })}
-                    else
-                    {
-                        <div> <em> No Subido </em> </div>
-                    }
+                    {@Html.ActionLink("Descargar Archivo", "DescargarArchivo", new { ruta = Model.Ruta, nombre = Model.Nombre, acronimo = Model.Acronimo })}
+                else
+                {
+                    <div> <em> No Subido </em> </div>
+                }
                 </div>
                 <div class="col-md-4">
                     <a class="btn btn-danger" href="@Url.Action("DeleteNormasConvivencia", "Building", new { EdificioId = Model.EdificioId })"><i class="fa fa-trash"></i> Borrar</a>
@@ -359,6 +359,16 @@
                     @Html.ValidationMessageFor(x => x.MensajeMora)
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Usar Inquilino en Cuadro de Cuota por Departamento</label>
+                <div class="col-md-3">
+                    <select name="@Html.NameFor(x => x.UsarInquilinoCCPD)" class="form-control">
+                        <option value="SI" @(Model.UsarInquilinoCCPD == "SI" ? "selected" : "")>SÍ</option>
+                        <option value="NO" @(Model.UsarInquilinoCCPD == "NO" ? "selected" : "")>NO</option>
+                    </select>
+                </div>
+            </div>
+            
             <hr />
             <div class="form-group">
                 <div class="ui-sortable">
