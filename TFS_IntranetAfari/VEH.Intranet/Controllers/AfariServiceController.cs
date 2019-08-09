@@ -15,6 +15,7 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using VEH.Intranet.ViewModel.Building;
 using System.Web;
+using static VEH.Intranet.ViewModel.Building.EnviarEmailInformativoViewModel;
 
 namespace VEH.Intranet.Controllers
 {
@@ -421,132 +422,123 @@ namespace VEH.Intranet.Controllers
             return ResponseGetComprobantesPago;
         }
         [Route("api/AfariService/EnviarCorreoMasivo")]
-        [HttpGet]
-        public void EnviarCorreoMasivo(Int32 usuarioId, Int32 edificioId, List<Int32> userList, string asunto, string mensaje, string cc)
+        [HttpPost]
+        public BaseBE EnviarCorreoMasivo(EnviarCorreoMasivoRequest enviarCorreoMasivoRequest)
         {
-            //BaseBE BaseBE = new BaseBE();
-            //
-            //try
-            //{
-            //    try
-            //    {
-            //        var lstDestinatario = new List<EnviarEmailInformativoViewModel.Destinatario>();
-            //        EmailLogic mailLogic = new EmailLogic();
-            //        ViewModel.Templates.infoViewModel mailModel = new ViewModel.Templates.infoViewModel();
-            //
-            //        var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == usuarioId);
-            //        var firma = usuario.Firma;
-            //        var edificio = context.Edificio.First(X => X.EdificioId == edificioId);
-            //        mailModel.Mensaje = mensaje;
-            //        mailModel.Titulo = asunto;
-            //        mailModel.administrador = edificio.EmailEncargado;
-            //        mailModel.Firma = firma ?? "";
-            //        mailModel.Acro = edificio.Acronimo;
-            //
-            //        if (!String.IsNullOrEmpty(cc) && cc.Length > 5)
-            //        {
-            //            var ccAddress = cc.Split(',');
-            //            foreach (var ccA in ccAddress)
-            //            {
-            //                if (!String.IsNullOrEmpty(ccA))
-            //                {
-            //                    lstDestinatario.Add(new EnviarEmailInformativoViewModel.Destinatario
-            //                    {
-            //                        dpto = "0",
-            //                        email = ccA,
-            //                        nombre = ccA,
-            //                        id = "0"
-            //                    });
-            //                }
-            //
-            //            }
-            //        }
-            //        foreach (var user in userList)
-            //        {
-            //            lstDestinatario.Add(new EnviarEmailInformativoViewModel.Destinatario
-            //            {
-            //                dpto = user.,
-            //                email = ccA,
-            //                nombre = ccA,
-            //                id = "0"
-            //            });
-            //        }
-            //        var LstDestinario = new List<Destinatario>();
-            //        var LstEmailDiferentes = new List<String>();
-            //        for (int i = 0; i < model.lstDestinatario.Count; i++)
-            //        {
-            //            var arrMail = model.lstDestinatario[i].email.Split(',');
-            //            foreach (var item in arrMail)
-            //            {
-            //                if (LstEmailDiferentes.Contains(item) == false && model.check[i])
-            //                {
-            //                    LstDestinario.Add(new EnviarEmailInformativoViewModel.Destinatario
-            //                    {
-            //                        dpto = model.lstDestinatario[i].dpto,
-            //                        email = item,
-            //                        nombre = model.lstDestinatario[i].nombre,
-            //                        id = model.lstDestinatario[i].id
-            //                    });
-            //                    LstEmailDiferentes.Add(item);
-            //                }
-            //            }
-            //        }
-            //
-            //        for (int i = 0; i < LstDestinario.Count(); i++)
-            //        {
-            //
-            //            var destinatario = LstDestinario[i];
-            //
-            //            mailModel.destinatario = destinatario;
-            //            try
-            //            {
-            //                //List<String> Archivos = new List<string>();
-            //                //foreach (var nuevoAdjunto in model.Archivos)
-            //                //{
-            //                //    if (nuevoAdjunto != null)
-            //                //    {
-            //                //        var fileName = Path.GetFileName(nuevoAdjunto.FileName);
-            //                //        var path = Path.Combine(Server.MapPath("~/Resources"), fileName);
-            //                //        nuevoAdjunto.SaveAs(path);
-            //                //
-            //                //        Archivos.Add(path);
-            //                //
-            //                //    }
-            //                //}
-            //
-            //                var emailUsuario = Session.GetCorreo();
-            //                var nombreUsuario = Session.GetNombreCompleto();
-            //                var nombreRemitente = Session.GetNombreRemitente();
-            //
-            //
-            //                if (!String.IsNullOrEmpty(nombreRemitente) && nombreRemitente.Length > 1)
-            //                {
-            //                    nombreUsuario = nombreRemitente;
-            //                }
-            //
-            //                mailLogic.SendEmail(asunto, "info", emailUsuario, nombreUsuario, destinatario.email, mailModel, null, cc);
-            //
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                BaseBE.error = true;
-            //                BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        BaseBE.error = true;
-            //        BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    BaseBE.error = true;
-            //    BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
-            //}
-            //
-            //return BaseBE;
+            BaseBE BaseBE = new BaseBE();
+            
+            try
+            {
+                try
+                {
+                    var lstDestinatario = new List<EnviarEmailInformativoViewModel.Destinatario>();
+                    EmailLogic mailLogic = new EmailLogic();
+                    ViewModel.Templates.infoViewModel mailModel = new ViewModel.Templates.infoViewModel();
+            
+                    var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == enviarCorreoMasivoRequest.usuarioId);
+                    var firma = usuario.Firma;
+                    var edificio = context.Edificio.First(X => X.EdificioId == enviarCorreoMasivoRequest.edificioId);
+                    mailModel.Mensaje = enviarCorreoMasivoRequest.mensaje;
+                    mailModel.Titulo = enviarCorreoMasivoRequest.asunto;
+                    mailModel.administrador = edificio.EmailEncargado;
+                    mailModel.Firma = firma ?? "";
+                    mailModel.Acro = edificio.Acronimo;
+            
+                    if (!String.IsNullOrEmpty(enviarCorreoMasivoRequest.cc) && enviarCorreoMasivoRequest.cc.Length > 5)
+                    {
+                        var ccAddress = enviarCorreoMasivoRequest.cc.Split(',');
+                        foreach (var ccA in ccAddress)
+                        {
+                            if (!String.IsNullOrEmpty(ccA))
+                            {
+                                lstDestinatario.Add(new EnviarEmailInformativoViewModel.Destinatario
+                                {
+                                    dpto = "0",
+                                    email = ccA,
+                                    nombre = ccA,
+                                    id = "0"
+                                });
+                            }
+            
+                        }
+                    }
+
+                    var LstDestinario = new List<Destinatario>();
+                    var LstEmailDiferentes = new List<String>();
+                    for (int i = 0; i < enviarCorreoMasivoRequest.lstDestinatarioCorreo.Count; i++)
+                    {
+                        var arrMail = enviarCorreoMasivoRequest.lstDestinatarioCorreo[i].email.Split(',');
+                        foreach (var item in arrMail)
+                        {
+                            if (LstEmailDiferentes.Contains(item) == false)
+                            {
+                                LstDestinario.Add(new EnviarEmailInformativoViewModel.Destinatario
+                                {
+                                    dpto = enviarCorreoMasivoRequest.lstDestinatarioCorreo[i].dpto,
+                                    email = item,
+                                    nombre = enviarCorreoMasivoRequest.lstDestinatarioCorreo[i].nombre//,
+                                    //id = enviarCorreoMasivoRequest.lstDestinatarioCorreo[i].id
+                                });
+                                LstEmailDiferentes.Add(item);
+                            }
+                        }
+                    }
+            
+                    for (int i = 0; i < LstDestinario.Count(); i++)
+                    {
+            
+                        var destinatario = LstDestinario[i];
+            
+                        mailModel.destinatario = destinatario;
+                        try
+                        {
+                            //List<String> Archivos = new List<string>();
+                            //foreach (var nuevoAdjunto in model.Archivos)
+                            //{
+                            //    if (nuevoAdjunto != null)
+                            //    {
+                            //        var fileName = Path.GetFileName(nuevoAdjunto.FileName);
+                            //        var path = Path.Combine(Server.MapPath("~/Resources"), fileName);
+                            //        nuevoAdjunto.SaveAs(path);
+                            //
+                            //        Archivos.Add(path);
+                            //
+                            //    }
+                            //}
+            
+                            var emailUsuario = usuario.Email;
+                            var nombreUsuario = usuario.Nombres + " " + usuario.Apellidos;
+                            var nombreRemitente = usuario.NombreRemitente;
+            
+            
+                            if (!String.IsNullOrEmpty(nombreRemitente) && nombreRemitente.Length > 1)
+                            {
+                                nombreUsuario = nombreRemitente;
+                            }
+            
+                            mailLogic.SendEmailMasivo(enviarCorreoMasivoRequest.asunto, "info", emailUsuario, nombreUsuario, destinatario.email, mailModel, null, enviarCorreoMasivoRequest.cc);
+            
+                        }
+                        catch (Exception ex)
+                        {
+                            BaseBE.error = true;
+                            BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    BaseBE.error = true;
+                    BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                BaseBE.error = true;
+                BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+            
+            return BaseBE;
         }
         [Route("api/AfariService/GetNormasConvivencia")]
         [HttpGet]
@@ -1834,6 +1826,62 @@ namespace VEH.Intranet.Controllers
             }
 
             return ResponseGetCategoriaVentaAlquiler;
+        }
+        [Route("api/AfariService/GetPropInqPorEdificio")]
+        [HttpGet]
+        public ResponseGetPropInqPorEdificio GetPropInqPorEdificio(Int32 edificioId)
+        {
+            ResponseGetPropInqPorEdificio ResponseGetPropInqPorEdificio = new ResponseGetPropInqPorEdificio();
+
+            try
+            {
+                try
+                {
+                    ResponseGetPropInqPorEdificio.lstProInq = context.Propietario.Where(x => x.Estado == ConstantHelpers.EstadoActivo
+                    && x.Departamento.EdificioId == edificioId).OrderBy(x => x.DepartamentoId).Select(x => new PropInqBE
+                    {
+                        Id = x.PropietarioId,
+                        nombreDepartamento = x.Departamento.Numero,
+                        nombre = x.Nombres + " " + x.ApellidoPaterno + " " + x.ApellidoMaterno,
+                        telefono = x.Telefono,
+                        email = x.Email,
+                        celular = x.Celular,
+                        nroDocumento = x.NroDocumento
+                    }).ToList();
+
+                    var lstPropietario = ResponseGetPropInqPorEdificio.lstProInq.Select(x => x.Id).ToList();
+                    var lstInquilino = context.Inquilino.Include( x => x.Propietario)
+                        .Include(x => x.Propietario.Departamento).Where(x => x.Estado == ConstantHelpers.EstadoActivo &&
+                    lstPropietario.Contains(x.PropietarioId)).ToList();
+
+                    foreach (var inq in lstInquilino)
+                    {
+                        ResponseGetPropInqPorEdificio.lstProInq.Add(new PropInqBE {
+                            Id = inq.InquilinoId,
+                            nombreDepartamento = inq.Propietario.Departamento.TipoInmueble.Nombre + " " + inq.Propietario.Departamento.Numero,
+                            nombre = inq.Nombres,
+                            telefono = inq.Telefono,
+                            email = inq.Email,
+                            celular = inq.Celular,
+                            nroDocumento = inq.Dni,
+                            tipo = "INQ"
+                        });
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetPropInqPorEdificio.error = true;
+                    ResponseGetPropInqPorEdificio.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetPropInqPorEdificio.error = true;
+                ResponseGetPropInqPorEdificio.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetPropInqPorEdificio;
         }
         [Route("api/AfariService/GetPropietariosPorEdificio")]
         [HttpGet]

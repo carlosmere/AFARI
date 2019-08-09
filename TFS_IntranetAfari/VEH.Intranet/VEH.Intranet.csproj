@@ -436,6 +436,7 @@
     <Compile Include="Models\BE\DetalleIngresoBE.cs" />
     <Compile Include="Models\BE\EdificioBE.cs" />
     <Compile Include="Models\BE\EdificioDetalleBE.cs" />
+    <Compile Include="Models\BE\EnviarCorreoMasivoRequest.cs" />
     <Compile Include="Models\BE\EstadoCuentaBancarioBE.cs" />
     <Compile Include="Models\BE\GastoBE.cs" />
     <Compile Include="Models\BE\GetEstadosCuentaBancario.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="Models\BE\ItemOL.cs" />
     <Compile Include="Models\BE\NoticiaBE.cs" />
     <Compile Include="Models\BE\PropietarioBE.cs" />
+    <Compile Include="Models\BE\PropInqBE.cs" />
     <Compile Include="Models\BE\ReciboMantenimientoBE.cs" />
     <Compile Include="Models\BE\RequestLogin.cs" />
     <Compile Include="Models\BE\ResponseGetAdministracionPropietario.cs" />
@@ -463,6 +465,7 @@
     <Compile Include="Models\BE\ResponseGetNoticias.cs" />
     <Compile Include="Models\BE\ResponseGetObligacionesLaborales.cs" />
     <Compile Include="Models\BE\ResponseGetPropietarios.cs" />
+    <Compile Include="Models\BE\ResponseGetPropInqPorEdificio.cs" />
     <Compile Include="Models\BE\ResponseGetRecibosMantenimiento.cs" />
     <Compile Include="Models\BE\ResponseGetTrabajadores.cs" />
     <Compile Include="Models\BE\ResponseGetUnidadTiempo.cs" />
