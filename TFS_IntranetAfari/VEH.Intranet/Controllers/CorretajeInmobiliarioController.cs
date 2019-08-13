@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -273,5 +274,55 @@ namespace VEH.Intranet.Controllers
 
             return RedirectToAction("LstDatosClientes");
         }
+        public ActionResult DescargarDatosClientes()
+        {
+            var ruta = Server.MapPath(@"~\Files\ReporteDatosClientes.xlsx");
+            try
+            {
+                using (FileStream fs = System.IO.File.OpenRead(ruta))
+                using (ExcelPackage excelPackage = new ExcelPackage(fs))
+                {
+                    ExcelWorkbook excelWorkBook = excelPackage.Workbook;
+                    ExcelWorksheet excelWorksheet = excelWorkBook.Worksheets.FirstOrDefault();
+
+                    if (excelWorksheet != null)
+                    {
+                        var LstClientes = context.ClienteCorretaje.Where(x => x.Estado == ConstantHelpers.EstadoActivo).ToList();
+                        Int32 i = 8;
+                        foreach (var cliente in LstClientes)
+                        {
+                            excelWorksheet.Cells["A" + i.ToString()].Value = cliente.TipoServicio;
+                            excelWorksheet.Cells["B" + i.ToString()].Value = cliente.TipoInmueble;
+                            excelWorksheet.Cells["C" + i.ToString()].Value = cliente.Direccion;
+                            excelWorksheet.Cells["D" + i.ToString()].Value = cliente.Distrito;
+                            excelWorksheet.Cells["E" + i.ToString()].Value = cliente.Area;
+                            excelWorksheet.Cells["F" + i.ToString()].Value = cliente.Dormitorios;
+                            excelWorksheet.Cells["G" + i.ToString()].Value = cliente.Estacionamientos;
+                            excelWorksheet.Cells["H" + i.ToString()].Value = cliente.Deposito;
+                            excelWorksheet.Cells["I" + i.ToString()].Value = cliente.Antiguedad;
+                            excelWorksheet.Cells["J" + i.ToString()].Value = cliente.CantidadPiso;
+                            excelWorksheet.Cells["K" + i.ToString()].Value = cliente.Precio;
+                            excelWorksheet.Cells["L" + i.ToString()].Value = cliente.CostoMantenimiento;
+                            excelWorksheet.Cells["M" + i.ToString()].Value = cliente.Cliente;
+                            excelWorksheet.Cells["N" + i.ToString()].Value = cliente.Numero;
+                            excelWorksheet.Cells["O" + i.ToString()].Value = cliente.Correo;
+
+                            i++;
+                        }
+
+                    }
+
+                    var fileStreamResult = new FileContentResult(excelPackage.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    fileStreamResult.FileDownloadName = "Datos_Clientes.xlsx";
+                    return fileStreamResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                PostMessage(MessageType.Error, ex.Message + " " + (ex.InnerException != null ? ex.InnerException.Message : ""));
+                return RedirectToAction("LstDatosClientes");
+            }
+        }
+
     }
 }
