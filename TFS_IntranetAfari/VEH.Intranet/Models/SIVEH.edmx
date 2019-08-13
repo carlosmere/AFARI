@@ -84,6 +84,28 @@
           <Property Name="SaldoAcumulado" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FechaDeActualizacion" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="ClienteCorretaje">
+          <Key>
+            <PropertyRef Name="ClienteCorretajeId" />
+          </Key>
+          <Property Name="ClienteCorretajeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoServicio" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TipoInmueble" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Distrito" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Area" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Dormitorios" Type="varchar" MaxLength="500" />
+          <Property Name="Estacionamientos" Type="varchar" MaxLength="500" />
+          <Property Name="Deposito" Type="varchar" MaxLength="50" />
+          <Property Name="Antiguedad" Type="varchar" MaxLength="50" />
+          <Property Name="CantidadPiso" Type="varchar" MaxLength="50" />
+          <Property Name="Precio" Type="varchar" MaxLength="500" />
+          <Property Name="CostoMantenimiento" Type="varchar" MaxLength="500" />
+          <Property Name="Cliente" Type="varchar" MaxLength="500" />
+          <Property Name="Numero" Type="varchar" MaxLength="500" />
+          <Property Name="Correo" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="ComisionAFP">
           <Key>
             <PropertyRef Name="ComisionAFPId" />
@@ -752,6 +774,22 @@
           <Property Name="Fecha" Type="datetime" Nullable="false" />
           <Property Name="DepartamentoId" Type="int" Nullable="false" />
           <Property Name="EdificioId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitaCorretaje">
+          <Key>
+            <PropertyRef Name="VisitaCorretajeId" />
+          </Key>
+          <Property Name="VisitaCorretajeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Moneda" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NombreCliente" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Firma" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_Anuncio_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
@@ -1637,6 +1675,7 @@
           <EntitySet Name="ArchivoIngreso" EntityType="Self.ArchivoIngreso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ArchivoTrabajador" EntityType="Self.ArchivoTrabajador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BalanceUnidadTiempoEdificio" EntityType="Self.BalanceUnidadTiempoEdificio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClienteCorretaje" EntityType="Self.ClienteCorretaje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComisionAFP" EntityType="Self.ComisionAFP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConsumoIndividual" EntityType="Self.ConsumoIndividual" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cronograma" EntityType="Self.Cronograma" Schema="dbo" store:Type="Tables" />
@@ -1684,6 +1723,7 @@
           <EntitySet Name="UProvincia" EntityType="Self.UProvincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Visita" EntityType="Self.Visita" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitaCorretaje" EntityType="Self.VisitaCorretaje" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Anuncio_Usuario" Association="Self.FK_Anuncio_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Anuncio" EntitySet="Anuncio" />
@@ -4014,6 +4054,8 @@
             <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
             <End Role="Cuota" EntitySet="Cuota" />
           </AssociationSet>
+          <EntitySet Name="VisitaCorretaje" EntityType="DB_92747_intranetModel.VisitaCorretaje" />
+          <EntitySet Name="ClienteCorretaje" EntityType="DB_92747_intranetModel.ClienteCorretaje" />
         </EntityContainer>
         <EntityType Name="ConsumoIndividual">
           <Key>
@@ -4099,6 +4141,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VisitaCorretaje">
+          <Key>
+            <PropertyRef Name="VisitaCorretajeId" />
+          </Key>
+          <Property Name="VisitaCorretajeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreCliente" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Firma" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ClienteCorretaje">
+          <Key>
+            <PropertyRef Name="ClienteCorretajeId" />
+          </Key>
+          <Property Name="ClienteCorretajeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoServicio" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TipoInmueble" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Distrito" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Dormitorios" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Estacionamientos" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Deposito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Antiguedad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CantidadPiso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CostoMantenimiento" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cliente" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Numero" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4904,6 +4984,46 @@
                 <ScalarProperty Name="LecturaAgua" ColumnName="LecturaAgua" />
                 <ScalarProperty Name="DepartamentoId" ColumnName="DepartamentoId" />
                 <ScalarProperty Name="CuotaId" ColumnName="CuotaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitaCorretaje">
+            <EntityTypeMapping TypeName="DB_92747_intranetModel.VisitaCorretaje">
+              <MappingFragment StoreEntitySet="VisitaCorretaje">
+                <ScalarProperty Name="Firma" ColumnName="Firma" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="VisitaCorretajeId" ColumnName="VisitaCorretajeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClienteCorretaje">
+            <EntityTypeMapping TypeName="DB_92747_intranetModel.ClienteCorretaje">
+              <MappingFragment StoreEntitySet="ClienteCorretaje">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="CostoMantenimiento" ColumnName="CostoMantenimiento" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="CantidadPiso" ColumnName="CantidadPiso" />
+                <ScalarProperty Name="Antiguedad" ColumnName="Antiguedad" />
+                <ScalarProperty Name="Deposito" ColumnName="Deposito" />
+                <ScalarProperty Name="Estacionamientos" ColumnName="Estacionamientos" />
+                <ScalarProperty Name="Dormitorios" ColumnName="Dormitorios" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Distrito" ColumnName="Distrito" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="TipoInmueble" ColumnName="TipoInmueble" />
+                <ScalarProperty Name="TipoServicio" ColumnName="TipoServicio" />
+                <ScalarProperty Name="ClienteCorretajeId" ColumnName="ClienteCorretajeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -79,6 +79,28 @@
     <Property Name="SaldoAcumulado" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="FechaDeActualizacion" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="ClienteCorretaje">
+    <Key>
+      <PropertyRef Name="ClienteCorretajeId" />
+    </Key>
+    <Property Name="ClienteCorretajeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TipoServicio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TipoInmueble" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="Direccion" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Distrito" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Area" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Dormitorios" Type="varchar" MaxLength="500" />
+    <Property Name="Estacionamientos" Type="varchar" MaxLength="500" />
+    <Property Name="Deposito" Type="varchar" MaxLength="50" />
+    <Property Name="Antiguedad" Type="varchar" MaxLength="50" />
+    <Property Name="CantidadPiso" Type="varchar" MaxLength="50" />
+    <Property Name="Precio" Type="varchar" MaxLength="500" />
+    <Property Name="CostoMantenimiento" Type="varchar" MaxLength="500" />
+    <Property Name="Cliente" Type="varchar" MaxLength="500" />
+    <Property Name="Numero" Type="varchar" MaxLength="500" />
+    <Property Name="Correo" Type="varchar" MaxLength="500" />
+  </EntityType>
   <EntityType Name="ComisionAFP">
     <Key>
       <PropertyRef Name="ComisionAFPId" />
@@ -747,6 +769,22 @@
     <Property Name="Fecha" Type="datetime" Nullable="false" />
     <Property Name="DepartamentoId" Type="int" Nullable="false" />
     <Property Name="EdificioId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VisitaCorretaje">
+    <Key>
+      <PropertyRef Name="VisitaCorretajeId" />
+    </Key>
+    <Property Name="VisitaCorretajeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cliente" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Direccion" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Moneda" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NombreCliente" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="Firma" Type="varchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="FK_Anuncio_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
@@ -1632,6 +1670,7 @@
     <EntitySet Name="ArchivoIngreso" EntityType="Self.ArchivoIngreso" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ArchivoTrabajador" EntityType="Self.ArchivoTrabajador" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BalanceUnidadTiempoEdificio" EntityType="Self.BalanceUnidadTiempoEdificio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClienteCorretaje" EntityType="Self.ClienteCorretaje" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ComisionAFP" EntityType="Self.ComisionAFP" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ConsumoIndividual" EntityType="Self.ConsumoIndividual" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Cronograma" EntityType="Self.Cronograma" Schema="dbo" store:Type="Tables" />
@@ -1679,6 +1718,7 @@
     <EntitySet Name="UProvincia" EntityType="Self.UProvincia" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Visita" EntityType="Self.Visita" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VisitaCorretaje" EntityType="Self.VisitaCorretaje" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Anuncio_Usuario" Association="Self.FK_Anuncio_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Anuncio" EntitySet="Anuncio" />

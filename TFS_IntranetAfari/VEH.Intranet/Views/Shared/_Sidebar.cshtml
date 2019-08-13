@@ -26,7 +26,7 @@
             <span>Unidad Tiempo</span>
         </a>
     </li>
-     <li class='@(ViewBag.Section == "Trabajador" ? "active" : "")'>
+    <li class='@(ViewBag.Section == "Trabajador" ? "active" : "")'>
         <a href='@Url.Action("LstTrabajadorAdmin", "Employee")'>
             <i class='fa fa-briefcase'></i>
             <span>Trabajadores</span>
@@ -51,14 +51,27 @@
         </a>
     </li>
     if (Session.GetEsAdmin() == true)
-                {
+    {
         <li class='@(ViewBag.Section == "AFP" ? "active" : "")'>
-            <a href = '@Url.Action("LstPermisoEdifico", "Control")' >
+            <a href='@Url.Action("LstPermisoEdifico", "Control")'>
                 <i class='fa fa-tasks'></i>
                 <span>Permisos</span>
             </a>
         </li>
     }
+    <hr />
+    <li class='@(ViewBag.Section == "AFP" ? "active" : "")'>
+        <a href='@Url.Action("LstVisitas", "CorretajeInmobiliario")'>
+            <i class='fa fa-check'></i>
+            <span>Constancias de Visitas</span>
+        </a>
+    </li>
+    <li class='@(ViewBag.Section == "AFP" ? "active" : "")'>
+        <a href='@Url.Action("LstDatosClientes", "CorretajeInmobiliario")'>
+            <i class='fa fa-users'></i>
+            <span>Datos Clientes</span>
+        </a>
+    </li>
 }
 else if (Session.GetRol() == AppRol.Propietario)
 {
@@ -67,7 +80,7 @@ else if (Session.GetRol() == AppRol.Propietario)
             <i class='fa fa-dashboard'></i>
             <span>Dashboard</span>
         </a>
-    </li>    
+    </li>
     <li class='@(ViewBag.Section == "Noticias" ? "active" : "")'>
         <a href='@Url.Action("LstNoticia", "News")'>
             <i class='fa fa-info-circle'></i>

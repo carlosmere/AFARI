@@ -360,11 +360,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label">Usar Inquilino en Cuadro de Cuota por Departamento</label>
+                <label class="col-md-2 control-label">Usar en Cuadro de Cuota por Departamento</label>
                 <div class="col-md-3">
                     <select name="@Html.NameFor(x => x.UsarInquilinoCCPD)" class="form-control">
-                        <option value="SI" @(Model.UsarInquilinoCCPD == "SI" ? "selected" : "")>SÍ</option>
-                        <option value="NO" @(Model.UsarInquilinoCCPD == "NO" ? "selected" : "")>NO</option>
+                        <option value="SI" @(Model.UsarInquilinoCCPD == "SI" ? "selected" : "")>INQUILINO</option>
+                        <option value="NO" @(Model.UsarInquilinoCCPD == "NO" ? "selected" : "")>PROPIETARIO</option>
                     </select>
                 </div>
             </div>

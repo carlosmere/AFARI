@@ -296,6 +296,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\ControlController.cs" />
+    <Compile Include="Controllers\CorretajeInmobiliarioController.cs" />
     <Compile Include="Controllers\DepartamentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ExternalController.cs" />
@@ -477,6 +478,9 @@
     <Compile Include="Models\BE\ResponseLogin.cs" />
     <Compile Include="Models\BE\TrabajadorBE.cs" />
     <Compile Include="Models\BE\UnidadTiempoBE.cs" />
+    <Compile Include="Models\ClienteCorretaje.cs">
+      <DependentUpon>SIVEH.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ComisionAFP.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
@@ -675,6 +679,9 @@
     <Compile Include="Models\Visita.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VisitaCorretaje.cs">
+      <DependentUpon>SIVEH.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="ViewModel\Building\AddEditArchivoCorregidoViewModel.cs" />
@@ -706,6 +713,10 @@
     <Compile Include="ViewModel\Control\AddEditUsuarioPermisoViewModel.cs" />
     <Compile Include="ViewModel\Control\LstAnuncioViewModel.cs" />
     <Compile Include="ViewModel\Control\LstPermisoEdificoViewModel.cs" />
+    <Compile Include="ViewModel\CorretajeInmobiliario\AddEditDatosClientesViewModel.cs" />
+    <Compile Include="ViewModel\CorretajeInmobiliario\AddEditVisitaViewModel.cs" />
+    <Compile Include="ViewModel\CorretajeInmobiliario\LstDatosClientesViewModel.cs" />
+    <Compile Include="ViewModel\CorretajeInmobiliario\LstVisitasViewModel.cs" />
     <Compile Include="ViewModel\Departament\AddEditDepartamentoViewModel.cs" />
     <Compile Include="ViewModel\Employee\AddEditArchivoTrabajadorViewModel.cs" />
     <Compile Include="ViewModel\Employee\AddEditTrabajadorViewModel.cs" />
@@ -811,6 +822,7 @@
     <Content Include="Content\img\gallery\gallery-7.jpg" />
     <Content Include="Content\img\gallery\gallery-8.jpg" />
     <Content Include="Content\img\gallery\gallery-9.jpg" />
+    <Content Include="Content\img\Logo Afari Transparente.png" />
     <Content Include="Content\img\logo-afari.png" />
     <Content Include="Content\img\logo-layout.png" />
     <Content Include="Content\img\logo.png" />
@@ -852,6 +864,7 @@
     <Content Include="Content\js\jquery.fileuploader.js" />
     <Content Include="Content\js\jquery.table2excel.js" />
     <Content Include="Content\js\jquery.ui.pos.js" />
+    <Content Include="Content\js\jSignature.min.noconflict.js" />
     <Content Include="Content\js\lightbox.min.js" />
     <Content Include="Content\js\map-google.demo.min.js" />
     <Content Include="Content\js\map-vector.demo.min.js" />
@@ -1310,6 +1323,10 @@
     <Content Include="Views\Fee\_AddEditConsumoIndividual.cshtml" />
     <Content Include="Views\Fee\_AddEditMConsumoIndividual.cshtml" />
     <Content Include="Views\Brokerage\Login.cshtml" />
+    <Content Include="Views\CorretajeInmobiliario\LstVisitas.cshtml" />
+    <Content Include="Views\CorretajeInmobiliario\AddEditVisita.cshtml" />
+    <Content Include="Views\CorretajeInmobiliario\LstDatosClientes.cshtml" />
+    <Content Include="Views\CorretajeInmobiliario\AddEditDatosClientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

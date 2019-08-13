@@ -79,5 +79,7 @@ namespace VEH.Intranet.Models
         public virtual DbSet<Visita> Visita { get; set; }
         public virtual DbSet<ConsumoIndividual> ConsumoIndividual { get; set; }
         public virtual DbSet<Cuota> Cuota { get; set; }
+        public virtual DbSet<VisitaCorretaje> VisitaCorretaje { get; set; }
+        public virtual DbSet<ClienteCorretaje> ClienteCorretaje { get; set; }
     }
 }
