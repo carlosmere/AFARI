@@ -1,0 +1,126 @@
+﻿@model VEH.Intranet.ViewModel.CorretajeInmobiliario.AddEditVisitaViewModel
+
+@{
+    ViewBag.Title = (Model.VisitaCorretajeId.HasValue ? "Editar" : "Nueva") + " Constancia de Visita";
+    ViewBag.PageIcon = "fa fa-check";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstVisitas","CorretajeInmobiliario")">Lista de visitas</a></li>
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <form method="post" class="form-horizontal" id="visitacorretaje">
+                    <input hidden name="Firma" id="Firma" />
+                    @Html.HiddenFor(x => x.VisitaCorretajeId)
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Cliente</label>
+                        <div class="col-md-2">
+                            <select id="Cliente" name="Cliente" class="form-control select2">
+                                <option value="DIRECTO" @(Model.Cliente == "DIRECTO" ? "selected" : "")>DIRECTO</option>
+                                <option value="NO DIRECTO" @(Model.Cliente == "NO DIRECTO" ? "selected" : "")>NO DIRECTO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Dirección</label>
+                        <div class="col-md-5">
+                            @Html.TextAreaFor(x => x.Direccion, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Tipo</label>
+                        <div class="col-md-2">
+                            <select id="Tipo" name="Tipo" class="form-control select2">
+                                <option value="ALQUILER" @(Model.Tipo == "ALQUILER" ? "selected" : "")>ALQUILER</option>
+                                <option value="VENTA" @(Model.Tipo == "VENTA" ? "selected" : "")>VENTA</option>
+                                <option value="COMPRA" @(Model.Tipo == "COMPRA" ? "selected" : "")>COMPRA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Moneda</label>
+                        <div class="col-md-2">
+                            <select id="Moneda" name="Moneda" class="form-control select2">
+                                <option value="DÓLAR" @(Model.Cliente == "DÓLAR" ? "selected" : "")>DÓLAR</option>
+                                <option value="SOL" @(Model.Cliente == "SOL" ? "selected" : "")>SOL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Precio</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.Precio, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Nombre Cliente</label>
+                        <div class="col-md-5">
+                            @Html.TextBoxFor(x => x.NombreCliente, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Fecha</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.Fecha, new { @class = "form-control datepicker" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Hora</label>
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(x => x.Hora, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Firma</label>
+
+                        <div class="col-md-10">
+                            <a class="btn btn-default" id="erasesign"><i class="fa fa-eraser"></i> Limpiar</a>
+                        </div>
+                    </div>
+                    <div class="form-group" style="color:black">
+                        <div class="col-md-12" style="color:black">
+                            <div id="signature">
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="ui-sortable">
+                            <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                            <a href="@Url.Action("LstVisitas", "CorretajeInmobiliario")" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="@Url.Content("~/Content/js/jSignature.min.noconflict.js")"></script>
+    <script>
+
+        $('#signature').jSignature();
+        @if (!String.IsNullOrEmpty(Model.Firma))
+        {
+            <text>$('#signature').jSignature("importData","@Model.Firma")</text>
+        }
+
+
+        $('#erasesign').on('click', function () {
+            $('#signature').jSignature("reset");
+        });
+
+        $('#visitacorretaje').on('submit', function () {
+
+            var dataString = $("#signature").jSignature("getData");
+
+            $('#Firma').val(dataString);
+        });
+    </script>
+}

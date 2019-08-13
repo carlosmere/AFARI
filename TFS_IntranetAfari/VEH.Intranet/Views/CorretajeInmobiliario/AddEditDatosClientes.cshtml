@@ -1,0 +1,159 @@
+﻿@model VEH.Intranet.ViewModel.CorretajeInmobiliario.AddEditDatosClientesViewModel
+
+@{
+    ViewBag.Title = (Model.ClienteCorretajeId.HasValue ? "Editar" : "Nuevo") + " Cliente";
+    ViewBag.PageIcon = "fa fa-users";
+}
+
+@section Breadcrumbs{
+    <li><a href="@Url.Action("LstDatosClientes","CorretajeInmobiliario")">Lista de visitas</a></li>
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-inverse">
+            <div class="panel-body">
+                <form method="post" class="form-horizontal" id="visitacorretaje">
+                    <input hidden name="Firma" id="Firma" />
+                    @Html.HiddenFor(x => x.ClienteCorretajeId)
+                    @Html.HiddenFor(x => x.FlagVer)
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Alquiler/Venta</label>
+                        <div class="col-md-2">
+                            <select id="TipoServicio" name="TipoServicio" class="form-control select2">
+                                <option value="ALQUILER" @(Model.Cliente == "ALQUILER" ? "selected" : "")>ALQUILER</option>
+                                <option value="VENTA" @(Model.Cliente == "VENTA" ? "selected" : "")>VENTA</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Tipo Inmueble</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.TipoInmueble, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Dirección</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.Direccion, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Distrito</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Distrito, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Área</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Area, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Dormitorios</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Dormitorios, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Estacionamientos</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.Estacionamientos, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Depósito</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Deposito, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Antigüedad</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.Antiguedad, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Cantidad de Pisos</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(x => x.CantidadPiso, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Precio</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.Precio, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Costo de Mantenimiento</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.CostoMantenimiento, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Cliente</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.Cliente, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Número</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.Numero, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Numero">Correo</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(x => x.Correo, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="ui-sortable">
+                            @if (Model.FlagVer != "1")
+                            {
+                                <button type="submit" class="btn btn-sm btn-primary m-r-10 pull-right"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
+                            }
+                            <a href="@Url.Action("LstDatosClientes", "CorretajeInmobiliario")" class="btn btn-sm btn-default m-r-5 pull-right"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        @if(Model.FlagVer == "1")
+        {
+            @:$('input').each(function () {
+            @:$(this).prop('disabled', true);
+            @:});
+
+            @:$('select').each(function () {
+            @:$(this).prop('disabled', true);
+            @:});
+
+            @:$('textarea').each(function () {
+            @:$(this).prop('disabled', true);
+            @:});
+        }
+
+    </script>
+}

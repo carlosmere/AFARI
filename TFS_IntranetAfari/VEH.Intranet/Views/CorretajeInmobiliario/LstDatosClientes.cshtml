@@ -1,0 +1,108 @@
+﻿@model VEH.Intranet.ViewModel.CorretajeInmobiliario.LstDatosClientesViewModel
+
+@{
+    ViewBag.Title = "Lista de Datos de Clientes";
+    ViewBag.PageIcon = "fa fa-users";
+}
+
+@section Breadcrumbs{
+
+}
+
+
+
+<div class="panel panel-inverse">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" data-original-title="" title="Colapsar / Expandir"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title"><i class="fa fa-filter"></i>&nbsp;&nbsp;Filtro</h4>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" novalidate="novalidate">
+            <input data-val="true" data-val-number="The field EdificioId must be a number." data-val-required="The EdificioId field is required." id="EdificioId" name="EdificioId" type="hidden" value="3035">
+            <div class="form-group">
+                <label class="col-md-1 control-label ui-sortable">Dirección</label>
+                <div class="col-md-4 ui-sortable">
+                    @Html.TextBoxFor(x => x.Direccion, new { @class = "form-control" })
+                </div>
+                <label class="col-md-1 control-label ui-sortable">Distrito</label>
+                <div class="col-md-4 ui-sortable">
+                    @Html.TextBoxFor(x => x.Distrito, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-1 control-label ui-sortable">Cliente</label>
+                <div class="col-md-4 ui-sortable">
+                    @Html.TextBoxFor(x => x.Cliente, new { @class = "form-control" })
+                </div>
+                <div class="col-md-2 col-md-offset-10 ui-sortable">
+                    <button type="submit" class="btn btn-sm btn-primary m-r-5"><i class="fa fa-search"></i>&nbsp;&nbsp;Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @*class="row">*@
+    <div>
+        @*class="col-sm-12">*@
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-list"></i>&nbsp;&nbsp;Listado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1 text-center">Alquiler/Venta</th>
+                                <th class="col-sm-1 text-center">Cliente</th>
+                                <th class="col-sm-1 text-center">Tipo</th>
+                                <th class="col-sm-2 text-center">Direccion</th>
+                                <th class="col-sm-1 text-center">Distrito</th>
+                                <th class="col-sm-1 text-center">Antigüedad</th>
+                                <th class="col-sm-1 text-center">Precio</th>
+                                <th class="col-sm-2 text-center">Costo Mantenimiento</th>
+                                <th class="col-sm-5 text-center">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LstClienteCorretaje)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.TipoServicio</td>
+                                    <td class="text-center">@item.Cliente</td>
+                                    <td class="text-center">@item.TipoInmueble</td>
+                                    <td class="text-center">@item.Direccion</td>
+                                    <td class="text-center">@item.Distrito</td>
+                                    <td class="text-center">@item.Antiguedad</td>
+                                    <td class="text-center">@item.Precio</td>
+                                    <td class="text-center">@item.CostoMantenimiento</td>
+                                    <td class="text-center">
+                                        <div class="input-group">
+                                            <div class="input-group-btn btn-xs">
+                                                <a href="@Url.Action("AddEditDatosClientes", "CorretajeInmobiliario", new { ClienteCorretajeId = item.ClienteCorretajeId , FlagVer = "1" })" class="btn btn-default btn-xs"><i class="fa fa-eye"></i>&nbsp;Ver</a>
+                                                <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="@Url.Action("AddEditDatosClientes", "CorretajeInmobiliario", new { ClienteCorretajeId = item.ClienteCorretajeId })"><i class="fa fa-pencil"></i>&nbsp;Editar</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="@Url.Action("DeleteDatosClientes", "CorretajeInmobiliario", new { ClienteCorretajeId = item.ClienteCorretajeId })"><i class="fa fa-trash"></i>&nbsp;Eliminar</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model.LstClienteCorretaje, page => Url.Action("LstDatosClientes", new { np = page, Direccion = Model.Direccion, Distrito = Model.Distrito, Cliente = Model.Cliente }), ConstantHelpers.Bootstrap3Pager)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-sm btn-primary" href="@Url.Action("AddEditDatosClientes", "CorretajeInmobiliario")"><i class="fa fa-plus"></i>&nbsp;Agregar Cliente</a>
