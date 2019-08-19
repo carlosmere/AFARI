@@ -103,7 +103,7 @@ namespace VEH.Intranet.Controllers
                         var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == 1531);
                         EmailLogic mailLogic = new EmailLogic();
                         ViewModel.Templates.infoViewModel model = new ViewModel.Templates.infoViewModel();
-                        model.Mensaje = "";
+                        model.Mensaje = "Estimado Usuario\nSe adjunta la constancia de visita realizada.";
                         model.Firma = usuario.Firma;
 
                         if (!String.IsNullOrEmpty(item.correo))

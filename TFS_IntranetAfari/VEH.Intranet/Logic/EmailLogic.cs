@@ -24,7 +24,7 @@ namespace VEH.Intranet.Logic
 {
     public class EmailLogic
     {
-        private SIVEHEntities context;
+        private SIVEHEntities context = new SIVEHEntities();
         private Controller Parent;
         public EmailLogic(Controller parent, CargarDatosContext datacontext)
         {
@@ -502,7 +502,7 @@ namespace VEH.Intranet.Logic
                             {
                                 var data = new Attachment(rutasArchivo, MediaTypeNames.Application.Octet);
                                 var disposition = data.ContentDisposition;
-                                disposition.FileName = "Constancia_Visita_" + visita.Fecha.ToString("dd/MM/yyyy") + "_" + visita.NombreCliente + ".pdf"; ;
+                                disposition.FileName = "Constancia_Visita_" + visita.Fecha.ToString("dd/MM/yyyy") + "_" + visita.NombreCliente + ".pdf";
                                 disposition.CreationDate = DateTime.Now;
                                 disposition.ModificationDate = DateTime.Now;
                                 disposition.ReadDate = DateTime.Now;
