@@ -785,6 +785,7 @@
     <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="3" Nullable="false" />
     <Property Name="Firma" Type="varchar(max)" Nullable="false" />
+    <Property Name="Correo" Type="varchar" MaxLength="250" />
   </EntityType>
   <Association Name="FK_Anuncio_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />

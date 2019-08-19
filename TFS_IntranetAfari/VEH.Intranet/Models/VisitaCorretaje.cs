@@ -25,5 +25,6 @@ namespace VEH.Intranet.Models
         public System.TimeSpan Hora { get; set; }
         public string Estado { get; set; }
         public string Firma { get; set; }
+        public string Correo { get; set; }
     }
 }

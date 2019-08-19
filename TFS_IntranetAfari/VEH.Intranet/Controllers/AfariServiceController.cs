@@ -16,6 +16,9 @@ using OfficeOpenXml;
 using VEH.Intranet.ViewModel.Building;
 using System.Web;
 using static VEH.Intranet.ViewModel.Building.EnviarEmailInformativoViewModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Newtonsoft.Json;
 
 namespace VEH.Intranet.Controllers
 {
@@ -25,6 +28,109 @@ namespace VEH.Intranet.Controllers
         public AfariServiceController()
         {
             context = new SIVEHEntities();
+        }
+        [Route("api/AfariService/UploadConstanciaVisita")]
+        [HttpPost]
+        public UploadConstanciaVisitaResponse UploadConstanciaVisita(ListUploadConstanciaVisitaBE ListUploadConstanciaVisitaBE)
+        {
+            UploadConstanciaVisitaResponse BaseBE = new UploadConstanciaVisitaResponse();
+            try
+            {
+                try
+                {
+                    foreach (var item in ListUploadConstanciaVisitaBE.data)
+                    {
+                        List<Point> lstPoints = new List<Point>();
+                        String puntos = item.firma;
+                        String xyPoint = String.Empty;
+                        var arrPuntos = puntos.Split('-');
+                        foreach (var p in arrPuntos)
+                        {
+                            xyPoint = p.Replace("(", "").Replace(")", "");
+                            var arrXY = xyPoint.Split(',');
+                            if (arrXY.Count() == 2)
+                            {
+                                decimal x = Convert.ToDecimal(arrXY[0]);
+                                decimal y = Convert.ToDecimal(arrXY[1]);
+                                lstPoints.Add(new Point((int)x, (int)y));
+                            }
+                        }
+                        var maxX = lstPoints.Max(x => x.X);
+                        var minX = lstPoints.Min(x => x.X) - 5;
+
+                        var maxY = lstPoints.Max(x => x.Y);
+                        var minY = lstPoints.Min(x => x.Y) - 5;
+
+                        Rectangle bounds = new Rectangle(0, 0, (maxX - minX) + 5, (maxY - minY) + 5);
+                        Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height);
+
+                        Graphics g = Graphics.FromImage(bitmap);
+                        g.FillRectangle(Brushes.White, bounds);
+
+                        for (int i = 0; i < lstPoints.Count - 1; i++)
+                        {
+                            if (lstPoints[i + 1].X - lstPoints[i].X < 30 && lstPoints[i].X - lstPoints[i + 1].X < 30)
+                            {
+                                g.DrawLine(Pens.Black,
+                                    lstPoints[i].X - minX, lstPoints[i].Y - minY,
+                                    lstPoints[i + 1].X - minX, lstPoints[i + 1].Y - minY);
+                            }
+                        }
+
+                        MemoryStream ms = new MemoryStream();
+                        bitmap.Save(ms, ImageFormat.Jpeg);
+                        byte[] byteImage = ms.ToArray();
+                        var SigBase64 = Convert.ToBase64String(byteImage);
+
+
+                        VisitaCorretaje visita = new VisitaCorretaje();
+                        visita.Estado = ConstantHelpers.EstadoActivo;
+                        context.VisitaCorretaje.Add(visita);
+
+                        visita.Cliente = item.cliente.ToUpper();
+                        visita.Direccion = item.direccion.ToUpper();
+                        visita.Tipo = item.tipo.ToUpper();
+                        visita.Precio = item.precio.ToDecimal();
+                        visita.Moneda = "DÓLAR";
+                        visita.Correo = item.correo;
+                        visita.NombreCliente = item.nombreCliente.ToUpper();
+                        visita.Fecha = item.fecha.ToDateTime();
+                        var arrHora = item.hora.Split(':');
+                        visita.Hora = new TimeSpan(arrHora[0].ToInteger(), arrHora[1].ToInteger(), 0);
+                        visita.Firma = SigBase64;
+                        context.SaveChanges();
+
+                        var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == 1531);
+                        EmailLogic mailLogic = new EmailLogic();
+                        ViewModel.Templates.infoViewModel model = new ViewModel.Templates.infoViewModel();
+                        model.Mensaje = "";
+                        model.Firma = usuario.Firma;
+
+                        if (!String.IsNullOrEmpty(item.correo))
+                        {
+                            mailLogic.SendEmailMasivoVisita("Constancia de Visita" + DateTime.Now.ToString(), "info", usuario.Email
+                        , usuario.NombreRemitente, item.correo, model, null
+                        , null,
+                        visita);
+                        }
+                    }
+                    BaseBE.mensaje = JsonConvert.SerializeObject(ListUploadConstanciaVisitaBE.data);
+                }
+                catch (Exception ex)
+                {
+                    BaseBE.error = true;
+                    BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                    return BaseBE;
+                }
+            }
+            catch (Exception ex)
+            {
+                BaseBE.error = true;
+                BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                return BaseBE;
+            }
+
+            return BaseBE;
         }
         [Route("api/AfariService/GetEstadosCuentaBancario")]
         [HttpGet]
@@ -382,14 +488,14 @@ namespace VEH.Intranet.Controllers
         public ResponseGetComprobantesPago GetComprobantesPago(Int32 edificioId, Int32 unidadTiempoId)
         {
             ResponseGetComprobantesPago ResponseGetComprobantesPago = new ResponseGetComprobantesPago();
-            
+
             var baseRuta = "http://afari.pe/intranet/Resources/Files/";
             try
             {
                 try
                 {
-                    var edificio  = context.Edificio.FirstOrDefault(x => x.EdificioId == edificioId);
-                    var unidad = context.UnidadTiempo.FirstOrDefault( x => x.UnidadTiempoId == unidadTiempoId);
+                    var edificio = context.Edificio.FirstOrDefault(x => x.EdificioId == edificioId);
+                    var unidad = context.UnidadTiempo.FirstOrDefault(x => x.UnidadTiempoId == unidadTiempoId);
                     baseRuta += edificio.Acronimo + "/";
 
                     var query = context.ArchivoGasto
@@ -426,7 +532,7 @@ namespace VEH.Intranet.Controllers
         public BaseBE EnviarCorreoMasivo(EnviarCorreoMasivoRequest enviarCorreoMasivoRequest)
         {
             BaseBE BaseBE = new BaseBE();
-            
+
             try
             {
                 try
@@ -434,7 +540,7 @@ namespace VEH.Intranet.Controllers
                     var lstDestinatario = new List<EnviarEmailInformativoViewModel.Destinatario>();
                     EmailLogic mailLogic = new EmailLogic();
                     ViewModel.Templates.infoViewModel mailModel = new ViewModel.Templates.infoViewModel();
-            
+
                     var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == enviarCorreoMasivoRequest.usuarioId);
                     var firma = usuario.Firma;
                     var edificio = context.Edificio.First(X => X.EdificioId == enviarCorreoMasivoRequest.edificioId);
@@ -443,7 +549,7 @@ namespace VEH.Intranet.Controllers
                     mailModel.administrador = edificio.EmailEncargado;
                     mailModel.Firma = firma ?? "";
                     mailModel.Acro = edificio.Acronimo;
-            
+
                     if (!String.IsNullOrEmpty(enviarCorreoMasivoRequest.cc) && enviarCorreoMasivoRequest.cc.Length > 5)
                     {
                         var ccAddress = enviarCorreoMasivoRequest.cc.Split(',');
@@ -459,7 +565,7 @@ namespace VEH.Intranet.Controllers
                                     id = "0"
                                 });
                             }
-            
+
                         }
                     }
 
@@ -483,12 +589,12 @@ namespace VEH.Intranet.Controllers
                             }
                         }
                     }
-            
+
                     for (int i = 0; i < LstDestinario.Count(); i++)
                     {
-            
+
                         var destinatario = LstDestinario[i];
-            
+
                         mailModel.destinatario = destinatario;
                         try
                         {
@@ -505,19 +611,19 @@ namespace VEH.Intranet.Controllers
                             //
                             //    }
                             //}
-            
+
                             var emailUsuario = usuario.Email;
                             var nombreUsuario = usuario.Nombres + " " + usuario.Apellidos;
                             var nombreRemitente = usuario.NombreRemitente;
-            
-            
+
+
                             if (!String.IsNullOrEmpty(nombreRemitente) && nombreRemitente.Length > 1)
                             {
                                 nombreUsuario = nombreRemitente;
                             }
-            
+
                             mailLogic.SendEmailMasivo(enviarCorreoMasivoRequest.asunto, "info", emailUsuario, nombreUsuario, destinatario.email, mailModel, null, enviarCorreoMasivoRequest.cc);
-            
+
                         }
                         catch (Exception ex)
                         {
@@ -537,12 +643,12 @@ namespace VEH.Intranet.Controllers
                 BaseBE.error = true;
                 BaseBE.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
             }
-            
+
             return BaseBE;
         }
         [Route("api/AfariService/GetNormasConvivencia")]
         [HttpGet]
-        public string   GetNormasConvivencia(Int32 edificioId)
+        public string GetNormasConvivencia(Int32 edificioId)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             try
@@ -1751,8 +1857,8 @@ namespace VEH.Intranet.Controllers
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
                     var query = webcontext.AfariDB_Distrito.AsQueryable();
 
-                    ResponseGetWebDistritos.lstDistrito = query.Where( x => x.CodDepartamento == codDepartamento &&
-                    x.CodProvincia == codProvincia).ToList();
+                    ResponseGetWebDistritos.lstDistrito = query.Where(x => x.CodDepartamento == codDepartamento &&
+                   x.CodProvincia == codProvincia).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -1850,13 +1956,14 @@ namespace VEH.Intranet.Controllers
                     }).ToList();
 
                     var lstPropietario = ResponseGetPropInqPorEdificio.lstProInq.Select(x => x.Id).ToList();
-                    var lstInquilino = context.Inquilino.Include( x => x.Propietario)
+                    var lstInquilino = context.Inquilino.Include(x => x.Propietario)
                         .Include(x => x.Propietario.Departamento).Where(x => x.Estado == ConstantHelpers.EstadoActivo &&
                     lstPropietario.Contains(x.PropietarioId)).ToList();
 
                     foreach (var inq in lstInquilino)
                     {
-                        ResponseGetPropInqPorEdificio.lstProInq.Add(new PropInqBE {
+                        ResponseGetPropInqPorEdificio.lstProInq.Add(new PropInqBE
+                        {
                             Id = inq.InquilinoId,
                             nombreDepartamento = inq.Propietario.Departamento.TipoInmueble.Nombre + " " + inq.Propietario.Departamento.Numero,
                             nombre = inq.Nombres,

@@ -443,6 +443,7 @@
     <Compile Include="Models\BE\GetEstadosCuentaBancario.cs" />
     <Compile Include="Models\BE\IngresoBE.cs" />
     <Compile Include="Models\BE\ItemOL.cs" />
+    <Compile Include="Models\BE\ListUploadConstanciaVisitaBE.cs" />
     <Compile Include="Models\BE\NoticiaBE.cs" />
     <Compile Include="Models\BE\PropietarioBE.cs" />
     <Compile Include="Models\BE\PropInqBE.cs" />
@@ -478,6 +479,8 @@
     <Compile Include="Models\BE\ResponseLogin.cs" />
     <Compile Include="Models\BE\TrabajadorBE.cs" />
     <Compile Include="Models\BE\UnidadTiempoBE.cs" />
+    <Compile Include="Models\BE\UploadConstanciaVisitaBE.cs" />
+    <Compile Include="Models\BE\UploadConstanciaVisitaResponse.cs" />
     <Compile Include="Models\ClienteCorretaje.cs">
       <DependentUpon>SIVEH.tt</DependentUpon>
     </Compile>

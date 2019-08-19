@@ -60,7 +60,7 @@ namespace VEH.Intranet.Controllers
                 visita.Fecha = model.Fecha.ToDateTime();
                 var arrHora = model.Hora.Split(':');
                 visita.Hora = new TimeSpan(arrHora[0].ToInteger(), arrHora[1].ToInteger(), 0);
-                visita.Firma = model.Firma;
+                //visita.Firma = model.Firma;
 
                 context.SaveChanges();
                 PostMessage(MessageType.Success);
@@ -172,11 +172,15 @@ namespace VEH.Intranet.Controllers
                     paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
                     doc.Add(paragraph);
 
-                    var arrFirma = visita.Firma.Split(',');
-                    byte[] bytesFirma = System.Convert.FromBase64String(arrFirma[1]);
+                    //var arrFirma = visita.Firma.Split(',');
+                    byte[] bytesFirma = Convert.FromBase64String(visita.Firma);
                     pic = Image.GetInstance(bytesFirma);
                     pic.Alignment = Element.ALIGN_CENTER;
-                    pic.ScaleAbsolute(450, 150);
+                    if (pic.Height > 180 || pic.Width > 250)
+                    {
+                        pic.ScaleAbsolute((pic.Width * (float)0.8), pic.Height * (float)0.8);
+                    }
+                    //
                     doc.Add(pic);
 
                     paragraph = new Paragraph("FIRMA", font) { Alignment = Element.ALIGN_CENTER };
