@@ -108,7 +108,7 @@ namespace VEH.Intranet.Controllers
 
                         if (!String.IsNullOrEmpty(item.correo))
                         {
-                            mailLogic.SendEmailMasivoVisita("Constancia de Visita" + DateTime.Now.ToString(), "info", usuario.Email
+                            mailLogic.SendEmailMasivoVisita("Constancia de Visita " + visita.Fecha.ToString("dd/MM/yyyy"), "info", usuario.Email
                         , usuario.NombreRemitente, item.correo, model, null
                         , null,
                         visita);
@@ -1989,6 +1989,43 @@ namespace VEH.Intranet.Controllers
             }
 
             return ResponseGetPropInqPorEdificio;
+        }
+        [Route("api/AfariService/GetAdministracionPropietario")]
+        [HttpGet]
+        public ResponseGetAdministracionPropietario GetAdministracionPropietario(Int32 edificioId, Int32? departamentoId)
+        {
+            ResponseGetAdministracionPropietario ResponseGetAdministracionPropietario = new ResponseGetAdministracionPropietario();
+
+            try
+            {
+                try
+                {
+                    ResponseGetAdministracionPropietario.lstPropietario = context.Propietario.Where(x => x.Estado == ConstantHelpers.EstadoActivo
+                    && x.Departamento.EdificioId == edificioId).OrderBy(x => x.DepartamentoId).Select(x => new PropietarioBE
+                    {
+                        propietarioId = x.PropietarioId,
+                        nombreDepartamento = x.Departamento.TipoInmueble.Nombre + " " + x.Departamento.Numero,
+                        nombrePropietario = x.Nombres + " " + x.ApellidoPaterno + " " + x.ApellidoMaterno,
+                        telefono = x.Telefono,
+                        email = x.Email,
+                        celular = x.Celular,
+                        nroDocumento = x.NroDocumento,
+                        nombreInquilino = (x.Inquilino.Where( y => y.Estado == ConstantHelpers.EstadoActivo).FirstOrDefault().Nombres ?? String.Empty)
+                    }).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ResponseGetAdministracionPropietario.error = true;
+                    ResponseGetAdministracionPropietario.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                ResponseGetAdministracionPropietario.error = true;
+                ResponseGetAdministracionPropietario.mensaje = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
+            }
+
+            return ResponseGetAdministracionPropietario;
         }
         [Route("api/AfariService/GetPropietariosPorEdificio")]
         [HttpGet]

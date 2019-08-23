@@ -321,7 +321,7 @@ namespace VEH.Intranet.Controllers
                 List<Cuota> CuotasDelEdifico = context.Cuota.Include(x => x.UnidadTiempo)
                     .Include(x => x.Departamento)
                     .Include(x => x.Departamento.Propietario)
-                    .Include(x => x.Departamento.Propietario.Select(y => y.Inquilino))
+                    .Include(x => x.Departamento.Propietario.Select(y => y.Inquilino.Where( z => z.Estado == ConstantHelpers.EstadoActivo)))
                     .Include(x => x.Departamento.TipoInmueble)
                     .Include(x => x.ConsumoIndividual)
                     .Where(X => X.Departamento.EdificioId == objEdificio.EdificioId

@@ -3259,7 +3259,7 @@ namespace VEH.Intranet.Logic
                     rowPropietarios["Contacto"] = item.Contacto;
                     rowPropietarios["Estacionamiento"] = item.Departamento.Estacionamiento;
                     rowPropietarios["Deposito"] = item.Departamento.Deposito;
-                    var inq = item.Inquilino.FirstOrDefault();
+                    var inq = item.Inquilino.FirstOrDefault( x => x.Estado == ConstantHelpers.EstadoActivo);
                     rowPropietarios["InquilinoNombres"] = inq != null ? inq.Nombres : String.Empty;
                     rowPropietarios["InquilinoNroDocumento"] = inq != null ? inq.Dni : String.Empty;
                     rowPropietarios["InquilinoCelular"] = inq != null ? inq.Celular + "\n" + inq.Telefono : String.Empty;
