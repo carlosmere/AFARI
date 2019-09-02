@@ -303,12 +303,34 @@ namespace VEH.Intranet.Controllers
                         var correcion = context.ArchivoCorrecionEdificio.FirstOrDefault(X => X.Tipo.Contains(ConstantHelpers.TipoArchivo.BalanceGeneral) && X.EdificioId == edificioId && X.UnidadTiempoId == unidadTiempoId);
                         if (correcion != null)
                         {
-                            //byte[] fileBytes = System.IO.File.ReadAllBytes(Path.Combine("http://afari.pe/intranet/Resources/Files/Corregidos", correcion.RutaArchivo));
+                            var asdd = HttpContext.Current.Server.MapPath(@"~\Resources\Files\Corregidos\" + correcion.RutaArchivo);
+                            byte[] fileBytes = System.IO.File.ReadAllBytes(asdd);
                             NombreArchivo = "Reporte Ingresos y Gastos - " + context.Edificio.FirstOrDefault(X => X.EdificioId == edificioId).Nombre + " - " + unidadTiempo.Descripcion + ".pdf";
-                            using (FileStream file = new FileStream(Path.Combine("http://afari.pe/intranet/Resources/Files/Corregidos", correcion.RutaArchivo), FileMode.Open, FileAccess.Read))
+
+                            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+                            //using (FileStream file = new FileStream(Path.Combine("http://afari.pe/intranet/Resources/Files/Corregidos", correcion.RutaArchivo), FileMode.Open, FileAccess.Read))
+                            //{
+                            //    file.CopyTo(outputMemoryStream);
+                            //}
+
+                            outputMemoryStream = new MemoryStream(fileBytes);
+
+                            if (outputMemoryStream == null)
                             {
-                                file.CopyTo(outputMemoryStream);
+                                response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
                             }
+
+                            response.Content = new StreamContent(outputMemoryStream);
+
+                            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                            {
+                                FileName = NombreArchivo
+                            };
+                            response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+                            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                            return response;
                         }
                     }
                     //Chequear>
@@ -1856,9 +1878,15 @@ namespace VEH.Intranet.Controllers
                 {
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
                     var query = webcontext.AfariDB_Distrito.AsQueryable();
-
-                    ResponseGetWebDistritos.lstDistrito = query.Where(x => x.CodDepartamento == codDepartamento &&
-                   x.CodProvincia == codProvincia).ToList();
+                    if (!String.IsNullOrEmpty(codDepartamento))
+                    {
+                        query = query.Where(x => x.CodDepartamento == codDepartamento);
+                    }
+                    if (!String.IsNullOrEmpty(codProvincia))
+                    {
+                        query = query.Where(x => x.CodProvincia == codProvincia);
+                    }
+                    ResponseGetWebDistritos.lstDistrito = query.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -1887,8 +1915,23 @@ namespace VEH.Intranet.Controllers
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
                     var query = webcontext.AfariDB_Edificio.AsQueryable();
 
-                    ResponseGetVentaAlquiler.lstEdificio = query.Where(x => x.Departamento == uuidDepartamento &&
-                   x.Provincia == uuidProvincia && x.Distrito == uuidDistrito && x.Categoria == uuiCategoria).ToList();
+                    if (!String.IsNullOrEmpty(uuidDepartamento))
+                    {
+                        query = query.Where(x => x.Departamento == uuidDepartamento);
+                    }
+                    if (!String.IsNullOrEmpty(uuidProvincia))
+                    {
+                        query = query.Where(x => x.Provincia == uuidProvincia);
+                    }
+                    if (!String.IsNullOrEmpty(uuidDistrito))
+                    {
+                        query = query.Where(x => x.Distrito == uuidDistrito);
+                    }
+                    if (!String.IsNullOrEmpty(uuiCategoria))
+                    {
+                        query = query.Where(x => x.Categoria == uuiCategoria);
+                    }
+                    ResponseGetVentaAlquiler.lstEdificio = query.ToList();
                 }
                 catch (Exception ex)
                 {

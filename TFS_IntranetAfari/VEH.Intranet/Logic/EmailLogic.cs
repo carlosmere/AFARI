@@ -353,7 +353,7 @@ namespace VEH.Intranet.Logic
                                             }
                                             else
                                             {
-                                                mailMessage.CC.Add(new MailAddress("cc_" + ccA));
+                                                mailMessage.CC.Add(new MailAddress(ccA));
                                             }
                                         }
                                     }
