@@ -100,9 +100,8 @@ namespace VEH.Intranet.Controllers
 
                 var nombre = String.Empty;
                 byte[] pdfBytes;
-                Document doc = new Document(PageSize.A4, 100f, 100f, 100f, 100f);
-
-
+                Document doc = new Document(PageSize.A4);
+                doc.SetMargins(100.0f, 100.0f, 100.0f, 100.0f);
                 using (MemoryStream output = new MemoryStream())
                 {
                     Font font = FontFactory.GetFont(FontFactory.HELVETICA, 12);
@@ -112,9 +111,12 @@ namespace VEH.Intranet.Controllers
                     doc.Open();
 
                     Image pic = Image.GetInstance(Server.MapPath(@"~\Content\img\Logo Afari Transparente.png"));
-                    pic.Alignment = Element.ALIGN_LEFT;
                     pic.ScaleAbsolute(120, 35);
+                    pic.SetAbsolutePosition(4, 800);
+                    doc.Add(pic);                    
 
+                    pic = Image.GetInstance(Server.MapPath(@"~\Content\img\membretada\isotipoafari.png"));
+                    pic.SetAbsolutePosition(220, 380);
                     doc.Add(pic);
 
                     Paragraph paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
@@ -186,6 +188,11 @@ namespace VEH.Intranet.Controllers
                     paragraph = new Paragraph("FIRMA", font) { Alignment = Element.ALIGN_CENTER };
                     doc.Add(paragraph);
 
+                    pic = Image.GetInstance(Server.MapPath(@"~\Content\img\membretada\footer.png"));
+                    pic.ScaleAbsolute(250, 42);
+                    pic.SetAbsolutePosition(170, 5);
+                    doc.Add(pic);                   
+
                     doc.Close();
                     pdfBytes = output.ToArray();
                 }
@@ -247,6 +254,8 @@ namespace VEH.Intranet.Controllers
                 cliente.Cliente = model.Cliente;
                 cliente.Numero = model.Numero;
                 cliente.Correo = model.Correo;
+                cliente.Otros = model.Otros;
+                cliente.CantidadInmuebles = model.CantidadInmuebles;
 
                 context.SaveChanges();
                 PostMessage(MessageType.Success);

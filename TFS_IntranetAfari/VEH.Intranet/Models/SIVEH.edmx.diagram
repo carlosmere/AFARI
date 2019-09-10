@@ -132,8 +132,8 @@
         <AssociationConnector Association="DB_92747_intranetModel.FK_ConsumoIndividual_Cuota" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_Departamento" />
         <AssociationConnector Association="DB_92747_intranetModel.FK_Cuota_UnidadTiempo" />
-        <EntityTypeShape EntityType="DB_92747_intranetModel.ClienteCorretaje" Width="1.5" PointX="3.375" PointY="6.75" />
         <EntityTypeShape EntityType="DB_92747_intranetModel.VisitaCorretaje" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DB_92747_intranetModel.ClienteCorretaje" Width="1.5" PointX="3.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

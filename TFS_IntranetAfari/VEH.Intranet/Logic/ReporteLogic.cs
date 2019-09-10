@@ -17,6 +17,8 @@ using VEH.Intranet.Helpers;
 using VEH.Intranet.Models;
 using System.Data.Entity;
 using System.Web.Hosting;
+using Xceed.Words.NET;
+using System.Drawing;
 
 namespace VEH.Intranet.Logic
 {
@@ -2114,7 +2116,11 @@ namespace VEH.Intranet.Logic
                 String FlagCuota = "T";
                 String FlagExtraordinaria = "T";
                 String FlagOtros = "T";
-
+                String ColumnaProInq = "Propietario";
+                if (listaCuota.FirstOrDefault().Departamento.Edificio.UsarInquilinoCCPD == true)
+                {
+                    ColumnaProInq = "Propietario o Inquilino";
+                }
                 DataRow rowDepartamentoTotal = ds.Tables["DTTotalesDepartamento"].NewRow();
                 rowDepartamentoTotal["NroDepartamento"] = "";
                 rowDepartamentoTotal["Propietario"] = "";
@@ -2242,6 +2248,8 @@ namespace VEH.Intranet.Logic
                 rv.LocalReport.SetParameters(new ReportParameter("FlagCuota", FlagCuota));
                 rv.LocalReport.SetParameters(new ReportParameter("FlagExtraordinaria", FlagExtraordinaria));
                 rv.LocalReport.SetParameters(new ReportParameter("FlagOtros", FlagOtros));
+                rv.LocalReport.SetParameters(new ReportParameter("ColumnaProInq", ColumnaProInq));
+                
 
                 Warning[] warnings;
                 string[] streamids;
@@ -2484,6 +2492,78 @@ namespace VEH.Intranet.Logic
                 throw;
             }
         }
+        public byte[] GetReportWord()
+        {
+            byte[] bytes = null;
+
+            using (DocX document = DocX.Create(@"Test.docx"))
+            {
+                // Insert a new Paragraphs.
+                Xceed.Words.NET.Paragraph p = document.InsertParagraph();
+
+                p.Append("I am ").Append("bold").Bold()
+                .Append(" and I am ")
+                .Append("italic").Italic().Append(".")
+                .AppendLine("I am ")
+                .Append("Arial Black")
+                .Font(new Xceed.Words.NET.Font("Arial Black"))
+                .Append(" and I am not.")
+                .AppendLine("I am ")
+                .Append("BLUE").Color(Color.Blue)
+                .Append(" and I am")
+                .Append("Red").Color(Color.Red).Append(".");
+
+                var ms = new MemoryStream();
+                document.SaveAs(ms);
+                ms.Position = 0;
+
+                //var file = new FileStreamResult(ms, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                //{
+                //    FileDownloadName = string.Format("test_{0}.docx", DateTime.Now.ToString("ddMMyyyyHHmmss"))
+                //};
+
+                bytes = ms.ToArray();
+
+            }
+
+            return bytes;
+        }
+        public void GetReport2()
+        {
+            try
+            {
+                Document doc = new Document(iTextSharp.text.PageSize.LETTER, 10, 10, 42, 35);
+
+                byte[] pdfBytes;
+                using (var mem = new MemoryStream())
+                {
+                    //using (
+                    PdfWriter wri = PdfWriter.GetInstance(doc, mem);//)
+                    //{
+                        doc.Open();//Open Document to write
+                        iTextSharp.text.Paragraph paragraph = new iTextSharp.text.Paragraph("This is my first line using Paragraph.");
+                        Phrase pharse = new Phrase("This is my second line using Pharse.");
+                        Chunk chunk = new Chunk(" This is my third line using Chunk.");
+
+                        doc.Add(paragraph);
+
+                        doc.Add(pharse);
+
+                        doc.Add(chunk);
+                        pdfBytes = mem.ToArray();
+                    //}
+                }
+
+                byte[] bytes = GetReportWord();
+
+                lstMemoryStream.Add(new MemoryStream(bytes));
+                lstMemoryStreamPDF.Add(pdfBytes);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         public String GetReport(Cuota cuota, DateTime fEmision, DateTime fVencimiento, Decimal PresupuestoMes, Decimal TotalM2, UnidadTiempo UnidadTiempoActualGeneral = null, List<Cuota> CuotasDelEdificio = null, UnidadTiempo lastUnidad = null, long? NumeroRecibo = null, bool EsSeparado = false)
         {
             try
@@ -2585,7 +2665,7 @@ namespace VEH.Intranet.Logic
                 String fileName = Server.MapPath("~/Resources") + "//" + nameDOC;
 
                 byte[] bytes = rv.LocalReport.Render(
-                    "Word", null, out mimeType, out encoding, out filenameExtension,
+                    "WORDOPENXML", null, out mimeType, out encoding, out filenameExtension,
                     out streamids, out warnings);
 
                 Warning[] warnings2;

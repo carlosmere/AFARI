@@ -31,5 +31,7 @@ namespace VEH.Intranet.Models
         public string Cliente { get; set; }
         public string Numero { get; set; }
         public string Correo { get; set; }
+        public string Otros { get; set; }
+        public string CantidadInmuebles { get; set; }
     }
 }

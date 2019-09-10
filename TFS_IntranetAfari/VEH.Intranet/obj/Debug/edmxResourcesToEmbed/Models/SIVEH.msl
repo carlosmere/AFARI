@@ -803,9 +803,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="VisitaCorretaje">
+      <EntityTypeMapping TypeName="DB_92747_intranetModel.VisitaCorretaje">
+        <MappingFragment StoreEntitySet="VisitaCorretaje">
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Firma" ColumnName="Firma" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Hora" ColumnName="Hora" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+          <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+          <ScalarProperty Name="VisitaCorretajeId" ColumnName="VisitaCorretajeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ClienteCorretaje">
       <EntityTypeMapping TypeName="DB_92747_intranetModel.ClienteCorretaje">
         <MappingFragment StoreEntitySet="ClienteCorretaje">
+          <ScalarProperty Name="CantidadInmuebles" ColumnName="CantidadInmuebles" />
+          <ScalarProperty Name="Otros" ColumnName="Otros" />
           <ScalarProperty Name="Correo" ColumnName="Correo" />
           <ScalarProperty Name="Numero" ColumnName="Numero" />
           <ScalarProperty Name="Cliente" ColumnName="Cliente" />
@@ -823,24 +843,6 @@
           <ScalarProperty Name="TipoInmueble" ColumnName="TipoInmueble" />
           <ScalarProperty Name="TipoServicio" ColumnName="TipoServicio" />
           <ScalarProperty Name="ClienteCorretajeId" ColumnName="ClienteCorretajeId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="VisitaCorretaje">
-      <EntityTypeMapping TypeName="DB_92747_intranetModel.VisitaCorretaje">
-        <MappingFragment StoreEntitySet="VisitaCorretaje">
-          <ScalarProperty Name="Correo" ColumnName="Correo" />
-          <ScalarProperty Name="Firma" ColumnName="Firma" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="Hora" ColumnName="Hora" />
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-          <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
-          <ScalarProperty Name="Moneda" ColumnName="Moneda" />
-          <ScalarProperty Name="Precio" ColumnName="Precio" />
-          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-          <ScalarProperty Name="Cliente" ColumnName="Cliente" />
-          <ScalarProperty Name="VisitaCorretajeId" ColumnName="VisitaCorretajeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

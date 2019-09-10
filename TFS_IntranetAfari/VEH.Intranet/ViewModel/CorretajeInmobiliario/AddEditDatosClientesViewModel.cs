@@ -26,6 +26,8 @@ namespace VEH.Intranet.ViewModel.CorretajeInmobiliario
         public string Numero { get; set; }
         public string Correo { get; set; }
         public string FlagVer { get; set; }
+        public string Otros { get; set; }
+        public string CantidadInmuebles { get; set; }
         public void Fill(CargarDatosContext c, Int32? clienteCorretajeId, String flagVer)
         {
             this.FlagVer = flagVer;
@@ -48,6 +50,8 @@ namespace VEH.Intranet.ViewModel.CorretajeInmobiliario
                 this.Cliente = cliente.Cliente;
                 this.Numero = cliente.Numero;
                 this.Correo = cliente.Correo;
+                this.Otros = cliente.Otros;
+                this.CantidadInmuebles = CantidadInmuebles;
             }
         }
     }

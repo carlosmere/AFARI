@@ -102,7 +102,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Propietario o Inquilino</Value>
+                                  <Value>=Parameters!ColumnaProInq.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -1982,6 +1982,10 @@
     </DataSet>
   </DataSets>
   <ReportParameters>
+    <ReportParameter Name="ColumnaProInq">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
     <ReportParameter Name="FlagOtros">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>

@@ -100,6 +100,8 @@
     <Property Name="Cliente" Type="varchar" MaxLength="500" />
     <Property Name="Numero" Type="varchar" MaxLength="500" />
     <Property Name="Correo" Type="varchar" MaxLength="500" />
+    <Property Name="Otros" Type="varchar" MaxLength="500" />
+    <Property Name="CantidadInmuebles" Type="varchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="ComisionAFP">
     <Key>

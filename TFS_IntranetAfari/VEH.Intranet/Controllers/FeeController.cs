@@ -475,85 +475,16 @@ namespace VEH.Intranet.Controllers
                     {
                         String fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
                             presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
+
                     }
                 }
                 else
-                {                    
-                    //var t = new Task(() =>
-                    //{
-                    //    ReporteLogic rl = new ReporteLogic();
-                    //    rl.Server = Server;
-                    //    rl.context = context;
-                    //    rl.UnidadTiempoActualId = unidadTiempoActualId;
-                    //
-                    //    foreach (Cuota c in listaCuota)
-                    //    {
-                    //        var valorExtraordinaria = c.CuotaExtraordinaria ?? 0;
-                    //        c.CuotaExtraordinaria = 0;
-                    //
-                    //        c.Total -= valorExtraordinaria;
-                    //
-                    //        rl.GetReport(c, fechaEmision, fechaVencimiento,
-                    //            presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
-                    //
-                    //        //c.Total += valorExtraordinaria;
-                    //        //c.CuotaExtraordinaria = valorExtraordinaria;
-                    //        //
-                    //        //rl.GetReport(c, fechaEmision, fechaVencimiento,
-                    //        //presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
-                    //    }
-                    //    lstMemoryStream.AddRange(rl.lstMemoryStream);
-                    //    lstMemoryStreamPDF.AddRange(rl.lstMemoryStreamPDF);
-                    //    lstNombreDOC.AddRange(rl.lstNombreDOC);
-                    //});
-                    //lstTareas.Add(t);
-                    //t.Start();
-                    //
-                    //
-                    //var t2 = new Task(() =>
-                    //{
-                    //    ReporteLogic rl = new ReporteLogic();
-                    //    rl.Server = Server;
-                    //    rl.context = context;
-                    //    rl.UnidadTiempoActualId = unidadTiempoActualId;
-                    //
-                    //    foreach (Cuota c in listaCuota)
-                    //    {
-                    //        var valorExtraordinaria = c.CuotaExtraordinaria ?? 0;
-                    //        c.CuotaExtraordinaria = 0;
-                    //
-                    //        //c.Total -= valorExtraordinaria;
-                    //        //
-                    //        //rl.GetReport(c, fechaEmision, fechaVencimiento,
-                    //        //    presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
-                    //        //
-                    //        //c.Total += valorExtraordinaria;
-                    //        c.CuotaExtraordinaria = valorExtraordinaria;
-                    //
-                    //        rl.GetReport(c, fechaEmision, fechaVencimiento,
-                    //        presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
-                    //    }
-                    //    lstMemoryStream.AddRange(rl.lstMemoryStream);
-                    //    lstMemoryStreamPDF.AddRange(rl.lstMemoryStreamPDF);
-                    //    lstNombreDOC.AddRange(rl.lstNombreDOC);
-                    //});
-                    //lstTareas.Add(t2);
-                    //t2.Start();
+                {         
                     foreach (Cuota c in listaCuota)
                     {
                         var valorExtraordinaria = c.CuotaExtraordinaria ?? 0;
                         c.CuotaExtraordinaria = 0;
                     
-                        //c.Total -= valorExtraordinaria;
-                        //
-                        //String fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
-                        //    presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId]);
-                        //
-                        //c.Total += valorExtraordinaria;
-                        //c.CuotaExtraordinaria = valorExtraordinaria;
-                        //fileName = reporteLogic.GetReport(c, fechaEmision, fechaVencimiento,
-                        //    presupuestoMes, totalM2, objUnidad, CuotasDelEdifico, lastUnidad, DicNumeroRecibo[c.DepartamentoId], true);
-
                         if (seImprimeCE == "0")
                         {
                             c.Total -= valorExtraordinaria;
@@ -827,9 +758,9 @@ namespace VEH.Intranet.Controllers
                         var LstCuotasT = context.Cuota.Include(x => x.Departamento)
                             .Include(x => x.UnidadTiempo)
                             .Include(x => x.Departamento.Propietario)
-                            .Where(x => x.Departamento.EdificioId == EdificioId 
-                            && x.Pagado == false 
-                            && x.UnidadTiempoId < unidadTiempoActivo.UnidadTiempoId 
+                            .Where(x => x.Departamento.EdificioId == EdificioId
+                            && x.Pagado == false
+                            && x.UnidadTiempoId < unidadTiempoActivo.UnidadTiempoId
                             && x.UnidadTiempo.Estado == ConstantHelpers.EstadoActivo
                             && (x.NoEsVisibleMorosidad == null || x.NoEsVisibleMorosidad == false)).OrderBy(x => x.UnidadTiempo.Orden).ThenBy(x => x.CuotaId).ToList();
 
@@ -914,7 +845,8 @@ namespace VEH.Intranet.Controllers
 
                         Int32 i = 8;
                         List<Int32> LstDepartamentoId = new List<Int32>();
-                        LstCuotas = LstCuotas.OrderBy(x => x.UnidadTiempoId).ToList();
+                        //LstCuotas = LstCuotas.OrderBy(x => x.UnidadTiempoId).ThenBy(x => x.DepartamentoId).ToList();
+                        LstCuotas = LstCuotas.OrderBy(x => x.DepartamentoId).ToList();
                         decimal? TotalGeneral = 0;
                         foreach (var item in LstCuotas)
                         {

@@ -105,6 +105,8 @@
           <Property Name="Cliente" Type="varchar" MaxLength="500" />
           <Property Name="Numero" Type="varchar" MaxLength="500" />
           <Property Name="Correo" Type="varchar" MaxLength="500" />
+          <Property Name="Otros" Type="varchar" MaxLength="500" />
+          <Property Name="CantidadInmuebles" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="ComisionAFP">
           <Key>
@@ -4055,8 +4057,8 @@
             <End Role="UnidadTiempo" EntitySet="UnidadTiempo" />
             <End Role="Cuota" EntitySet="Cuota" />
           </AssociationSet>
-          <EntitySet Name="ClienteCorretaje" EntityType="DB_92747_intranetModel.ClienteCorretaje" />
           <EntitySet Name="VisitaCorretaje" EntityType="DB_92747_intranetModel.VisitaCorretaje" />
+          <EntitySet Name="ClienteCorretaje" EntityType="DB_92747_intranetModel.ClienteCorretaje" />
         </EntityContainer>
         <EntityType Name="ConsumoIndividual">
           <Key>
@@ -4142,6 +4144,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="VisitaCorretaje">
+          <Key>
+            <PropertyRef Name="VisitaCorretajeId" />
+          </Key>
+          <Property Name="VisitaCorretajeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreCliente" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Firma" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="ClienteCorretaje">
           <Key>
             <PropertyRef Name="ClienteCorretajeId" />
@@ -4163,23 +4182,8 @@
           <Property Name="Cliente" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Numero" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Correo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="VisitaCorretaje">
-          <Key>
-            <PropertyRef Name="VisitaCorretajeId" />
-          </Key>
-          <Property Name="VisitaCorretajeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Cliente" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NombreCliente" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Firma" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Correo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Otros" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CantidadInmuebles" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4989,9 +4993,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VisitaCorretaje">
+            <EntityTypeMapping TypeName="DB_92747_intranetModel.VisitaCorretaje">
+              <MappingFragment StoreEntitySet="VisitaCorretaje">
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Firma" ColumnName="Firma" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
+                <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="VisitaCorretajeId" ColumnName="VisitaCorretajeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ClienteCorretaje">
             <EntityTypeMapping TypeName="DB_92747_intranetModel.ClienteCorretaje">
               <MappingFragment StoreEntitySet="ClienteCorretaje">
+                <ScalarProperty Name="CantidadInmuebles" ColumnName="CantidadInmuebles" />
+                <ScalarProperty Name="Otros" ColumnName="Otros" />
                 <ScalarProperty Name="Correo" ColumnName="Correo" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="Cliente" ColumnName="Cliente" />
@@ -5009,24 +5033,6 @@
                 <ScalarProperty Name="TipoInmueble" ColumnName="TipoInmueble" />
                 <ScalarProperty Name="TipoServicio" ColumnName="TipoServicio" />
                 <ScalarProperty Name="ClienteCorretajeId" ColumnName="ClienteCorretajeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VisitaCorretaje">
-            <EntityTypeMapping TypeName="DB_92747_intranetModel.VisitaCorretaje">
-              <MappingFragment StoreEntitySet="VisitaCorretaje">
-                <ScalarProperty Name="Correo" ColumnName="Correo" />
-                <ScalarProperty Name="Firma" ColumnName="Firma" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
-                <ScalarProperty Name="Moneda" ColumnName="Moneda" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
-                <ScalarProperty Name="VisitaCorretajeId" ColumnName="VisitaCorretajeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
