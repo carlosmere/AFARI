@@ -2056,7 +2056,7 @@ namespace VEH.Intranet.Logic
                 DSInfoReporteEdificio ds = new DSInfoReporteEdificio();
 
                 DataRow titulo = ds.Tables["DTInfo"].NewRow();
-                titulo["UnidadTiempo"] = " " + UnidadTiempo + "\nEDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
+                titulo["UnidadTiempo"] = " " + UnidadTiempo;
                 //" " + UnidadTiempo + "\n\r EDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
                 ds.Tables["DTInfo"].Rows.Add(titulo);
                 Boolean EsDiferenteCuotatTotal = false;
@@ -2232,6 +2232,8 @@ namespace VEH.Intranet.Logic
                 rv.LocalReport.DataSources.Add(rdsTotales);
 
                 var TipoInmueble = listaCuota.Count > 0 ? listaCuota[0].Departamento.TipoInmueble : null;
+
+                rv.LocalReport.SetParameters(new ReportParameter("Edificio", "EDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre));
 
                 rv.LocalReport.SetParameters(new ReportParameter("TipoInmueble", TipoInmueble.Acronimo));
                 rv.LocalReport.SetParameters(new ReportParameter("TipoInmuebleNombreCompleto", TipoInmueble.Nombre));
