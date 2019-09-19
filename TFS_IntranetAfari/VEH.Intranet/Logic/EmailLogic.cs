@@ -171,10 +171,23 @@ namespace VEH.Intranet.Logic
                     PdfWriter wri = PdfWriter.GetInstance(doc, output);
                     doc.Open();
 
-                    Image pic = Image.GetInstance(HttpContext.Current.Server.MapPath(@"~\Content\img\Logo Afari Transparente.png"));
-                    pic.Alignment = Element.ALIGN_LEFT;
-                    pic.ScaleAbsolute(120, 35);
+                    PdfContentByte cb = wri.DirectContent;
+                    cb.SetColorStroke(new CMYKColor(1f, 1f, 0f, 0.05f));
+                    cb.MoveTo(14, 825);//70, 200);
+                    cb.LineTo(580, 825);
+                    cb.LineTo(580, 15);
+                    cb.LineTo(14, 15);
 
+                    cb.ClosePathStroke();
+
+                    Image pic = Image.GetInstance(HttpContext.Current.Server.MapPath(@"~\Content\img\Logo Afari Transparente.png"));
+                    pic.ScaleAbsolute(120, 35);
+                    pic.SetAbsolutePosition(20, 780);
+                    doc.Add(pic);
+
+                    pic = Image.GetInstance(HttpContext.Current.Server.MapPath(@"~\Content\img\membretada\isotipoafari.png"));
+                    pic.ScaleAbsolute(269, 273);
+                    pic.SetAbsolutePosition(180, 350);
                     doc.Add(pic);
 
                     Paragraph paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
@@ -231,7 +244,10 @@ namespace VEH.Intranet.Logic
                     doc.Add(paragraph);
                     paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
                     doc.Add(paragraph);
-
+                    paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
+                    doc.Add(paragraph);
+                    paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
+                    doc.Add(paragraph);
                     //var arrFirma = visita.Firma.Split(',');
                     byte[] bytesFirma = Convert.FromBase64String(visita.Firma);
                     pic = Image.GetInstance(bytesFirma);
@@ -246,10 +262,14 @@ namespace VEH.Intranet.Logic
                     paragraph = new Paragraph("FIRMA", font) { Alignment = Element.ALIGN_CENTER };
                     doc.Add(paragraph);
 
+                    pic = Image.GetInstance(HttpContext.Current.Server.MapPath(@"~\Content\img\membretada\footer.png"));
+                    pic.ScaleAbsolute(320, 42);
+                    pic.SetAbsolutePosition(140, 20);
+                    doc.Add(pic);
+
                     doc.Close();
                     pdfBytes = output.ToArray();
                 }
-
                 var stream = new MemoryStream(pdfBytes);
 
                 return stream;
@@ -396,7 +416,7 @@ namespace VEH.Intranet.Logic
                 throw ex;
             }
         }
-        public void SendEmailMasivoVisita(string asunto, string plantilla, string remitente, string nombreRemitente, string receptor, ViewModel.Templates.infoViewModel model = null, String copiacarbon = null, String copiaOculta = null,VisitaCorretaje visita = null)
+        public string SendEmailMasivoVisita(string asunto, string plantilla, string remitente, string nombreRemitente, string receptor, ViewModel.Templates.infoViewModel model = null, String copiacarbon = null, String copiaOculta = null,VisitaCorretaje visita = null)
         {
             try
             {
@@ -416,7 +436,7 @@ namespace VEH.Intranet.Logic
                         Timeout = 60000,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(ConfigurationManager.AppSettings["CorreoSistema"], SecurePassword)
+                        Credentials = new NetworkCredential(remitente, SecurePassword)
                     })
                     {
                         var LstReceptores = receptor.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -525,8 +545,9 @@ namespace VEH.Intranet.Logic
 
             catch (Exception ex)
             {
-                throw ex;
+                return ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty);
             }
+            return String.Empty;
         }
     }
 }

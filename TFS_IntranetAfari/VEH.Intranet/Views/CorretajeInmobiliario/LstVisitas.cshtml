@@ -77,7 +77,8 @@
                                             <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
                                                 <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu">                                                
+                                                <li><a href="@Url.Action("EmailVisita", "CorretajeInmobiliario", new { VisitaCorretajeId = item.VisitaCorretajeId})"><i class="fa fa-envelope"></i>&nbsp;Enviar Correo</a></li>
                                                 <li><a href="@Url.Action("DescargarVisita", "CorretajeInmobiliario", new { VisitaCorretajeId = item.VisitaCorretajeId})"><i class="fa fa-file-pdf-o"></i>&nbsp;Descargar</a></li>
                                                 <li class="divider"></li>
                                                 <li><a href="@Url.Action("DeleteVisita", "CorretajeInmobiliario", new { VisitaCorretajeId = item.VisitaCorretajeId })"><i class="fa fa-trash"></i>&nbsp;Eliminar</a></li>

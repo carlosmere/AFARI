@@ -15,6 +15,7 @@ namespace VEH.Intranet.ViewModel.CorretajeInmobiliario
         public string Tipo { get; set; } = String.Empty;
         public decimal Precio { get; set; } = 0;
         public string Moneda { get; set; } = String.Empty;
+        public string Email { get; set; } = String.Empty;
         public string NombreCliente { get; set; } = String.Empty;
         public String Fecha { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
         public String Hora { get; set; } = DateTime.Now.ToString("HH:mm");
@@ -34,6 +35,7 @@ namespace VEH.Intranet.ViewModel.CorretajeInmobiliario
                 this.Fecha = visita.Fecha.ToString("dd/MM/yyyy");
                 this.Hora = visita.Hora.ToString();
                 this.Firma = visita.Firma;
+                this.Email = visita.Correo;
             }
         }
     }

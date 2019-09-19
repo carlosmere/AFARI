@@ -7,6 +7,6 @@ namespace VEH.Intranet.Models.BE
 {
     public class ResponseGetWebProvincias : BaseBE
     {
-        public List<AfariDB_Provincia> lstProvincia { get; set; }
+        public List<VehDB_Provincia> lstProvincia { get; set; }
     }
 }

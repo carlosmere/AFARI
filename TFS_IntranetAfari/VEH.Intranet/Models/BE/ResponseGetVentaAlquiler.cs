@@ -7,6 +7,6 @@ namespace VEH.Intranet.Models.BE
 {
     public class ResponseGetVentaAlquiler : BaseBE
     {
-        public List<AfariDB_Edificio> lstEdificio { get; set; }
+        public List<VehDB_Edificio> lstEdificio { get; set; }
     }
 }

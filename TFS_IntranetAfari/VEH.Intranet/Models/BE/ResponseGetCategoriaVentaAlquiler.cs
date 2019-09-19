@@ -7,6 +7,6 @@ namespace VEH.Intranet.Models.BE
 {
     public class ResponseGetCategoriaVentaAlquiler : BaseBE
     {
-        public List<AfariDB_Categoria> lstCategoria { get; set; }
+        public List<VehDB_Categoria> lstCategoria { get; set; }
     }
 }

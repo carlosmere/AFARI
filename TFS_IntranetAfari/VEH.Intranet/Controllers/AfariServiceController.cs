@@ -34,6 +34,7 @@ namespace VEH.Intranet.Controllers
         public UploadConstanciaVisitaResponse UploadConstanciaVisita(ListUploadConstanciaVisitaBE ListUploadConstanciaVisitaBE)
         {
             UploadConstanciaVisitaResponse BaseBE = new UploadConstanciaVisitaResponse();
+            var respuestaEmail = String.Empty;
             try
             {
                 try
@@ -91,7 +92,7 @@ namespace VEH.Intranet.Controllers
                         visita.Direccion = item.direccion.ToUpper();
                         visita.Tipo = item.tipo.ToUpper();
                         visita.Precio = item.precio.ToDecimal();
-                        visita.Moneda = "DÓLAR";
+                        visita.Moneda = item.moneda;//"DÓLAR";
                         visita.Correo = item.correo;
                         visita.NombreCliente = item.nombreCliente.ToUpper();
                         visita.Fecha = item.fecha.ToDateTime();
@@ -103,17 +104,18 @@ namespace VEH.Intranet.Controllers
                         var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == 1531);
                         EmailLogic mailLogic = new EmailLogic();
                         ViewModel.Templates.infoViewModel model = new ViewModel.Templates.infoViewModel();
-                        model.Mensaje = "Estimado Usuario\nSe adjunta la constancia de visita realizada.";
+                        model.Mensaje = "Estimado (a)\nSe adjunta la constancia de visita realizada.";
                         model.Firma = usuario.Firma;
 
                         if (!String.IsNullOrEmpty(item.correo))
                         {
-                            mailLogic.SendEmailMasivoVisita("Constancia de Visita " + visita.Fecha.ToString("dd/MM/yyyy"), "info", usuario.Email
+                            respuestaEmail = mailLogic.SendEmailMasivoVisita("Constancia de Visita " + visita.Fecha.ToString("dd/MM/yyyy"), "info", usuario.Email
                         , usuario.NombreRemitente, item.correo, model, null
                         , null,
                         visita);
                         }
                     }
+                    BaseBE.detalle = respuestaEmail;
                     BaseBE.mensaje = JsonConvert.SerializeObject(ListUploadConstanciaVisitaBE.data);
                 }
                 catch (Exception ex)
@@ -1819,7 +1821,7 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
-                    var query = webcontext.AfariDB_Departamento.AsQueryable();
+                    var query = webcontext.VehDB_Departamento.AsQueryable();
 
                     ResponseGetDepartamentos.lstDepartamento = query.ToList();
                 }
@@ -1848,7 +1850,7 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
-                    var query = webcontext.AfariDB_Provincia.AsQueryable();
+                    var query = webcontext.VehDB_Provincia.AsQueryable();
 
                     ResponseGetWebProvincias.lstProvincia = query.ToList();
                 }
@@ -1877,7 +1879,7 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
-                    var query = webcontext.AfariDB_Distrito.AsQueryable();
+                    var query = webcontext.VehDB_Distrito.AsQueryable();
                     if (!String.IsNullOrEmpty(codDepartamento))
                     {
                         query = query.Where(x => x.CodDepartamento == codDepartamento);
@@ -1913,7 +1915,7 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
-                    var query = webcontext.AfariDB_Edificio.AsQueryable();
+                    var query = webcontext.VehDB_Edificio.AsQueryable();
 
                     if (!String.IsNullOrEmpty(uuidDepartamento))
                     {
@@ -1958,7 +1960,7 @@ namespace VEH.Intranet.Controllers
                 try
                 {
                     DB_92747_bitportalEntities webcontext = new DB_92747_bitportalEntities();
-                    var query = webcontext.AfariDB_Categoria.AsQueryable();
+                    var query = webcontext.VehDB_Categoria.AsQueryable();
 
                     ResponseGetCategoriaVentaAlquiler.lstCategoria = query.ToList();
                 }

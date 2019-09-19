@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using VEH.Intranet.Filters;
 using VEH.Intranet.Helpers;
+using VEH.Intranet.Logic;
 using VEH.Intranet.Models;
 using VEH.Intranet.ViewModel.CorretajeInmobiliario;
 
@@ -27,6 +28,34 @@ namespace VEH.Intranet.Controllers
             var model = new LstVisitasViewModel();
             model.Fill(CargarDatosContext(), np, Fecha, NombreCliente);
             return View(model);
+        }
+        public ActionResult EmailVisita(Int32 VisitaCorretajeId)
+        {
+            try
+            {
+                VisitaCorretaje visita = context.VisitaCorretaje.FirstOrDefault( x => x.VisitaCorretajeId == VisitaCorretajeId);                
+
+                var usuario = context.Usuario.FirstOrDefault(x => x.UsuarioId == 1531);
+                EmailLogic mailLogic = new EmailLogic();
+                ViewModel.Templates.infoViewModel model = new ViewModel.Templates.infoViewModel();
+                model.Mensaje = "Estimado Usuario\nSe adjunta la constancia de visita realizada.";
+                model.Firma = usuario.Firma;
+
+                if (!String.IsNullOrEmpty(visita.Correo))
+                {
+                    mailLogic.SendEmailMasivoVisita("Constancia de Visita " + visita.Fecha.ToString("dd/MM/yyyy"), "info", usuario.Email
+                , usuario.NombreRemitente, visita.Correo, model, null
+                , null,
+                visita);
+                }
+                PostMessage(MessageType.Success);
+            }
+            catch(Exception ex)
+            {
+                PostMessage(MessageType.Error, ex.Message + (ex.InnerException != null ? ex.InnerException.Message : String.Empty));
+            }
+
+            return RedirectToAction("LstVisitas");
         }
         public ActionResult AddEditVisita(Int32? VisitaCorretajeId)
         {
@@ -57,6 +86,7 @@ namespace VEH.Intranet.Controllers
                 visita.Precio = model.Precio;
                 visita.Moneda = model.Moneda;
                 visita.NombreCliente = model.NombreCliente;
+                visita.Correo = model.Email;
                 visita.Fecha = model.Fecha.ToDateTime();
                 var arrHora = model.Hora.Split(':');
                 visita.Hora = new TimeSpan(arrHora[0].ToInteger(), arrHora[1].ToInteger(), 0);
@@ -110,13 +140,23 @@ namespace VEH.Intranet.Controllers
                     PdfWriter wri = PdfWriter.GetInstance(doc, output);
                     doc.Open();
 
+                    PdfContentByte cb = wri.DirectContent;
+                    cb.SetColorStroke(new CMYKColor(1f, 1f, 0f, 0.05f));
+                    cb.MoveTo(14, 825);//70, 200);
+                    cb.LineTo(580, 825);
+                    cb.LineTo(580, 15);
+                    cb.LineTo(14, 15);
+
+                    cb.ClosePathStroke();
+
                     Image pic = Image.GetInstance(Server.MapPath(@"~\Content\img\Logo Afari Transparente.png"));
                     pic.ScaleAbsolute(120, 35);
-                    pic.SetAbsolutePosition(4, 800);
+                    pic.SetAbsolutePosition(20, 780);
                     doc.Add(pic);                    
 
                     pic = Image.GetInstance(Server.MapPath(@"~\Content\img\membretada\isotipoafari.png"));
-                    pic.SetAbsolutePosition(220, 380);
+                    pic.ScaleAbsolute(269, 273);
+                    pic.SetAbsolutePosition(180, 350);
                     doc.Add(pic);
 
                     Paragraph paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
@@ -173,7 +213,10 @@ namespace VEH.Intranet.Controllers
                     doc.Add(paragraph);
                     paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
                     doc.Add(paragraph);
-
+                    paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
+                    doc.Add(paragraph);
+                    paragraph = new Paragraph(" ", font) { Alignment = Element.ALIGN_LEFT };
+                    doc.Add(paragraph);
                     //var arrFirma = visita.Firma.Split(',');
                     byte[] bytesFirma = Convert.FromBase64String(visita.Firma);
                     pic = Image.GetInstance(bytesFirma);
@@ -189,8 +232,8 @@ namespace VEH.Intranet.Controllers
                     doc.Add(paragraph);
 
                     pic = Image.GetInstance(Server.MapPath(@"~\Content\img\membretada\footer.png"));
-                    pic.ScaleAbsolute(250, 42);
-                    pic.SetAbsolutePosition(170, 5);
+                    pic.ScaleAbsolute(320, 42);
+                    pic.SetAbsolutePosition(140, 20);
                     doc.Add(pic);                   
 
                     doc.Close();

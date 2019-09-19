@@ -22,7 +22,7 @@ namespace VEH.Intranet.ViewModel.CorretajeInmobiliario
             baseFill(datacontext);
             this.np = np ?? 1;
             this.NombreCliente = nombreCliente;
-            var query = datacontext.context.VisitaCorretaje.Where(x => x.Estado == ConstantHelpers.EstadoActivo).OrderBy(x => x.Fecha).AsQueryable();
+            var query = datacontext.context.VisitaCorretaje.Where(x => x.Estado == ConstantHelpers.EstadoActivo).OrderByDescending(x => x.Fecha).ThenByDescending( x => x.Hora).AsQueryable();
 
             if (!String.IsNullOrEmpty(this.Fecha))
             {

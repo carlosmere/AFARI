@@ -16,5 +16,6 @@ namespace VEH.Intranet.Models.BE
         public String hora;
         public String firma;
         public String correo;
+        public String moneda;
     }
 }

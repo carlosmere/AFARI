@@ -7,6 +7,6 @@ namespace VEH.Intranet.Models.BE
 {
     public class ResponseGetWebDistritos : BaseBE
     {
-        public List<AfariDB_Distrito> lstDistrito { get; set; }
+        public List<VehDB_Distrito> lstDistrito { get; set; }
     }
 }

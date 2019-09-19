@@ -7,6 +7,6 @@ namespace VEH.Intranet.Models.BE
 {
     public class ResponseGetWebDepartamentos : BaseBE
     {
-        public List<AfariDB_Departamento> lstDepartamento { get; set; }
+        public List<VehDB_Departamento> lstDepartamento { get; set; }
     }
 }
