@@ -194,13 +194,11 @@ D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\zh-CHT\Microsoft.ReportViewer
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.VisualStudio.Data.Services.resources.dll
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\es\Microsoft.VisualStudio.Data.Core.resources.dll
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.App.config
-D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csprojAssemblyReference.cache
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.Globalization.Shared.ValidationStrings.resources
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.Globalization.Shared.ValidationStrings.en.resources
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.GenerateResource.cache
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\RdlCompile.cache
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\RdlCompile.compiled
-D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.CoreCompileInputs.cache
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\en\VEH.Intranet.resources.dll
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.csproj.CopyComplete
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\obj\Debug\VEH.Intranet.dll

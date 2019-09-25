@@ -2091,8 +2091,9 @@ namespace VEH.Intranet.Controllers
                         telefono = x.Telefono,
                         email = x.Email,
                         celular = x.Celular,
+                        parentesco = x.ParentescoTitular,
                         nroDocumento = x.NroDocumento,
-                        nombreInquilino = (x.Inquilino.FirstOrDefault().Nombres ?? String.Empty)
+                        nombreInquilino = (x.Inquilino.FirstOrDefault( y => y.Estado == ConstantHelpers.EstadoActivo).Nombres ?? String.Empty)
                     }).ToList();
                 }
                 catch (Exception ex)

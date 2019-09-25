@@ -2339,7 +2339,11 @@ namespace VEH.Intranet.Logic
                 String FlagCuota = "T";
                 String FlagExtraordinaria = "T";
                 String FlagOtros = "T";
-
+                String ColumnaProInq = "Propietario";
+                if (listaCuota.FirstOrDefault().Departamento.Edificio.UsarInquilinoCCPD == true)
+                {
+                    ColumnaProInq = "Propietario o Inquilino";
+                }
                 DataRow rowDepartamentoTotal = ds.Tables["DTTotalesDepartamento"].NewRow();
                 rowDepartamentoTotal["NroDepartamento"] = "";
                 rowDepartamentoTotal["Propietario"] = "";
@@ -2451,6 +2455,7 @@ namespace VEH.Intranet.Logic
                 rv.LocalReport.DataSources.Add(rdsTotales);
 
                 var TipoInmueble = listaCuota.Count > 0 ? listaCuota[0].Departamento.TipoInmueble : null;
+                rv.LocalReport.SetParameters(new ReportParameter("Edificio", "EDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre));
 
                 rv.LocalReport.SetParameters(new ReportParameter("TipoInmueble", TipoInmueble.Acronimo));
                 rv.LocalReport.SetParameters(new ReportParameter("TipoInmuebleNombreCompleto", TipoInmueble.Nombre));
@@ -2467,6 +2472,7 @@ namespace VEH.Intranet.Logic
                 rv.LocalReport.SetParameters(new ReportParameter("FlagCuota", FlagCuota));
                 rv.LocalReport.SetParameters(new ReportParameter("FlagExtraordinaria", FlagExtraordinaria));
                 rv.LocalReport.SetParameters(new ReportParameter("FlagOtros", FlagOtros));
+                rv.LocalReport.SetParameters(new ReportParameter("ColumnaProInq", ColumnaProInq));
 
                 Warning[] warnings;
                 string[] streamids;
