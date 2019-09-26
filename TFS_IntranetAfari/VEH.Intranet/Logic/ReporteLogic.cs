@@ -2288,7 +2288,7 @@ namespace VEH.Intranet.Logic
                 DSInfoReporteEdificio ds = new DSInfoReporteEdificio();
 
                 DataRow titulo = ds.Tables["DTInfo"].NewRow();
-                titulo["UnidadTiempo"] = " " + UnidadTiempo + "\nEDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
+                titulo["UnidadTiempo"] = " " + UnidadTiempo;
                 //" " + UnidadTiempo + "\n\r EDIFICIO " + listaCuota.FirstOrDefault().Departamento.Edificio.Nombre;
                 ds.Tables["DTInfo"].Rows.Add(titulo);
                 Boolean EsDiferenteCuotatTotal = false;
