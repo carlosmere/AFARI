@@ -750,7 +750,6 @@ namespace VEH.Intranet.Controllers
                 {
                     ExcelWorkbook excelWorkBook = excelPackage.Workbook;
                     ExcelWorksheet excelWorksheet = excelWorkBook.Worksheets.FirstOrDefault();
-
                     if (excelWorksheet != null)
                     {
                         var unidadTiempoActivo = context.UnidadTiempo.FirstOrDefault(X => X.EsActivo);
@@ -1275,13 +1274,49 @@ namespace VEH.Intranet.Controllers
                                 excelWorksheet.Cells[i, mes.Value].Style.Border.BorderAround(ExcelBorderStyle.Thin, System.Drawing.Color.Black);
                                 excelWorksheet.Cells[i, mes.Value].Style.Font.Bold = true;
                             }
+
                         }
 
                     }
-
                     var fileStreamResult = new FileContentResult(excelPackage.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                    fileStreamResult.FileDownloadName = "CuadroMoroso_" + Edificio + "_" + DateTime.Now.ToShortDateString() + ".xlsx";
-                    return fileStreamResult;
+
+                    MemoryStream stream = new MemoryStream();
+                    var aux = fileStreamResult.FileContents;
+                    stream.Write(aux, 0, aux.Length);
+
+                    Spire.Xls.Workbook workbook = new Spire.Xls.Workbook();
+                    
+                    workbook.LoadFromStream(stream);                    
+                    var sheet = workbook.Worksheets[0];
+                    sheet.PageSetup.Orientation = Spire.Xls.PageOrientationType.Landscape;
+                    sheet.PageSetup.IsFitToPage = true;
+
+                    MemoryStream streamPdf = new MemoryStream();
+                    workbook.SaveToStream(streamPdf, Spire.Xls.FileFormat.PDF);
+
+                    MemoryStream outputMemStream = new MemoryStream();
+                    ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+                    zipStream.SetLevel(2);
+
+                    var nombre = "Cuadro Moroso " + Edificio + ".pdf";
+                    ZipEntry entry_pdf = new ZipEntry(nombre);
+                    entry_pdf.DateTime = DateTime.Now;
+                    zipStream.PutNextEntry(entry_pdf);
+                    StreamUtils.Copy(new MemoryStream(streamPdf.ToArray()), zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+
+                    nombre = "Cuadro Moroso " + Edificio + ".xlsx";
+                    ZipEntry entry_excel = new ZipEntry(nombre);
+                    entry_excel.DateTime = DateTime.Now;
+                    zipStream.PutNextEntry(entry_excel);
+                    StreamUtils.Copy(new MemoryStream(fileStreamResult.FileContents), zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+
+                    zipStream.IsStreamOwner = false;
+                    zipStream.Close();
+                    outputMemStream.Position = 0;
+
+                    return File(outputMemStream, "application/octet-stream", "Cuadro Moroso " + Edificio + ".zip");
                 }
             }
             catch (Exception ex)

@@ -19,6 +19,8 @@ using static VEH.Intranet.ViewModel.Building.EnviarEmailInformativoViewModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Newtonsoft.Json;
+using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.Core;
 
 namespace VEH.Intranet.Controllers
 {
@@ -1687,21 +1689,51 @@ namespace VEH.Intranet.Controllers
 
                     }
 
-                    MemoryStream outputMemoryStream = new MemoryStream(excelPackage.GetAsByteArray());
-                    if (outputMemoryStream == null)
-                    {
-                        response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-                    }
+                    MemoryStream stream = new MemoryStream();
+                    var aux = excelPackage.GetAsByteArray();
+                    stream.Write(aux, 0, aux.Length);
 
-                    response.Content = new StreamContent(outputMemoryStream);
+                    Spire.Xls.Workbook workbook = new Spire.Xls.Workbook();
+
+                    workbook.LoadFromStream(stream);
+                    var sheet = workbook.Worksheets[0];
+                    sheet.PageSetup.Orientation = Spire.Xls.PageOrientationType.Landscape;
+                    sheet.PageSetup.IsFitToPage = true;
+
+                    MemoryStream streamPdf = new MemoryStream();
+                    workbook.SaveToStream(streamPdf, Spire.Xls.FileFormat.PDF);
+
+                    MemoryStream outputMemStream = new MemoryStream();
+                    ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+                    zipStream.SetLevel(2);
+
+                    var nombre = "Cuadro Moroso " + Edificio + ".pdf";
+                    ZipEntry entry_pdf = new ZipEntry(nombre);
+                    entry_pdf.DateTime = DateTime.Now;
+                    zipStream.PutNextEntry(entry_pdf);
+                    StreamUtils.Copy(new MemoryStream(streamPdf.ToArray()), zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+
+                    nombre = "Cuadro Moroso " + Edificio + ".xlsx";
+                    ZipEntry entry_excel = new ZipEntry(nombre);
+                    entry_excel.DateTime = DateTime.Now;
+                    zipStream.PutNextEntry(entry_excel);
+                    StreamUtils.Copy(new MemoryStream(aux), zipStream, new byte[4096]);
+                    zipStream.CloseEntry();
+
+                    zipStream.IsStreamOwner = false;
+                    zipStream.Close();
+                    outputMemStream.Position = 0;
+
+                    response.Content = new StreamContent(outputMemStream);
 
                     response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
                     {
-                        FileName = "CuadroMoroso_" + Edificio + "_" + DateTime.Now.ToShortDateString() + ".xlsx"
+                        FileName = "Cuadro Moroso " + Edificio + ".zip"
                     };
                     response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                     return response;
                 }

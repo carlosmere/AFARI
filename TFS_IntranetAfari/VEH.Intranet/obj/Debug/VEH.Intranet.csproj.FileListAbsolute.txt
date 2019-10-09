@@ -107,6 +107,7 @@ D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\PagedList.Mvc.xml
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.Barcode.xml
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.Common.xml
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.DataExport.xml
+D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.DataExport.ResourceMgr.xml
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.Doc.xml
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.DocViewer.Forms.xml
 D:\TFS_CM\AFARI\TFS_IntranetAfari\VEH.Intranet\bin\Spire.License.xml
