@@ -1516,7 +1516,7 @@ namespace VEH.Intranet.Controllers
                         }
 
                         i += 5;
-                        LstCuotas = LstCuotas.Where(x => x.CuotaExtraordinaria > 0).ToList();
+                        LstCuotas = LstCuotas.Where(x => x.CuotaExtraordinaria > 0).OrderBy(x => x.UnidadTiempo.Orden).ToList();
 
                         if (LstCuotas.Count > 0)
                         {
