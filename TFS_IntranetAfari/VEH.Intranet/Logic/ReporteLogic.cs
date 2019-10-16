@@ -553,7 +553,7 @@ namespace VEH.Intranet.Logic
                     Numeracion++;
                 }
                 var ListNumeroLeyenda = LstLeyendas.Select(x => x.Numero).ToList();
-                var TieneExtraOrdinaria = lstIngresos.Sum(X => X.CuotaExtraordinaria) ?? 0;
+                var TieneExtraOrdinaria = lstIngresos.Where( x => x.FechaEmision.Value.Month == x.FechaPagado.Value.Month).Sum(X => X.CuotaExtraordinaria) ?? 0;
                 decimal sumExtraordinaria = 0;
                 bool mostrarExtraordinaria = false;
                 int cantCuotaExtraUnidad = 0;

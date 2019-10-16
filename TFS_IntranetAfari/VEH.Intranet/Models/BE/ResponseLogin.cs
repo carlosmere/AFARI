@@ -15,5 +15,6 @@ namespace VEH.Intranet.Models.BE
         public Int32? edificioId { get; set; }
         public string nombreEdificio { get; set; }
         public string nombreDepartamento { get; set; }
+        public string ultimaPagada { get; set; }
     }
 }

@@ -1097,6 +1097,12 @@ namespace VEH.Intranet.Controllers
                                         }
                                         else
                                         {
+                                            //if (cuota.FechaEmision.Value.Month != cuota.FechaPagado.Value.Month && cuota.EsExtraordinaria == true)
+                                            //{
+                                            //    cuota.CuotaExtraordinaria = 0;
+                                            //}
+                                            
+
                                             ListCuotas.Add(cuota);
                                         }
                                     }

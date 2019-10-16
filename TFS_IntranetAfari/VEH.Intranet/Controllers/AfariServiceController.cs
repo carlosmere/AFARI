@@ -1703,37 +1703,37 @@ namespace VEH.Intranet.Controllers
                     MemoryStream streamPdf = new MemoryStream();
                     workbook.SaveToStream(streamPdf, Spire.Xls.FileFormat.PDF);
 
-                    MemoryStream outputMemStream = new MemoryStream();
-                    ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
-                    zipStream.SetLevel(2);
+                    //MemoryStream outputMemStream = new MemoryStream();
+                    //ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
+                    //zipStream.SetLevel(2);
+                    //
+                    //var nombre = "Cuadro Moroso " + Edificio + ".pdf";
+                    //ZipEntry entry_pdf = new ZipEntry(nombre);
+                    //entry_pdf.DateTime = DateTime.Now;
+                    //zipStream.PutNextEntry(entry_pdf);
+                    //StreamUtils.Copy(new MemoryStream(streamPdf.ToArray()), zipStream, new byte[4096]);
+                    //zipStream.CloseEntry();
+                    //
+                    //nombre = "Cuadro Moroso " + Edificio + ".xlsx";
+                    //ZipEntry entry_excel = new ZipEntry(nombre);
+                    //entry_excel.DateTime = DateTime.Now;
+                    //zipStream.PutNextEntry(entry_excel);
+                    //StreamUtils.Copy(new MemoryStream(aux), zipStream, new byte[4096]);
+                    //zipStream.CloseEntry();
+                    //
+                    //zipStream.IsStreamOwner = false;
+                    //zipStream.Close();
+                    //outputMemStream.Position = 0;
 
-                    var nombre = "Cuadro Moroso " + Edificio + ".pdf";
-                    ZipEntry entry_pdf = new ZipEntry(nombre);
-                    entry_pdf.DateTime = DateTime.Now;
-                    zipStream.PutNextEntry(entry_pdf);
-                    StreamUtils.Copy(new MemoryStream(streamPdf.ToArray()), zipStream, new byte[4096]);
-                    zipStream.CloseEntry();
-
-                    nombre = "Cuadro Moroso " + Edificio + ".xlsx";
-                    ZipEntry entry_excel = new ZipEntry(nombre);
-                    entry_excel.DateTime = DateTime.Now;
-                    zipStream.PutNextEntry(entry_excel);
-                    StreamUtils.Copy(new MemoryStream(aux), zipStream, new byte[4096]);
-                    zipStream.CloseEntry();
-
-                    zipStream.IsStreamOwner = false;
-                    zipStream.Close();
-                    outputMemStream.Position = 0;
-
-                    response.Content = new StreamContent(outputMemStream);
+                    response.Content = new StreamContent(streamPdf);
 
                     response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
                     {
-                        FileName = "Cuadro Moroso " + Edificio + ".zip"
+                        FileName = "Cuadro Moroso " + Edificio + ".pdf"
                     };
                     response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
 
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
 
                     return response;
                 }
@@ -2578,6 +2578,18 @@ namespace VEH.Intranet.Controllers
                                 ResponseLogin.edificioId = usuario.Departamento.EdificioId;
                                 ResponseLogin.nombreEdificio = usuario.Departamento.Edificio.Nombre;
                                 ResponseLogin.nombreDepartamento = usuario.Departamento.TipoInmueble.Nombre + " " + usuario.Departamento.Numero;
+                                
+                                var b = context.Cuota.Where(X => X.DepartamentoId == ResponseLogin.departamentoId && X.Pagado).OrderByDescending(X => X.UnidadTiempo.Orden).ToList();
+                                var ultimaTiempoPagada = b.FirstOrDefault();
+                                if (ultimaTiempoPagada != null)
+                                {
+                                    ResponseLogin.ultimaPagada = ultimaTiempoPagada.UnidadTiempo.Descripcion;
+
+                                }
+                                else
+                                {
+                                    ResponseLogin.ultimaPagada = "Nunca pago cuota";
+                                }
 
                                 try
                                 {
