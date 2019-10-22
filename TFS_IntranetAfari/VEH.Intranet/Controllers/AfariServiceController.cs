@@ -2125,7 +2125,9 @@ namespace VEH.Intranet.Controllers
                         celular = x.Celular,
                         parentesco = x.ParentescoTitular,
                         nroDocumento = x.NroDocumento,
-                        nombreInquilino = (x.Inquilino.FirstOrDefault( y => y.Estado == ConstantHelpers.EstadoActivo).Nombres ?? String.Empty)
+                        nombreInquilino = (x.Inquilino.FirstOrDefault( y => y.Estado == ConstantHelpers.EstadoActivo).Nombres ?? String.Empty),
+                        celularInquilino = (x.Inquilino.FirstOrDefault(y => y.Estado == ConstantHelpers.EstadoActivo).Celular ?? String.Empty),
+                        emailInquilino = (x.Inquilino.FirstOrDefault(y => y.Estado == ConstantHelpers.EstadoActivo).Email ?? String.Empty)
                     }).ToList();
                 }
                 catch (Exception ex)
